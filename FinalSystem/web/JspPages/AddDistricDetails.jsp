@@ -1,7 +1,9 @@
+<%@page import="java.sql.ResultSet"%>
+<jsp:useBean id="state" scope="session" class="Model.ProvinceRegister"/>  
 <!DOCTYPE html>
 <html>
 <head>
-	<title>BootAdmin - Responsive Admin HTML Template</title>
+	<title> Online Election Voting </title>
 	
 	<!-- Meta -->
 	<meta charset="utf-8" />
@@ -49,7 +51,19 @@
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
-	
+	<% 
+   /*String username="";
+   String usertype="";
+   String userid=session.getAttribute("userid").toString();
+    if(session.getAttribute("username")== null){
+            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
+            response.sendRedirect("404.html");
+      } 
+   else {
+        username=session.getAttribute("username").toString();
+        usertype=session.getAttribute("usrtype").toString();
+   }*/
+   %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
@@ -63,7 +77,8 @@
 										<div class="profile">
 						<img src="#" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>Adrian Demian</strong>
+                                                    <strong><b>Hi, </b></strong>
+                                                        <em></em>
 						</span>
 					</div>
 					<ul class="topnav hidden-phone">
@@ -102,42 +117,30 @@
                      </tr>
                 <tr>
                    <td>                 
-                   <div>
-                   <label>No of Polling Divisions</label>    
-                    </div>
+                        <div>
+                            <label>No of Polling Divisions</label>    
+                        </div>
                     </td>
-                   <td>
-                        <select name="Nodistrcs">
-                            <option value="1" >1</option>
-                            <option value="2" >2</option>
-                            <option value="3" >3</option>
-                            <option value="4" >4</option>
-                            <option value="5" >5</option>
-                            <option value="6" >6</option>
-                            <option value="7" >7</option>
-                            <option value="8" >8</option>
-                            <option value="9" >9</option>                        
-                        </select> 
-                    
+                    <td>
+                          <input name="Nodistrcs" type="text" />
                     </td>
-                   
-                    </tr> 
-                    
-                      <tr>
+                 </tr> 
+                <tr>
                    <td>                 
-                   <div>
-                   <label>Province Name</label>    
-                    </div>
-                    </td>
+                        <div>
+                            <label>Province Name</label>    
+                        </div>
+                   </td>
                    <td>
-                    <div>
-                        <select name="provinceid">
-                            <option value="1151264d-3174-4e67-9afc-4b7c69cb49eb" >Western Province</option>
-                            <option value="Central" >Central Province</option>                
-                        </select> 
-                    </div>
-                    </td>
-                    </tr>  
+                       <div>
+                         <Select name="provinceid"> 
+                          <c:forEach items="${state.stateList}" var="st" >  
+                          <option value="1"><c:out value="${st.provinceName}"/></option>  
+                          </c:forEach>  
+                        </select>  
+                      </div>
+                   </td>
+               </tr>  
              
 <tr><td></td>
 <td> <input type="submit" value="Submit" name="districtregbtn" id="districtregbtn" class="reg_submit"/>

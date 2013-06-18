@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Provincial Registration </title>
+	<title> Online Election Voting </title>
 	
 	<!-- Meta -->
 	<meta charset="utf-8" />
@@ -49,9 +49,21 @@
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
-	
+   <% 
+   /*String username="";
+   String usertype="";
+   String userid=session.getAttribute("userid").toString();
+    if(session.getAttribute("username")== null){
+            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
+            response.sendRedirect("404.html");
+      } 
+   else {
+        username=session.getAttribute("username").toString();
+        usertype=session.getAttribute("usrtype").toString();
+   }*/
+   %>
 	<!-- Start Content -->
-	<div class="container-fluid left-menu">
+       <div class="container-fluid left-menu">
 		
 		<div class="navbar main">
 			<div class="innerpx">
@@ -63,7 +75,8 @@
 										<div class="profile">
 						<img src="#" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>Adrian</strong>
+							<strong><b>Hi, </b></strong>
+                                                        <em></em>
 						</span>
 					</div>
 					<ul class="topnav hidden-phone">
@@ -77,49 +90,48 @@
    <div class="middle_main">
 
 <div class="admin_register_wrapper">
-   <div class="reg_form_header"><h4> District Details</h4></div>
+   <div class="reg_form_header"><h4> Provincial Details</h4></div>
  
-  <form name="Provinceregform" method="get" action="../ProvinceRegister_Servlet" enctype="multipart/form-data">
-             <table class="admin_reg_tb">
-
+  <form name="Provinceregform" method="post" action="../ProvinceRegister_Servlet" >
+            <table class="admin_reg_tb">
                 <tr>
                     <td>
-                         <label>Province Code</label> 
-                         </td>
-                         <td>
-                            <div> 
+                        <label>Province Code</label> 
+                    </td>
+                    <td>
+                         <div> 
                             <input name="provincode" type="text" />
-                            </div>
-                         </td>
+                         </div>
+                   </td>
                 </tr>
                 <tr>
-                      <td>
+                   <td>
                          <label>Province Name</label> 
-                         </td>
-                         <td>
-                            <div> 
+                   </td>
+                   <td>
+                        <div> 
                             <input name="provincename" type="text" />
-                            </div>
-                        </td>
-                     </tr>
+                        </div>
+                  </td>
+                </tr>
                 <tr>
-                        <td>
+                   <td>
                          <label>Description</label> 
-                         </td>
-                         <td>
-                            <div> 
+                   </td>
+                   <td>
+                        <div> 
                                 <textarea name="decrp" rows="2"></textarea>
-                            </div>
-                    </td>
-                    </tr>
+                        </div>
+                   </td>
+               </tr>
                 <tr>
                    <td>                 
-                   <div>
-                   <label>No of Districts</label>    
-                    </div>
-                    </td>
+                        <div>
+                            <label>No of Districts</label>    
+                        </div>
+                   </td>
                    <td>
-                    <div >
+                        <div>
                         <select name="Nodistrcs">
                             <option value="0">Select District Count </option>
                             <option value="1" >1</option>
@@ -130,31 +142,29 @@
                             <option value="6" >6</option>
                             <option value="7" >7</option>
                             <option value="8" >8</option>
-                            <option value="9" >9</option>                        
+                            <option value="9" >9</option> 
+                            <option value="1" >10</option>
                         </select> 
-                    </div>
+                        </div>
+                   </td>           
+                </tr>  
+                <tr>
+                    <td>    
+                    </td>  
+                    <td> 
+                        <input type="submit" value="Submit" name="provinceregbtn" id="provinceregbtn" class="reg_submit"/>
                     </td>
-                   
-                    </tr>  
-
-<tr>
-<td></td>  
-<td> <input type="submit" value="Submit" name="provinceregbtn" id="provinceregbtn" class="reg_submit"/></td>
-
-</tr>
-
+                </tr>
             </table>
-                 </form>	
-
-
-
-					
+      <br>
+  </form>	
+				
   </div> 
    </div> 		
 		<!-- Sticky Footer -->
 		<div id="footer">
 	      	<div class="wrap">
-	      		<p>Nalin Costa</p>
+	      		<p>Nalin Costha</p>
 	      	</div>
 	    </div>
 		

@@ -14,20 +14,22 @@ public class ElectionPartyReg extends Dbconnection{
     
     Connection conn=Createconnection();
     
-   public boolean InsertElecitonPartyDetaisl(String ElectioPcode, String ElectionPName, String RegisterDate, byte[] Logo, String SectryID, int CandiCount) throws SQLException {
+   public boolean InsertElecitonPartyDetaisl(String PoliPartyID,String ElectioPcode, String ElectionPName, String RegisterDate, byte[] Logo, String SectryID, int CandiCount) throws SQLException {
          boolean flage=false;
         try
         {
-            String query="";
+            String query="INSERT INTO `electionsystemdb`.`politicalpartytbl` "+
+                         " (PoliPartyID,PoliticalPartyCode,PoliticalPartyName,Logo,No_of_Candidates,RegisterdDate,UserID) "+
+                         " VALUES (?,?,?,?,?,?,?);";
             
             PreparedStatement prestate=conn.prepareStatement(query);
-            
-            prestate.setString(1, ElectioPcode);
-            prestate.setString(2, ElectionPName);
-            prestate.setString(3, RegisterDate);
+            prestate.setString(1, PoliPartyID);
+            prestate.setString(2, ElectioPcode);
+            prestate.setString(3, ElectionPName);
             prestate.setBytes(4, Logo);
-            prestate.setString(5, SectryID);
-            prestate.setInt(6, CandiCount);
+            prestate.setInt(5, CandiCount);
+            prestate.setString(6, RegisterDate);
+            prestate.setString(7, SectryID);
             
             int result=prestate.executeUpdate();
             if(result>0)

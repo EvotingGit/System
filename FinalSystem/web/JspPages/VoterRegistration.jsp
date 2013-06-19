@@ -176,108 +176,147 @@
 						<div class="rrow scroll-y" id="mainYScroller">
 							 
                            <!--  our GK start-->
-            <div class="middle_main">
+                          <div class="middle_main">
 
 <div class="admin_register_wrapper">
-   <div class="reg_form_header"><h4>Election Party Register</h4></div>
-
-
- <form name="electpartyregform" method="post" action="../ElectPartyRegister_Servlet" >
+   <div class="reg_form_header"><h4>Voter Registration</h4></div>
+ <form name="Voterregform" method="post" action="../AdminRegister_Servlet">
              <table class="admin_reg_tb">
                 <tr>
                     <td>
-                         <label>Election Party Code</label> 
+                         <label>User Code</label> 
                          </td>
                          <td>
                             <div> 
-                            <input name="electpcode" type="text" />
+                            <input name="usercode" type="text" />
                             </div>
                          </td>
                 </tr>
+                 <tr>
+                      <td>
+            <label>User Type</label> 
+                         </td>
+                         <td>
+               <div>
+                 <select name="usrtyp"  class="selectpicker">
+                    <option value="Administrator" >Administrator</option>
+                    <option value="Candidates"  >Candidates</option>
+                    <option value="Voter"   >Voter</option>
+                    <option value="Sectary" >Sectary</option>
+                 </select> 
+              </div>
+                                </td>
+                    </tr>
                 <tr>
                       <td>
-                         <label>Party Name</label> 
+                         <label>First Name</label> 
                          </td>
                          <td>
                             <div> 
-                            <input name="partyname" type="text" />
+                            <input name="fname" type="text" />
                             </div>
                     </td>
                      </tr>
-                <tr>
-                      <td>
-                       <label>Registered Date</label>   
-                      </td>
-                      <td>
-                     <div class="control-group">
-			
-			<div class="controls">
-			 <input type="text" id="datepicker" value="" name="regdate" />
-			</div>
-                     </div>
-                      </td>
-                </tr>
-                <tr>
-                    <td>
-                         <label>Logo</label>
+                     <tr>
+                        <td>
+                         <label>Last Name</label> 
+                         </td>
+                         <td>
+                            <div> 
+                            <input name="lname" type="text" />
+                            </div>
                     </td>
-                    <td>
-                         <div style="padding-bottom: 11px;"> 
-                          <div class="fileupload fileupload-new" data-provides="fileupload">
-								<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
-							  	<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-							  	<div>
-									<span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" /></span>
-							    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-							  	</div>
-							</div>
-                      </div>
+                    </tr>
+                <tr>
+                      <td>                 
+                   <div>
+                   <label>Gender</label>    
+                    </div>
                     </td>
-                </tr>
+                    <td colspan="2"> 
+                    <ul class="gender_list">
+                   <li> <input type="radio" name="gndr" id="radio-1" value="Male"  checked="checked"/>    </li>
+                   <li> <label for="radio-1">Male</label></li>
+					<li> <input type="radio" name="gndr" id="radio-2" value="Female"  /></li>
+                   <li><label for="radio-2" >Female</label></li>
+				   </ul>
+                   </td>
+                   
+                  
+                    </tr>  
                 <tr>
                       <td>
                         <div>
-                         <label> Sectry Name</label>   
+                         <label> NIC No</label>   
                         </div>
                     </td>
-                    <td>     <div>
-                 <select name="secname" class="selectpicker">
-                    <option value="" >A</option>
-                    <option value=""  >B</option>
-                    <option value="" >V</option>
-                 </select> 
-                              	</div>
-                    </td>
+                    <td> <div> <input type="text"  name="nic" />
+                              	</div></td>
+                    </tr>
+               <tr>
+                      <td  style="vertical-align:top">
+                         <label> Contact No</label>   
+                       </td>
+                       <td>
+                   
+                       <input name="mbno" type="text"  class="large" placeholder="Mobile No"/>
+                   
+                      </br>
+                      
+                       <input name="lndno" type="text"  class="large" placeholder="Resident No"/>
+                 
+                       </td>
                     </tr>
                 <tr>
                       <td>
-                         <label>Candidates Amount</label>   
-                       </td>
-                       <td>
-                    <div> 
-                        <select name="candiamount" class="selectpicker">
-                            <option value="1" >1</option>
-                            <option value="2" >2</option>
-                            <option value="3" >3</option>
-                            <option value="4" >4</option>
-                            <option value="5" >5</option>
-                            <option value="6" >6</option>
-                        </select> 
-                      
-                   </div>
-                       </td>
-                      
-                    </tr>
-					
+                       <label>Birthday picker</label>   
+                      </td>
+                      <td>
+                       <div class="control-group">
+							
+							<div class="controls">
+								<input type="text" id="datepicker" value="" />
+							</div>
+						</div>
+                      </td>
+                </tr>
+                <tr>
+                    <td>
+                      <label>Email</label>
+                    </td>
+                    <td>
+                      <div> 
+                   <input type="text" name="e_mail" />
+                     </div>
+                    </td>
+                </tr>
+                  <tr>
+                      <td>
+            <label>Polling Division</label> 
+                         </td>
+                         <td>
+               <div>
+                 <select name="polingdiv" class="selectpicker">
+                    <option value="abc" >ABC</option>
+                    <option value="abc" >EFG</option>
+                    <option value="abc" >HIJ</option>
+                 </select> 
+              </div>
+                    </td>
+         	           </tr>
+                  
 				<tr>
 				<td></td>
-				<td>    <input type="submit" value="Submit" name="ppartyregbtn" id="ppartyregbtn" class="reg_submit"/></td>
-				</tr>	
-					
-           </table>
+				<td> <input type="submit" value="Submit" name="adminregbtn" id="adminregbtn" class="reg_submit"/></td>
+				
+				</tr>
+				
+            </table>
+            <br>
            
-        
         </form>
+
+
 
  
    
@@ -287,7 +326,8 @@
    
    
   </div> 
-   </div>                    
+   </div>     
+	 
 
      <!--  our GK end-->
 

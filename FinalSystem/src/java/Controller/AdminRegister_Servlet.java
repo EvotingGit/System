@@ -61,6 +61,7 @@ public class AdminRegister_Servlet extends HttpServlet {
         UserRegister userreg=new UserRegister();
         CandiRegister candiReg=new CandiRegister();
         Security securepass=new Security();
+        VoterRegister voter=new VoterRegister();
         byte[] image=null; 
 
         try {
@@ -136,9 +137,24 @@ public class AdminRegister_Servlet extends HttpServlet {
                               if(post.equals("Sectary"))
                             {
                                 Sectary sectry=new Sectary();
-                                 String regparty=request.getParameter("regpoliparty");
-                                 boolean boolrs1=sectry.InsertSectaryDetails(UserId,regparty,createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
+                                String regparty=request.getParameter("regpoliparty");
+                                boolean boolrs1=sectry.InsertSectaryDetails(UserId,regparty,createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
                                  if(boolrs1==true)
+                                {
+                                     HttpSession session=request.getSession(true);
+                                     session.setAttribute("Register", "Sucess");
+                                     response.sendRedirect("../Evoting/JspPages/Adminregister.jsp");
+                                }
+                            }
+                              if(post.equals("Voter"))
+                            {
+                                 UUID electuuid = UUID.randomUUID();
+                                 String stats="False"; 
+                                 String poldiv=request.getParameter("polingdiv");
+                                 String voterpass=request.getParameter("nic");
+                                 String electNo=electuuid.toString();
+                                 boolean vtrboolrs1=voter.InsertVoterDetails(UserId,electNo,poldiv,stats,createdby,createddate,updatedby, updateddate,voterpass,post);
+                                 if(vtrboolrs1==true)
                                 {
                                      HttpSession session=request.getSession(true);
                                      session.setAttribute("Register", "Sucess");

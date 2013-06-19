@@ -176,108 +176,68 @@
 						<div class="rrow scroll-y" id="mainYScroller">
 							 
                            <!--  our GK start-->
-            <div class="middle_main">
+                           <div class="middle_main">
 
 <div class="admin_register_wrapper">
-   <div class="reg_form_header"><h4>Election Party Register</h4></div>
-
-
- <form name="electpartyregform" method="post" action="../ElectPartyRegister_Servlet" >
+   <div class="reg_form_header"><h4> Create Election Types</h4></div>
+ <form name="electionTyperegform" method="post" action="../ElectionTypeRegister_Servlet" >
              <table class="admin_reg_tb">
                 <tr>
                     <td>
-                         <label>Election Party Code</label> 
+                         <label>Election Code</label> 
                          </td>
                          <td>
                             <div> 
-                            <input name="electpcode" type="text" />
+                            <input name="electioncode" type="text" />
                             </div>
                          </td>
                 </tr>
                 <tr>
                       <td>
-                         <label>Party Name</label> 
+            <label>User Type</label> 
+                         </td>
+                         <td>
+               <div>
+                 <select name="electyp" class="selectpicker">
+                    <option value="Pre" >Presedencial</option>
+                    <option value="pro"  >Provincial</option>
+                    
+                 </select> 
+              </div>
+             
+                    </td>
+                    </tr>
+                <tr>
+                      <td>
+                         <label>Year</label> 
                          </td>
                          <td>
                             <div> 
-                            <input name="partyname" type="text" />
+                            <input name="year" type="text" id="datepicker" />
                             </div>
                     </td>
                      </tr>
-                <tr>
-                      <td>
-                       <label>Registered Date</label>   
-                      </td>
-                      <td>
-                     <div class="control-group">
-			
-			<div class="controls">
-			 <input type="text" id="datepicker" value="" name="regdate" />
-			</div>
-                     </div>
-                      </td>
-                </tr>
-                <tr>
-                    <td>
-                         <label>Logo</label>
-                    </td>
-                    <td>
-                         <div style="padding-bottom: 11px;"> 
-                          <div class="fileupload fileupload-new" data-provides="fileupload">
-								<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
-							  	<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-							  	<div>
-									<span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" /></span>
-							    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-							  	</div>
-							</div>
-                      </div>
-                    </td>
-                </tr>
-                <tr>
-                      <td>
-                        <div>
-                         <label> Sectry Name</label>   
-                        </div>
-                    </td>
-                    <td>     <div>
-                 <select name="secname" class="selectpicker">
-                    <option value="" >A</option>
-                    <option value=""  >B</option>
-                    <option value="" >V</option>
-                 </select> 
-                              	</div>
+                     <tr>
+                        <td>
+                         <label>Date</label> 
+                         </td>
+                         <td>
+                            <div> 
+                            <input name="date" type="text" id="datepicker"/>
+                            </div>
                     </td>
                     </tr>
-                <tr>
-                      <td>
-                         <label>Candidates Amount</label>   
-                       </td>
-                       <td>
-                    <div> 
-                        <select name="candiamount" class="selectpicker">
-                            <option value="1" >1</option>
-                            <option value="2" >2</option>
-                            <option value="3" >3</option>
-                            <option value="4" >4</option>
-                            <option value="5" >5</option>
-                            <option value="6" >6</option>
-                        </select> 
-                      
-                   </div>
-                       </td>
-                      
-                    </tr>
-					
+              
 				<tr>
 				<td></td>
-				<td>    <input type="submit" value="Submit" name="ppartyregbtn" id="ppartyregbtn" class="reg_submit"/></td>
-				</tr>	
-					
-           </table>
+				<td> <input type="submit" value="Submit" name="eletypregbtn" id="eletypregbtn" class="reg_submit"/></td>
+				</tr>
+            </table>
+            <br>
            
-        
         </form>
+
+
 
  
    
@@ -287,7 +247,6 @@
    
    
   </div> 
-   </div>                    
 
      <!--  our GK end-->
 

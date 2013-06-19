@@ -104,8 +104,7 @@
                     <option value="Sectary" >Sectary</option>
                  </select> 
               </div>
-              </div>
-                    </td>
+                                </td>
                     </tr>
                 <tr>
                       <td>

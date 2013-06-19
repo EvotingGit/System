@@ -4,28 +4,23 @@
  */
 package Controller;
 
-import Model.ElectionPartyReg;
+import Model.ElectionType;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.List;
+import java.sql.ResultSet;
 import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
  * @author User
  */
-@WebServlet(name = "ElectPartyRegister_Servlet", urlPatterns = {"/ElectPartyRegister_Servlet"})
-public class ElectPartyRegister_Servlet extends HttpServlet {
+@WebServlet(name = "ElectionTypeRegister_Servlet", urlPatterns = {"/ElectionTypeRegister_Servlet"})
+public class ElectionTypeRegister_Servlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -41,45 +36,21 @@ public class ElectPartyRegister_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        byte[] logo=null; 
-        ElectionPartyReg electionparty=new ElectionPartyReg();
-        
+        ElectionType electype=new ElectionType();
         try {
-           if(request.getParameter("ppartyregbtn")!=null)
-           {
-                //DiskFileItemFactory factory = new DiskFileItemFactory(); 
-                //ServletFileUpload sfu = new ServletFileUpload(factory); 
-                //List items = sfu.parseRequest(request); 
-                //Iterator iter = items.iterator();
+            if(request.getParameter("eletypregbtn")!=null)
+            {
                 UUID uuid = UUID.randomUUID();
-                String PoliPartyID=uuid.toString();
-                String ElectioPcode=request.getParameter("electpcode");
-                String ElectionPName=request.getParameter("partyname");
-                String RegisterDate=request.getParameter("regdate");
-                /*while (iter.hasNext()) { 
-                        FileItem item = (FileItem) iter.next(); 
-                            if (!item.isFormField()) { 
-                                logo = item.get(); 
-                            }   
-                    } */
-                String sectryid=request.getParameter("secname"); 
-                int candidateamunt=Integer.parseInt(request.getParameter("candiamount")); 
+                //SimpleDateFormat convertDate = new SimpleDateFormat("MMM dd yyyy"); 
+                String ElectionTypeID=uuid.toString();
+                String ElectionTypeCode=request.getParameter("electioncode");
+                String ElectionType=request.getParameter("electyp");
+                String Year=request.getParameter("year");
+                String Date=request.getParameter("date");
                 
-                boolean reslt=electionparty.InsertElecitonPartyDetaisl(PoliPartyID,ElectioPcode,ElectionPName,RegisterDate,logo,sectryid,candidateamunt);
-                if(reslt==true)
-                {
-                     HttpSession session=request.getSession(true);
-                     session.setAttribute("Register", "Sucess");
-                     response.sendRedirect("~/JspPages/Adminregister.jsp");
-                }
-           }
-        }
-        catch(Exception exp)
-        {
-            
-        }
-        finally {            
+                ResultSet rslt=electype.InsertElectionTypes(ElectionTypeID,ElectionTypeCode,ElectionType,Year, Date);
+            }
+        } finally {            
             out.close();
         }
     }

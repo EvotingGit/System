@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -48,9 +49,13 @@ public class ElectionTypeRegister_Servlet extends HttpServlet {
                 String Year=request.getParameter("year");
                 String Date=request.getParameter("date");
                 
-                ResultSet rslt=electype.InsertElectionTypes(ElectionTypeID,ElectionTypeCode,ElectionType,Year, Date);
-            }
-        } finally {            
+                ResultSet insertResltSet=electype.InsertElectionTypes(ElectionTypeID,ElectionTypeCode,ElectionType,Year, Date);
+                HttpSession session=request.getSession(true);
+                session.setAttribute("EleTypeRset", insertResltSet);
+                response.sendRedirect("../Evoting/JspPages/ElectionTypes.jsp");
+                }
+        }
+        finally {            
             out.close();
         }
     }

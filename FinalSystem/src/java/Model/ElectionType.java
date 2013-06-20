@@ -7,6 +7,8 @@ package Model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,12 +52,19 @@ public class ElectionType extends Dbconnection {
         ResultSet rst=null;
         try
         {
-            
+            String selectquery="SELECT * FROM `electionsystemdb`.`ElectionTypeTbl` "+
+                               " WHERE ElectionTypeID=?";
+            PreparedStatement ps;
+            ps=conn.prepareCall(selectquery);
+            ps.setString(1, ElectionTypeID);
+            rst=ps.executeQuery();
             return  rst;
-            
         }catch(Exception ex)
         {
-            
+            ex.printStackTrace();
+            System.err.println(ex.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Record Not Found !", ex);
+            return  rst;
         }
         finally
         {

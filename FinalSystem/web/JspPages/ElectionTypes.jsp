@@ -4,7 +4,7 @@
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-	<title>Online Election Voting </title>
+	<title>BootAdmin - Responsive Admin HTML Template</title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -176,7 +176,7 @@
 						<div class="rrow scroll-y" id="mainYScroller">
 							 
                            <!--  our GK start-->
-                           <div class="middle_main">
+                         <div class="middle_main">
 
 <div class="admin_register_wrapper">
    <div class="reg_form_header"><h4> Create Election Types</h4></div>
@@ -237,16 +237,9 @@
            
         </form>
 
-
-
- 
-   
-   
-   
-   
-   
    
   </div> 
+
 
      <!--  our GK end-->
 

@@ -10,18 +10,19 @@ package Model;
  */
 public class ProvinceModel {
     
-    private String provinceID;  
-    private String provinceName;  
+    public String provinceID;  
+    public String provinceName;  
   
-    public ProvinceModel()  
-    {  
-    }  
+ 
+    ProvinceModel(String ProId, String ProvName) {
+        this.provinceID = ProId ;  
+        this.provinceName = ProvName;  
+    }
       
-    public void ProvinceModel(String provinceID,String provinceName)  
-    {  
-        this.provinceID = provinceID ;  
-        this.provinceName = provinceName;  
-    }  
+//    public void ProvinceModel(String provinceID,String provinceName)  
+//    {  
+//       
+//    }  
   
     public String getID()  
     {  

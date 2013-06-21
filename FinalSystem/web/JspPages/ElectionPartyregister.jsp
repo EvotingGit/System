@@ -237,7 +237,7 @@
                 <tr>
                       <td>
                         <div>
-                         <label> Sectry Name</label>   
+                         <label> Sectary Name</label>   
                         </div>
                     </td>
                     <td>     <div>

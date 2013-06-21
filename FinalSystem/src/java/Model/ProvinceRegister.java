@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.activation.DataSource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 
 /**
  *
@@ -16,7 +19,10 @@ import java.util.List;
 public class ProvinceRegister  extends Dbconnection{
     
     Connection conn=Createconnection();
-    private List<ProvinceModel> stateList ;  
+    public List<ProvinceModel> stateList ;  
+    private DataSource myDS;  
+    private Context initCtx;  
+    private Context envCtx;
 
     public boolean InsertProvince(String ProvinceID,String ProvinceCode,String ProvinceName,String Description,String NumberOfDestrict)
     {
@@ -59,7 +65,17 @@ public class ProvinceRegister  extends Dbconnection{
     {
         ResultSet rsltst=null;
         stateList=new ArrayList<ProvinceModel>();
-        ProvinceModel province=new ProvinceModel();
+       try  
+        {  
+          initCtx  =  new  InitialContext();  
+          envCtx  =  (Context)  initCtx.lookup("java:comp/env");  
+          myDS    =  (DataSource) envCtx.lookup("jdbc/test");  
+        }   
+        catch (Exception e)  
+        {  
+            System.out.println(e);  
+        }  
+         
         try
         {
             String slectqry="select ProvinceID,ProvinceName From  `electionsystemdb`.`ProvinceTbl`";
@@ -67,11 +83,10 @@ public class ProvinceRegister  extends Dbconnection{
             rsltst=ps.executeQuery();
             while(rsltst.next())
             {
-               String ProId=rsltst.getString("ProvinceID");
-               String ProvName=rsltst.getString("ProvinceName");
-               province.ProvinceModel(ProId,ProvName);
+               String provinceID=rsltst.getString("ProvinceID");
+               String provinceName=rsltst.getString("ProvinceName");
+               ProvinceModel province=new ProvinceModel(provinceID,provinceName);
                stateList.add(province);
-               
             }
             
         }

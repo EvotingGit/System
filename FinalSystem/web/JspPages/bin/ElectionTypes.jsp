@@ -4,7 +4,7 @@
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-	<title>BootAdmin - Responsive Admin HTML Template</title>
+	<title>Online Election Voting </title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -179,16 +179,16 @@
                            <div class="middle_main">
 
 <div class="admin_register_wrapper">
-   <div class="reg_form_header"><h4> Admin Registration</h4></div>
- <form name="adminregform" method="get" action="../AdminRegister_Servlet" enctype="multipart/form-data">
+   <div class="reg_form_header"><h4> Create Election Types</h4></div>
+ <form name="electionTyperegform" method="post" action="../ElectionTypeRegister_Servlet" >
              <table class="admin_reg_tb">
                 <tr>
                     <td>
-                         <label>User Code</label> 
+                         <label>Election Code</label> 
                          </td>
                          <td>
                             <div> 
-                            <input name="usercode" type="text" />
+                            <input name="electioncode" type="text" />
                             </div>
                          </td>
                 </tr>
@@ -198,10 +198,10 @@
                          </td>
                          <td>
                <div>
-                 <select name="usrtyp" class="selectpicker">
-                    <option value="Administrator" >Administrator</option>
-                    <option value="Candidates"  >Candidates</option>
-                    <option value="Voter" >Voter</option>
+                 <select name="electyp" class="selectpicker">
+                    <option value="Pre" >Presedencial</option>
+                    <option value="pro"  >Provincial</option>
+                    
                  </select> 
               </div>
              
@@ -209,158 +209,34 @@
                     </tr>
                 <tr>
                       <td>
-                         <label>First Name</label> 
+                         <label>Year</label> 
                          </td>
                          <td>
                             <div> 
-                            <input name="fname" type="text" />
+                            <input name="year" type="text" id="datepicker" />
                             </div>
                     </td>
                      </tr>
                      <tr>
                         <td>
-                         <label>Last Name</label> 
+                         <label>Date</label> 
                          </td>
                          <td>
                             <div> 
-                            <input name="lname" type="text" />
+                            <input name="date" type="text" id="datepicker"/>
                             </div>
                     </td>
                     </tr>
-                <tr>
-                      <td>                 
-                   <div>
-                   <label>Gender</label>    
-                    </div>
-                    </td>
-                    <td colspan="2"> 
-                    <ul class="gender_list">
-                   <li> <input type="radio" name="gndr" id="radio-1" value="Male"  checked="checked"/>    </li>
-                   <li> <label for="radio-1">Male</label></li>
-                  
-                  
-                   
-                 
-                  
-                  <li> <input type="radio" name="gndr" id="radio-2" value="Female"  /></li>
-                   <li><label for="radio-2" >Female</label></li>
-				   </ul>
-                   </td>
-                    </tr>  
-                <tr>
-                      <td>
-                        <div>
-                         <label> NIC No</label>   
-                        </div>
-                    </td>
-                    <td> <div> <input type="text"  name="nic" />
-                              	</div></td>
-                    </tr>
-                <tr>
-                      <td  style="vertical-align:top">
-                         <label> Contact No</label>   
-                       </td>
-                       <td>
-                   
-                       <input name="mbno" type="text"  class="large" placeholder="Mobile No"/>
-                   
-                      </br>
-                      
-                       <input name="lndno" type="text"  class="large" placeholder="Resident No"/>
-                 
-                       </td>
-                    </tr>
-                <tr>
-                      <td>
-                       <label>Birthday picker</label>   
-                      </td>
-                      <td>
-                        <input type="text" name="birthday" id="datepicker"/>
-                      </td>
-                </tr>
-                <tr>
-                    <td>
-                      <label>Email</label>
-                    </td>
-                    <td>
-                      <div> 
-                   <input type="text" name="e_mail" />
-                     </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                         <label>Profile Picture</label>
-                    </td>
-                    <td>
-                        <div class="fileupload fileupload-new" data-provides="fileupload">
-								<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
-							  	<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-							  	<div>
-									<span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" /></span>
-							    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-							  	</div>
-							</div>
-                    </td>
-                </tr>
-                  <tr>
-                    <td>
-                         <label>User Name</label>
-                    </td>
-                    <td>
-                         <div> 
-                             <input type="text" name="usernam" />
-                     </div>
-                    </td>
-                </tr>
-                 <tr>
-                    <td>
-                         <label>Password</label>
-                    </td>
-                    <td>
-                         <div> 
-                             <input type="password" name="passwrd" />
-                     </div>
-                    </td>
-                </tr>
-                 <tr>
-                    <td>
-                         <label>Confirm Password</label>
-                    </td>
-                    <td>
-                         <div> 
-                             <input type="password" name="conpasswrd" />
-                     </div>
-                    </td>
-                </tr>
-                 <tr>
-                    <td>
-                         <label>Assign Location</label>
-                    </td>
-                    <td>
-                         <div> 
-                             <input type="text" name="loc" />
-                     </div>
-                    </td>
-                </tr>
-				
+              
 				<tr>
 				<td></td>
-				<td> <input type="submit" value="Submit" name="adminregbtn" id="adminregbtn" class="reg_submit"/></td>
+				<td> <input type="submit" value="Submit" name="eletypregbtn" id="eletypregbtn" class="reg_submit"/></td>
 				</tr>
             </table>
             <br>
            
         </form>
 
-
-
- 
-   
-   
-   
-   
-   
    
   </div> 
 

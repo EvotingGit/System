@@ -47,12 +47,13 @@ public class ElectionTypeRegister_Servlet extends HttpServlet {
                 String ElectionTypeCode=request.getParameter("electioncode");
                 String ElectionType=request.getParameter("electyp");
                 String Year=request.getParameter("year");
-                String Date=request.getParameter("date");
-                
-                ResultSet insertResltSet=electype.InsertElectionTypes(ElectionTypeID,ElectionTypeCode,ElectionType,Year, Date);
-                HttpSession session=request.getSession(true);
-                session.setAttribute("EleTypeRset", insertResltSet);
-                response.sendRedirect("../Evoting/JspPages/ElectionTypes.jsp");
+
+                boolean insertResltSet=electype.InsertElectionTypes(ElectionTypeID,ElectionTypeCode,ElectionType,Year);
+                if(insertResltSet!=false){
+                    HttpSession session=request.getSession(true);
+                    session.setAttribute("EleTypeRset", insertResltSet);
+                    response.sendRedirect("../FinalSystem/JspPages/ElectionTypes.jsp");
+                    }
                 }
         }
         finally {            

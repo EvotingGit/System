@@ -4,6 +4,7 @@
  */
 package Model;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ public class Sectary extends UserRegister {
          try
          {
             String query="INSERT INTO `electionsystemdb`.`SectaryTble` "+
-                         "(UserID,RegsterPoliticalParty,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate) "+ 
+                         "(UserID,PoliPartyID,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate) "+ 
                          "VALUES (?,?,?,?,?,?);";
             
             PreparedStatement prestate=conn.prepareStatement(query);
@@ -63,19 +64,14 @@ public class Sectary extends UserRegister {
         }
     }
     
-     public ResultSet LoadSectrycombo()
+     public ResultSet LoadSectryList()
      {
-         ResultSet rsltst=null;
-         try
+        ResultSet rsltst=null;
+        try
         {
-           /* CallableStatement cs=Createconnection().prepareCall("{call CountAsignTask(?)}");
-            cs.setString(1, empid);
-            rs = cs.executeQuery();*/
-            String slectqry="select UserID,FirstName From `electionsystemdb`.`DistricTbl` WHERE UserType=(?) AND RegsterPoliticalParty=(?) ";
-            PreparedStatement ps=con.prepareStatement(slectqry);
-            rsltst=ps.executeQuery();
-            
-            return rsltst;
+           CallableStatement cs=Createconnection().prepareCall("{call SectaryList()}");
+           rsltst = cs.executeQuery();
+           return rsltst;
         }
         catch(Exception ex)
         {

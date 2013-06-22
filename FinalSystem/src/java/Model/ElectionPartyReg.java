@@ -5,6 +5,7 @@
 package Model;
 
 import java.sql.*;
+import java.util.List;
 
 /**
  *
@@ -14,22 +15,22 @@ public class ElectionPartyReg extends Dbconnection{
     
     Connection conn=Createconnection();
     
-   public boolean InsertElecitonPartyDetaisl(String PoliPartyID,String ElectioPcode, String ElectionPName, String RegisterDate, byte[] Logo, String SectryID, int CandiCount) throws SQLException {
+   public boolean InsertElecitonPartyDetaisl(String PoliPartyID,String ElectioPcode, String ElectionPName, String RegisterDate, byte[] Logo,String electypeid,int CandiCount) throws SQLException {
          boolean flage=false;
         try
         {
             String query="INSERT INTO `electionsystemdb`.`politicalpartytbl` "+
-                         " (PoliPartyID,PoliticalPartyCode,PoliticalPartyName,Logo,No_of_Candidates,RegisterdDate,UserID) "+
+                         " (PoliPartyID,PoliticalPartyCode,PoliticalPartyName,RegisterdDate,Logo,No_of_Candidates,ElectionTypeID) "+
                          " VALUES (?,?,?,?,?,?,?);";
             
             PreparedStatement prestate=conn.prepareStatement(query);
             prestate.setString(1, PoliPartyID);
             prestate.setString(2, ElectioPcode);
             prestate.setString(3, ElectionPName);
-            prestate.setBytes(4, Logo);
-            prestate.setInt(5, CandiCount);
-            prestate.setString(6, RegisterDate);
-            prestate.setString(7, SectryID);
+            prestate.setString(4, RegisterDate);
+            prestate.setBytes(5, Logo);
+            prestate.setInt(6, CandiCount);
+            prestate.setString(7, electypeid);
             
             int result=prestate.executeUpdate();
             if(result>0)
@@ -56,12 +57,8 @@ public class ElectionPartyReg extends Dbconnection{
         ResultSet rsltst=null;
         try
         {
-           /* CallableStatement cs=Createconnection().prepareCall("{call CountAsignTask(?)}");
-            cs.setString(1, empid);
-            rs = cs.executeQuery();*/
-            String slectqry="select PoliPartyID,PoliticalPartyName From  `electionsystemdb`.`politicalpartytbl`";
-            PreparedStatement ps=con.prepareStatement(slectqry);
-            rsltst=ps.executeQuery();
+           CallableStatement cs=Createconnection().prepareCall("{call LoadPoliticalCombo()}");
+            rsltst = cs.executeQuery();
             return rsltst;
         }
         catch(Exception ex)
@@ -69,4 +66,22 @@ public class ElectionPartyReg extends Dbconnection{
             return rsltst;
         }
    }
+   
+   public ResultSet LoadpolipartyList()
+   {
+        ResultSet rsltst=null;
+        try
+        {
+           CallableStatement cs=Createconnection().prepareCall("{call GetPoliticalPartiesList()}");
+            rsltst = cs.executeQuery();
+            return rsltst;
+        }
+       catch(Exception ex)
+       {
+           ex.printStackTrace();
+           System.err.println(ex.getMessage());
+           return rsltst;
+       }
+   }
+   
 }

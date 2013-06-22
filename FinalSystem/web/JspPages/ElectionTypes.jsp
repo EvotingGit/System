@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
+<%@page import="Model.ElectionType"%>
+<%@page import="java.sql.ResultSet"%>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-	<title>BootAdmin - Responsive Admin HTML Template</title>
+	<title>Create Election Type </title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -194,14 +196,13 @@
                 </tr>
                 <tr>
                       <td>
-            <label>User Type</label> 
+            <label>Election Type</label> 
                          </td>
                          <td>
                <div>
                  <select name="electyp" class="selectpicker">
-                    <option value="Pre" >Presedencial</option>
-                    <option value="pro"  >Provincial</option>
-                    
+                    <option value="Presidential">Presidential</option>
+                    <option value="Provincial">Provincial</option>
                  </select> 
               </div>
              
@@ -211,35 +212,65 @@
                       <td>
                          <label>Year</label> 
                          </td>
-                         <td>
-                            <div> 
-                            <input name="year" type="text" id="datepicker" />
-                            </div>
-                    </td>
+                        
+                           <td>
+                       <div class="control-group">
+			<div class="controls">
+			<input type="text" id="datepicker" nanme="year" />
+				</div>
+				</div>
+                      </td>
                      </tr>
-                     <tr>
-                        <td>
-                         <label>Date</label> 
-                         </td>
-                         <td>
-                            <div> 
-                            <input name="date" type="text" id="datepicker"/>
-                            </div>
-                    </td>
-                    </tr>
-              
 				<tr>
 				<td></td>
 				<td> <input type="submit" value="Submit" name="eletypregbtn" id="eletypregbtn" class="reg_submit"/></td>
 				</tr>
             </table>
-            <br>
+            <br><br>
+           <div class="widget-head">
+		<h4 class="heading">Province Details</h4>
+	</div>
+    <div class="widget-body">
+      <table  cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
+          <thead>
+              <tr>
+                <th style="visibility: hidden">Election ID</th>
+                <th>Election Code</th>
+		<th>Election Type</th>
+                <th>Year</th>
+            </tr>
+          </thead>
+          <tbody>
+          <%
+            ResultSet insertreslt=null;
+            ElectionType electype=new ElectionType();
+            insertreslt=electype.GetElectionTpeList();
+            if(insertreslt!=null){
+                while(insertreslt.next())
+                {%>
+                  <tr class="gradeX">
+                    <td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
+                    <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
+                    <td class="center"><%= insertreslt.getString(3)%></td>
+                    <td class="center"><%= insertreslt.getString(4)%></td>
+		</tr>
+            <% }
+              }
+            else{%>
+            <tr class="center">
+                
+            </tr>
+            <%}   %>
+          </tbody>
+      </table>
+      </div>
+ 
            
         </form>
 
    
   </div> 
-
+</div>
 
      <!--  our GK end-->
 

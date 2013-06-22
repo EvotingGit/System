@@ -6,7 +6,7 @@
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-	<title> Online Election Voting </title>
+	<title> Candidate Registration </title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -181,7 +181,7 @@
                           <div class="middle_main">
 
 <div class="admin_register_wrapper">
-   <div class="reg_form_header"><h4>Candidate Registration</h4></div>
+   <div class="reg_form_header"><h4>Create Candidate</h4></div>
  <form name="candiregform" method="post" action="../AdminRegister_Servlet">
              <table class="admin_reg_tb">
                 <tr>
@@ -201,12 +201,11 @@
                          <td>
                <div>
                  <select name="usrtyp"class="selectpicker">
-                    <option value="Administrator" >Administrator</option>
-                    <option value="Candidate"  >Candidate</option>
-                    <option value="Voter"   >Voter</option>
+                    <option value="Administrator">Administrator</option>
+                    <option value="Candidate">Candidate</option>
+                    <option value="Voter">Voter</option>
                     <option value="Sectary" >Sectary</option>
                  </select> 
-              </div>
               </div>
                     </td>
                     </tr>
@@ -250,7 +249,7 @@
                 <tr>
                       <td>
                         <div>
-                         <label> NIC No</label>   
+                         <label>NIC No/Passport No</label>   
                         </div>
                     </td>
                     <td> <div> <input type="text"  name="nic" />
@@ -275,7 +274,11 @@
                        <label>Birthday picker</label>   
                       </td>
                       <td>
-                        <input type="text" name="birthday"/>
+                       <div class="control-group">
+			<div class="controls">
+			<input type="text" id="datepicker" nanme="birthday" />
+				</div>
+				</div>
                       </td>
                 </tr>
                 <tr>
@@ -288,7 +291,7 @@
                      </div>
                     </td>
                 </tr>
-                              <tr>
+                  <tr>
                     <td>
                          <label>Candidate Picture</label>
                     </td>
@@ -371,7 +374,7 @@
                 </tr>
                   <tr>
                      <td>
-                         <label>Election Number</label>
+                         <label>Preference Number</label>
                     </td>
                     <td>
                          <div> 

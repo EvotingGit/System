@@ -117,20 +117,20 @@ public class AdminRegister_Servlet extends HttpServlet {
                                 if(boolrs1==true)
                                 {
                                      HttpSession session=request.getSession(true);
-                                     session.setAttribute("Register", "Sucess");
+                                     session.setAttribute("AdminRegister", "Sucess");
                                      response.sendRedirect("../FinalSystem/JspPages/Adminregister.jsp");
                                 }
                               }
                             if(post.equals("Candidate"))
                             {
-                                 String party=request.getParameter("politicalparty");
+                                 String partyid=request.getParameter("politicalparty");
                                  String seat=request.getParameter("seat");
                                  String electNo=request.getParameter("electno");
-                                 boolean boolrs1=candiReg.insertCandiDetail(UserId,party,seat,electNo,createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
+                                 boolean boolrs1=candiReg.insertCandiDetail(UserId,partyid,seat,electNo,createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
                                  if(boolrs1==true)
                                 {
                                      HttpSession session=request.getSession(true);
-                                     session.setAttribute("Register", "Sucess");
+                                     session.setAttribute("CandidateRegister", "Sucess");
                                      response.sendRedirect("../FinalSystem/JspPages/CandidateList.jsp");
                                 }
                             }
@@ -142,8 +142,8 @@ public class AdminRegister_Servlet extends HttpServlet {
                                  if(boolrs1==true)
                                 {
                                      HttpSession session=request.getSession(true);
-                                     session.setAttribute("Register", "Sucess");
-                                     response.sendRedirect("../Evoting/JspPages/Adminregister.jsp");
+                                     session.setAttribute("SectaryRegister", "Sucess");
+                                     response.sendRedirect("../FinalSystem/JspPages/SecatryList.jsp");
                                 }
                             }
                               if(post.equals("Voter"))

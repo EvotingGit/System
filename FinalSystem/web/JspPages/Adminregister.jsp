@@ -270,12 +270,16 @@
                  
                        </td>
                     </tr>
-                <tr>
+                 <tr>
                       <td>
                        <label>Birthday picker</label>   
                       </td>
                       <td>
-                        <input type="text" name="birthday"/>
+                       <div class="control-group">
+			<div class="controls">
+			<input type="text" id="datepicker" nanme="birthday" />
+				</div>
+				</div>
                       </td>
                 </tr>
                 <tr>

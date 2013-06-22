@@ -176,8 +176,8 @@
 					<td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
                                         <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
                                         <td class="center"><%= insertreslt.getString(3)%></td>
-                                        <td class="center"><%= insertreslt.getString(4)%></td>
                                         <td class="center"><%= insertreslt.getString(5)%></td>
+                                        <td class="center"><%= insertreslt.getString(6)%></td>
 				</tr>
 				 <% }
               }

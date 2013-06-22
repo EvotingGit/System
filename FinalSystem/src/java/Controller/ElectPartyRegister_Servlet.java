@@ -5,8 +5,10 @@
 package Controller;
 
 import Model.ElectionPartyReg;
+import Model.ElectionType;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -63,15 +65,21 @@ public class ElectPartyRegister_Servlet extends HttpServlet {
                                 logo = item.get(); 
                             }   
                     } */
-                String sectryid=request.getParameter("secname"); 
+                String electypeid=request.getParameter("electype"); 
                 int candidateamunt=Integer.parseInt(request.getParameter("candiamount")); 
                 
-                boolean reslt=electionparty.InsertElecitonPartyDetaisl(PoliPartyID,ElectioPcode,ElectionPName,RegisterDate,logo,sectryid,candidateamunt);
+                boolean reslt=electionparty.InsertElecitonPartyDetaisl(PoliPartyID,ElectioPcode,ElectionPName,RegisterDate,logo,electypeid,candidateamunt);
+                 HttpSession session=request.getSession(true);
                 if(reslt==true)
                 {
-                     HttpSession session=request.getSession(true);
-                     session.setAttribute("Register", "Sucess");
-                     response.sendRedirect("~/JspPages/Adminregister.jsp");
+                       
+                        session.setAttribute("ElectPartyRegister", "Sucess");
+                        response.sendRedirect("../JspPages/PoliticalPartyList.jsp");
+                }
+                else
+                {
+                    session.setAttribute("ElectPartyRegister", "Error");
+                    response.sendRedirect("../JspPages/ElectionPartyregister.jsp");
                 }
            }
         }

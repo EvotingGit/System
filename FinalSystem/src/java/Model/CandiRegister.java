@@ -5,6 +5,7 @@
 package Model;
 
 import com.mysql.jdbc.Connection;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 
@@ -16,17 +17,17 @@ public class CandiRegister extends Dbconnection{
     
     java.sql.Connection conn=Createconnection(); 
     
-    public boolean insertCandiDetail(String UserId,String Electparty,String Seat,String ElectNo,String createdby,String createddate,String updatedby,String updateddate,String UserName, String Password, String Post)
+    public boolean insertCandiDetail(String UserId,String Electpartyid,String Seat,String ElectNo,String createdby,String createddate,String updatedby,String updateddate,String UserName, String Password, String Post)
     {
         boolean rst=false;
         
         try{
             String Query="INSERT INTO `electionsystemdb`.`candidatetble` "+
-                         "(UserID,ElectionTypeID,SeatName,ElectionNo,CreateDate,CreatedBy,UpdateDate,UpdatedBy) "+
+                         "(UserID,PoliPartyID,SeatName,PreferenceNo,CreateDate,CreatedBy,UpdateDate,UpdatedBy) "+
                          " VALUES (?,?,?,?,?,?,?,?);";
             PreparedStatement prestate=conn.prepareStatement(Query);
             prestate.setString(1, UserId);
-            prestate.setString(2, Electparty);
+            prestate.setString(2, Electpartyid);
             prestate.setString(3, Seat);
             prestate.setString(4, ElectNo);
             prestate.setString(5, createddate);
@@ -81,9 +82,8 @@ public class CandiRegister extends Dbconnection{
          ResultSet rsltst=null;
          try
          {
-            String slectqry="select UserID, From `electionsystemdb`.`candidatetble`";
-            PreparedStatement ps=con.prepareStatement(slectqry);
-            rsltst=ps.executeQuery();
+            CallableStatement cs=Createconnection().prepareCall("{call CandidateListtable()}");
+            rsltst = cs.executeQuery();
             return rsltst;
          }
          catch(Exception ex)

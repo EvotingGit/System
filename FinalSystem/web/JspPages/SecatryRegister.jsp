@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Model.ElectionPartyReg"%>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-	<title>BootAdmin - Responsive Admin HTML Template</title>
+	<title> Create New Sectary </title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -199,10 +201,10 @@
                          <td>
                <div>
                  <select name="usrtyp" class="selectpicker">
-                    <option value="Administrator" >Administrator</option>
-                    <option value="Candidates"  >Candidates</option>
-                    <option value="Voter"   >Voter</option>
-                    <option value="Sectary" >Sectary</option>
+                    <option value="Administrator">Administrator</option>
+                    <option value="Candidates">Candidates</option>
+                    <option value="Voter">Voter</option>
+                    <option value="Sectary">Sectary</option>
                  </select> 
               </div>
            
@@ -218,7 +220,7 @@
                             </div>
                     </td>
                      </tr>
-                     <tr>
+                <tr>
                         <td>
                          <label>Last Name</label> 
                          </td>
@@ -247,7 +249,7 @@
                 <tr>
                       <td>
                         <div>
-                         <label> NIC No</label>   
+                         <label>NIC-No/Passport No</label>   
                         </div>
                     </td>
                     <td> <div> <input type="text"  name="nic" />
@@ -255,7 +257,7 @@
                     </tr>
                 <tr>
                       <td  style="vertical-align:top">
-                         <label> Contact No</label>   
+                         <label>Contact No</label>   
                        </td>
                        <td>
                    
@@ -272,7 +274,11 @@
                        <label>Birthday picker</label>   
                       </td>
                       <td>
-                        <input type="text" name="birthday"/>
+                       <div class="control-group">
+			<div class="controls">
+			<input type="text" id="datepicker" nanme="birthday" />
+				</div>
+				</div>
                       </td>
                 </tr>
                 <tr>
@@ -285,8 +291,7 @@
                      </div>
                     </td>
                 </tr>
-            
-                  <tr>
+                <tr>
                     <td>
                          <label>User Name</label>
                     </td>
@@ -296,7 +301,7 @@
                      </div>
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td>
                          <label>Password</label>
                     </td>
@@ -306,7 +311,7 @@
                      </div>
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td>
                          <label>Confirm Password</label>
                     </td>
@@ -321,10 +326,21 @@
                          <label>Political Party :</label>
                     </td>
                     <td>
-                            <div>
-                            <select name="regpoliparty" class="selectpicker">
-                                <option value="jvp" >JVP</option>
-                                <option value="unp"  >UNP</option>
+                     <div>
+                      <%
+                    try {
+                          ElectionPartyReg politParty=new ElectionPartyReg();
+                          ResultSet rslts=politParty.LoadpolipartyCombo();%>
+                          <select name="regpoliparty" class="selectpicker">
+                           <% while(rslts.next())
+                           { %>  
+                                <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
+                           <%}
+                      }
+                    catch(Exception exception1)
+                    {
+                         exception1.printStackTrace();
+                    }%>   
                             </select> 
                          </div>
                     </td>
@@ -334,7 +350,7 @@
 				<td> <input type="submit" value="Submit" name="adminregbtn" id="adminregbtn" class="reg_submit"/></td>
 				</tr>
             </table>
-            <br>
+            <br> <br>
            
         </form>
 

@@ -118,7 +118,7 @@ public class AdminRegister_Servlet extends HttpServlet {
                                 {
                                      HttpSession session=request.getSession(true);
                                      session.setAttribute("Register", "Sucess");
-                                     response.sendRedirect("../Evoting/JspPages/Adminregister.jsp");
+                                     response.sendRedirect("../FinalSystem/JspPages/Adminregister.jsp");
                                 }
                               }
                             if(post.equals("Candidate"))
@@ -131,7 +131,7 @@ public class AdminRegister_Servlet extends HttpServlet {
                                 {
                                      HttpSession session=request.getSession(true);
                                      session.setAttribute("Register", "Sucess");
-                                     response.sendRedirect("../Evoting/JspPages/Adminregister.jsp");
+                                     response.sendRedirect("../FinalSystem/JspPages/CandidateList.jsp");
                                 }
                             }
                               if(post.equals("Sectary"))

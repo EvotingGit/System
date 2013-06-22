@@ -22,7 +22,7 @@ public class CandiRegister extends Dbconnection{
         
         try{
             String Query="INSERT INTO `electionsystemdb`.`candidatetble` "+
-                         "(UserID,PoliticalPartyCode,SeatName,ElectionNo,CreateDate,CreatedBy,UpdateDate,UpdatedBy) "+
+                         "(UserID,ElectionTypeID,SeatName,ElectionNo,CreateDate,CreatedBy,UpdateDate,UpdatedBy) "+
                          " VALUES (?,?,?,?,?,?,?,?);";
             PreparedStatement prestate=conn.prepareStatement(Query);
             prestate.setString(1, UserId);
@@ -75,5 +75,22 @@ public class CandiRegister extends Dbconnection{
         throw new UnsupportedOperationException("Not yet implemented");
         }
     }
+     
+     public ResultSet GetCandidateList()
+     {
+         ResultSet rsltst=null;
+         try
+         {
+            String slectqry="select UserID, From `electionsystemdb`.`candidatetble`";
+            PreparedStatement ps=con.prepareStatement(slectqry);
+            rsltst=ps.executeQuery();
+            return rsltst;
+         }
+         catch(Exception ex)
+         {
+             ex.toString();
+             return rsltst;
+         }
+     }
     
 }

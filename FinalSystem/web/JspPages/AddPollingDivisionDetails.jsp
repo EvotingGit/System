@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+<%@page import="Model.PollingDivisionRegister"%>
+<%@page import="java.sql.ResultSet"%>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
@@ -50,6 +52,8 @@
 	<link rel="stylesheet" href="theme/css/style.min.css?1359188899" />
 	
 	
+	<!-- DataTables -->
+	<link rel="stylesheet" media="screen" href="theme/scripts/DataTables/media/css/DT_bootstrap.css" />
 	
 	<!-- LESS 2 CSS -->
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
@@ -210,15 +214,25 @@
                     </div>
                     </td>
                    <td>
-                    <div>
-                        <select name="distrcid" class="selectpicker">
-                            <option value="c6628449-47a7-4eb5-993d-96b131030c12">Colombo</option>
-                            <option value="" >Gampaha</option>                
-                        </select> 
+                    <div><%
+                    try {
+                          PollingDivisionRegister pollingDiv=new PollingDivisionRegister();
+                          ResultSet rslts=pollingDiv.LoadDistricCombo();%>
+                           <select name="distrcid" class="selectpicker">
+                           <% while(rslts.next())
+                           { %>  
+                                <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
+                           <%}
+                      }
+                    catch(Exception exception1)
+                    {
+                         exception1.printStackTrace();
+                    }%>
+                     </select> 
                     </div>
                     </td>
                      </tr>  
-                       <tr>
+                       <tr style="visibility: hidden">
                     <td>
                          <label>Registered Political Parties</label> 
                          </td>
@@ -228,7 +242,7 @@
                             </div>
                          </td>
                 </tr>
-                 <tr>
+                       <tr style="visibility: hidden">
                     <td>
                          <label>Registered Voters</label> 
                          </td>
@@ -243,7 +257,47 @@
 <td>            <input type="submit" value="Submit" class="reg_submit" name="polldivisionregbtn" id="polldivisionregbtn"/></td>
 </tr>
       </table>      
-
+<br/>
+<br/>
+<div class="widget-body center">
+		<table class="table table-bordered table-primary table-condensed">
+			<thead>
+				<tr>
+                                        <th style="visibility: hidden">Polling ID</th>
+					<th>Polling Division Code</th>
+					<th>Polling Division Name</th>
+                        		<th>Registered Political Parties Amount </th>
+                                        <th>Registered Political Voters Amount</th>
+                                        <th>District </th>
+				</tr>
+			
+			</thead>
+			<tbody>
+                            <%
+                            ResultSet insertreslt=null;
+                            PollingDivisionRegister pollingdiv=new PollingDivisionRegister();
+                            insertreslt=pollingdiv.ViewPollingDivision();
+                            if(insertreslt!=null){
+                                while(insertreslt.next())
+                                {%>
+				<tr>
+					<td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
+                                        <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
+                                        <td class="center"><%= insertreslt.getString(3)%></td>
+                                        <td class="center"><%= insertreslt.getString(4)%></td>
+                                        <td class="center"><%= insertreslt.getString(5)%></td>
+                                        <td class="center"><%= insertreslt.getString(6)%></td>
+				</tr>
+                                 <% }
+                            }
+                        else{%>
+                            <tr class="center">
+                
+                            </tr>
+                            <%}   %>
+			</tbody>
+		</table>
+	</div>
         </form>   				
   </div> 
    </div> 		           

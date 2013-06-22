@@ -50,5 +50,23 @@ public class ElectionPartyReg extends Dbconnection{
         return flage;
         }
     }
-    
+ 
+   public ResultSet LoadpolipartyCombo()
+   {
+        ResultSet rsltst=null;
+        try
+        {
+           /* CallableStatement cs=Createconnection().prepareCall("{call CountAsignTask(?)}");
+            cs.setString(1, empid);
+            rs = cs.executeQuery();*/
+            String slectqry="select PoliPartyID,PoliticalPartyName From  `electionsystemdb`.`politicalpartytbl`";
+            PreparedStatement ps=con.prepareStatement(slectqry);
+            rsltst=ps.executeQuery();
+            return rsltst;
+        }
+        catch(Exception ex)
+        {
+            return rsltst;
+        }
+   }
 }

@@ -5,6 +5,8 @@
 package Model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -32,6 +34,7 @@ public class DistricRegister extends Dbconnection{
              
              int result=prestate.executeUpdate();
              if(result>0){
+                 
                   flage=true;
                   return flage;
              }
@@ -50,4 +53,21 @@ public class DistricRegister extends Dbconnection{
             return flage;
         }
     }
+     
+     public ResultSet ViewDistrict()
+     {
+         ResultSet rsltst=null;
+         try
+         {
+            String slectqry="select * From `electionsystemdb`.`DistricTbl`";
+            PreparedStatement ps=con.prepareStatement(slectqry);
+            rsltst=ps.executeQuery();
+            return rsltst;
+         }
+         catch(Exception ex)
+         {
+             ex.toString();
+             return rsltst;
+         }
+     }
 }

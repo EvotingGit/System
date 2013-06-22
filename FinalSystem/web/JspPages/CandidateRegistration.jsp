@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+<%@page import="Model.ElectionPartyReg"%>
+<%@page import="java.sql.ResultSet"%>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
@@ -309,10 +311,20 @@
                          </td>
                          <td>
                <div>
-                 <select name="politicalparty" class="selectpicker">>
-                    <option value="jvp" >ABC</option>
-                    <option value="unp" >EFG</option>
-                    <option value="" >HIJ</option>
+                    <%
+                    try {
+                          ElectionPartyReg politicalParty=new ElectionPartyReg();
+                          ResultSet rslts=politicalParty.LoadpolipartyCombo();%>
+                          <select name="politicalparty" class="selectpicker">
+                           <% while(rslts.next())
+                           { %>  
+                               <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
+                           <%}
+                      }
+                    catch(Exception exception1)
+                    {
+                         exception1.printStackTrace();
+                    }%>
                  </select> 
               </div>
                     </td>
@@ -367,13 +379,10 @@
                      </div>
                     </td>
                 </tr>
-				
 				<tr>
 				<td></td>
 				<td> <input type="submit" value="Submit" name="adminregbtn" id="adminregbtn" class="reg_submit"/></td>
-				
-				</tr>
-				
+				</tr>	
             </table>
             <br>
            

@@ -5,6 +5,8 @@
 package Model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -51,6 +53,44 @@ public class PollingDivisionRegister extends Dbconnection{
             return flage;
         }
     }
+      
+      public ResultSet ViewPollingDivision()
+     {
+         ResultSet rsltst=null;
+         try
+         {
+            String slectqry="select * From `electionsystemdb`.`PollingDivisionTbl`";
+            PreparedStatement ps=con.prepareStatement(slectqry);
+            rsltst=ps.executeQuery();
+            return rsltst;
+         }
+         catch(Exception ex)
+         {
+             ex.toString();
+             return rsltst;
+         }
+     }
+      
+     public ResultSet LoadDistricCombo()
+     {
+         ResultSet rsltst=null;
+         try
+        {
+           /* CallableStatement cs=Createconnection().prepareCall("{call CountAsignTask(?)}");
+            cs.setString(1, empid);
+            rs = cs.executeQuery();*/
+            String slectqry="select DistricID,DistricName From  `electionsystemdb`.`DistricTbl`";
+            PreparedStatement ps=con.prepareStatement(slectqry);
+            rsltst=ps.executeQuery();
+            
+            return rsltst;
+        }
+        catch(Exception ex)
+        {
+            return rsltst;
+        }
+     }
+     
     
     
 }

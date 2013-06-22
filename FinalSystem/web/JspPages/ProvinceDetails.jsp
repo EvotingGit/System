@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+<%@page import="Model.ProvinceRegister"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Model.ProvinceProperty"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
@@ -49,7 +53,9 @@
 	<!-- Theme -->
 	<link rel="stylesheet" href="theme/css/style.min.css?1359188899" />
 	
-	
+	<!-- DataTables -->
+	<link rel="stylesheet" media="screen" href="theme/scripts/DataTables/media/css/DT_bootstrap.css" />
+
 	
 	<!-- LESS 2 CSS -->
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
@@ -233,6 +239,7 @@
                    </td>
                    <td>
                         <div>
+                     
                         <select name="Nodistrcs" class="selectpicker">
                             <option value="0">Select District Count </option>
                             <option value="1" >1</option>
@@ -257,17 +264,54 @@
                     </td>
                 </tr>
             </table>
-      <br>
+      <br/>
+      <br/>
+<div class="relativeWrap">
+<div class="widget widget-gray widget-gray-white">
+      <div class="widget-head">
+		<h4 class="heading">Province Details</h4>
+	</div>
+    <div class="widget-body">
+      <table  cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
+          <thead>
+              <tr>
+                <th style="visibility: hidden">Province ID</th>
+                <th>Province Code</th>
+		<th>Province Name</th>
+                <th>Description</th>
+		<th>Districts</th>
+            </tr>
+          </thead>
+          <tbody>
+              <%
+            ResultSet insertreslt=null;
+            ProvinceRegister province=new ProvinceRegister();
+            insertreslt=province.ViewProvince();
+            if(insertreslt!=null){
+                while(insertreslt.next())
+                {%>
+                  <tr class="gradeX">
+                    <td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
+                    <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
+			<td class="center"><%= insertreslt.getString(3)%></td>
+                        <td class="center"><%= insertreslt.getString(4)%></td>
+                        <td class="center"><%= insertreslt.getString(5)%></td>
+		</tr>
+            <% }
+              }
+            else{%>
+            <tr class="center">
+                
+            </tr>
+            <%}   %>
+              
+          </tbody>
+      </table>
+      </div>
+</div>
   </form>	
-	<br/>
-        <table>
-            <thead>
-                <tr></tr>
-            </thead>
-            <tbody>
-                <tr></tr>
-            </tbody>
-        </table>
+	
+   
   </div> 
    </div> 		
 

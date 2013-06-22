@@ -6,6 +6,7 @@ package Model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,5 +62,25 @@ public class Sectary extends UserRegister {
             return flage;
         }
     }
+    
+     public ResultSet LoadSectrycombo()
+     {
+         ResultSet rsltst=null;
+         try
+        {
+           /* CallableStatement cs=Createconnection().prepareCall("{call CountAsignTask(?)}");
+            cs.setString(1, empid);
+            rs = cs.executeQuery();*/
+            String slectqry="select UserID,FirstName From `electionsystemdb`.`DistricTbl` WHERE UserType=(?) AND RegsterPoliticalParty=(?) ";
+            PreparedStatement ps=con.prepareStatement(slectqry);
+            rsltst=ps.executeQuery();
+            
+            return rsltst;
+        }
+        catch(Exception ex)
+        {
+            return rsltst;
+        }
+     }
     
 }

@@ -65,17 +65,6 @@ public class ProvinceRegister  extends Dbconnection{
     {
         ResultSet rsltst=null;
         stateList=new ArrayList<ProvinceModel>();
-       try  
-        {  
-          initCtx  =  new  InitialContext();  
-          envCtx  =  (Context)  initCtx.lookup("java:comp/env");  
-          myDS    =  (DataSource) envCtx.lookup("jdbc/test");  
-        }   
-        catch (Exception e)  
-        {  
-            System.out.println(e);  
-        }  
-         
         try
         {
             String slectqry="select ProvinceID,ProvinceName From  `electionsystemdb`.`ProvinceTbl`";
@@ -115,5 +104,22 @@ public class ProvinceRegister  extends Dbconnection{
         {
             return rsltst;
         }
+     }
+     
+     public ResultSet ViewProvince()
+     {
+         ResultSet rsltst=null;
+         try
+         {
+            String slectqry="select * From `electionsystemdb`.`ProvinceTbl`";
+            PreparedStatement ps=con.prepareStatement(slectqry);
+            rsltst=ps.executeQuery();
+            return rsltst;
+         }
+         catch(Exception ex)
+         {
+             ex.toString();
+             return rsltst;
+         }
      }
 }

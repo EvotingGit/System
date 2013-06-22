@@ -96,4 +96,24 @@ public class ProvinceRegister  extends Dbconnection{
         }
         return stateList;
     }
+    
+     public ResultSet LoadProviceCombo()
+     {
+         ResultSet rsltst=null;
+         try
+        {
+           /* CallableStatement cs=Createconnection().prepareCall("{call CountAsignTask(?)}");
+            cs.setString(1, empid);
+            rs = cs.executeQuery();*/
+            String slectqry="select ProvinceID,ProvinceName From  `electionsystemdb`.`ProvinceTbl`";
+            PreparedStatement ps=con.prepareStatement(slectqry);
+            rsltst=ps.executeQuery();
+            
+            return rsltst;
+        }
+        catch(Exception ex)
+        {
+            return rsltst;
+        }
+     }
 }

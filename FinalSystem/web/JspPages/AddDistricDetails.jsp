@@ -1,8 +1,12 @@
-﻿<!DOCTYPE html>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Model.ProvinceRegister"%>
+?<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+
 <head>
 	<title> Online Election Voting </title>
 	
@@ -58,6 +62,7 @@
 <body>
 	<% 
    /*String username="";
+ * 
    String usertype="";
    String userid=session.getAttribute("userid").toString();
     if(session.getAttribute("username")== null){
@@ -232,13 +237,23 @@
                    </td>
                    <td>
                        <div>
-                         <Select name="provinceid" class="selectpicker"> 
-                          <c:forEach items="${state.stateList}" var="st" >  
-                          <option value="${st.provinceID}">${st.provinceName}</option>  
-                          </c:forEach>  
-                        </select>  
+                            <Select name="provinceid" class="selectpicker"> 
+                    <%
+                    try {
+                          ProvinceRegister provincecombo=new ProvinceRegister();
+                          ResultSet rslts=provincecombo.LoadProviceCombo();
+                           while(rslts.next())
+                           { %>  
+                                <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
+                           <%}
+                      }
+                    catch(Exception exception1)
+                    {
+                         exception1.printStackTrace();
+                    }%>
+                     </select>  
                       </div>
-                   </td>
+                     </td>
                </tr>  
              
 <tr><td></td>

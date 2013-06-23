@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.CreateUniqueID;
 import Model.ProvinceRegister;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,12 +37,12 @@ public class ProvinceRegister_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        CreateUniqueID createUUid=new CreateUniqueID();
         try {
            if(request.getParameter("provinceregbtn")!=null);
-           {
-               UUID uuid = UUID.randomUUID();
-               
-               String ProvinceID=uuid.toString();
+           {             
+               String ProvinceID=createUUid.UniqueID();
                String ProvinceCode=request.getParameter("provincode");
                String ProvinceName=request.getParameter("provincename");
                String ProDecription=request.getParameter("decrp");

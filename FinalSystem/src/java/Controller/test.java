@@ -4,12 +4,16 @@
  */
 package Controller;
 
+import Model.CreateUniqueID;
 import Model.Testmd;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,6 +30,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import java.util.Date;
 
 /**
  *
@@ -45,7 +50,7 @@ public class test extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, FileUploadException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 //        byte[] b=null; 
@@ -101,14 +106,14 @@ public class test extends HttpServlet {
         try
         {
             Testmd tst=new Testmd();
-            String password=request.getParameter("pass");
-            String rst=tst.CallMainFunction(password);
-
-
+            String strdate=request.getParameter("pro");
+            tst.abc(strdate);
         }
         catch(Exception ex)
         {    
         ex.toString();
+        } finally {            
+            out.close();
         }
     }
 
@@ -125,11 +130,8 @@ public class test extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
             processRequest(request, response);
-        } catch (FileUploadException ex) {
-            Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }
 
     /**
@@ -144,11 +146,8 @@ public class test extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
             processRequest(request, response);
-        } catch (FileUploadException ex) {
-            Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }
 
     /**

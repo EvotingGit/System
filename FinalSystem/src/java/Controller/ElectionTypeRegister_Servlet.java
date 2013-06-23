@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.CreateUniqueID;
 import Model.ElectionType;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,14 +37,15 @@ public class ElectionTypeRegister_Servlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         PrintWriter out = response.getWriter();
         ElectionType electype=new ElectionType();
+        CreateUniqueID createUUid=new CreateUniqueID();
         try {
             if(request.getParameter("eletypregbtn")!=null)
             {
-                UUID uuid = UUID.randomUUID();
                 //SimpleDateFormat convertDate = new SimpleDateFormat("MMM dd yyyy"); 
-                String ElectionTypeID=uuid.toString();
+                String ElectionTypeID=createUUid.UniqueID();
                 String ElectionTypeCode=request.getParameter("electioncode");
                 String ElectionType=request.getParameter("electyp");
                 String Year=request.getParameter("year");

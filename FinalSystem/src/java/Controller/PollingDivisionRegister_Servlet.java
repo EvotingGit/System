@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.CreateUniqueID;
 import Model.DistricRegister;
 import Model.PollingDivisionRegister;
 import java.io.IOException;
@@ -37,12 +38,12 @@ public class PollingDivisionRegister_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        CreateUniqueID createUUid=new CreateUniqueID();
        try {
            if(request.getParameter("polldivisionregbtn")!=null);
            {
-               UUID uuid = UUID.randomUUID();
-               
-               String PollingDivisionID=uuid.toString();
+               String PollingDivisionID=createUUid.UniqueID();
                String PollingDivisionCode=request.getParameter("p_divisioncode");
                String PollingDivisionName=request.getParameter("p_divisionname");
                int RegPoliticalParty=Integer.parseInt(request.getParameter("politicalpartyamount"));

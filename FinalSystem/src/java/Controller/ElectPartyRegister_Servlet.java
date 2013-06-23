@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.CreateUniqueID;
 import Model.ElectionPartyReg;
 import Model.ElectionType;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class ElectPartyRegister_Servlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
+        CreateUniqueID createUUid=new CreateUniqueID();
         byte[] logo=null; 
         ElectionPartyReg electionparty=new ElectionPartyReg();
         
@@ -54,8 +56,7 @@ public class ElectPartyRegister_Servlet extends HttpServlet {
                 //ServletFileUpload sfu = new ServletFileUpload(factory); 
                 //List items = sfu.parseRequest(request); 
                 //Iterator iter = items.iterator();
-                UUID uuid = UUID.randomUUID();
-                String PoliPartyID=uuid.toString();
+                String PoliPartyID=createUUid.UniqueID();
                 String ElectioPcode=request.getParameter("electpcode");
                 String ElectionPName=request.getParameter("partyname");
                 String RegisterDate=request.getParameter("regdate");

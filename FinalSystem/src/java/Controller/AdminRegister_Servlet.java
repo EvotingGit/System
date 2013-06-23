@@ -28,11 +28,13 @@ import org.apache.jasper.tagplugins.jstl.core.Catch;
 import javax.servlet.http.Part;
 
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.fileupload.FileUploadException;
+import java.util.Date;
 
 /*
 /**
@@ -57,6 +59,7 @@ public class AdminRegister_Servlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
+        CreateUniqueID createUUid=new CreateUniqueID();
         AdminRegister adminReg=new AdminRegister();
         UserRegister userreg=new UserRegister();
         CandiRegister candiReg=new CandiRegister();
@@ -71,10 +74,10 @@ public class AdminRegister_Servlet extends HttpServlet {
                    // ServletFileUpload sfu = new ServletFileUpload(factory); 
                     //List items = sfu.parseRequest(request); 
                     //Iterator iter = items.iterator();
-                    UUID uuid = UUID.randomUUID();
-                    //SimpleDateFormat convertDate = new SimpleDateFormat("MMM dd yyyy"); 
                     
-                    String UserID=uuid.toString();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                    Date date = new Date();
+                    String UserID=createUUid.UniqueID();
                     String userCode=request.getParameter("usercode");
                     String usertype=request.getParameter("usrtyp");
                     String fistname=request.getParameter("fname");
@@ -84,8 +87,8 @@ public class AdminRegister_Servlet extends HttpServlet {
                     String mbno=request.getParameter("mbno");
                     String lndno=request.getParameter("lndno");
                     String nic=request.getParameter("nic");
-                    //java.util.Date BithDate = convertDate.parse(birthdy); 
                     String email=request.getParameter("e_mail");
+                    
                     //String image=null; //request.getParameter("propic");
                     //while (iter.hasNext()) { 
                        // FileItem item = (FileItem) iter.next(); 
@@ -93,8 +96,9 @@ public class AdminRegister_Servlet extends HttpServlet {
                               //  image = item.get(); 
                          //   }   
                     //} 
-                    String createdby="xxx";
-                    String createddate="xxx"; 
+                    
+                    String createdby=null;
+                    String createddate=dateFormat.format(date);  
                     String updatedby=null;
                     String updateddate=null;
                     String usernm=request.getParameter("usernam");
@@ -148,7 +152,8 @@ public class AdminRegister_Servlet extends HttpServlet {
                             }
                               if(post.equals("Voter"))
                             {
-                                 UUID electuuid = UUID.randomUUID();
+                                 String electuuid  =createUUid.UniqueID();
+                                 CreateUniqueID.trimUUID(electuuid.toString());
                                  String stats="False"; 
                                  String poldiv=request.getParameter("polingdiv");
                                  String voterpass=request.getParameter("nic");

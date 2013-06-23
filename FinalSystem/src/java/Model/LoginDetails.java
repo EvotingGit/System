@@ -23,6 +23,8 @@ public class LoginDetails extends Dbconnection {
        boolean flag=false;
        try
         {
+           if(UserId!=null)
+           {
             String query="insert into logindetails (UserID,UserName,Password,UserType) values (?,?,?,?)";
             PreparedStatement ps=con.prepareStatement(query);
             ps.setString(1, UserId);
@@ -36,6 +38,11 @@ public class LoginDetails extends Dbconnection {
                 flag=true;
             }
             return flag;
+           }
+           else
+           {
+               Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "No User Id for this user");
+           }
         }
         catch(Exception ex)
         {

@@ -13,5 +13,10 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+         <form name="frm1" action="test" method="post"> 
+             
+            <input type="text" name="date" /> 
+ <input type="submit" name="Login" value="Login" /> 
+         </form>
     </body>
 </html>

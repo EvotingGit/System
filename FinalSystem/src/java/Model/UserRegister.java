@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class UserRegister extends Dbconnection {
     
-     Connection conn=Createconnection(); 
+    Connection conn=Createconnection(); 
     public ResultSet GetuserdetailsbyID(String UserCode,String  UserID)
     {
        ResultSet rs=null;
@@ -47,9 +47,9 @@ public class UserRegister extends Dbconnection {
         
         try
         {
-            //SimpleDateFormat convertDate = new SimpleDateFormat("MMM dd yyyy");
-
-            String query="INSERT INTO `electionsystemdb`.`sysusertbl` "+
+           if(UserId!=null && userCode!=null)
+           {
+                String query="INSERT INTO `electionsystemdb`.`sysusertbl` "+
                          " (UserId,UserCode,UserType,FirstName,LastName,Gender, DateofBirth,MobileNo,LandNo,NIC_No,Email,Image, CreatedBy,CreatedDate,UpdatedBy, UpdatedDate) "+ 
                          " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             
@@ -77,6 +77,11 @@ public class UserRegister extends Dbconnection {
                 Rset=GetuserdetailsbyID(userCode,UserId);
                 return  Rset;
             }
+           }
+           else
+           {
+               Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "User Code nd User ID is missing");
+           }
         }
         catch(Exception ex)
         {
@@ -97,8 +102,7 @@ public class UserRegister extends Dbconnection {
             ResultSet rs=null;
             String slectqry="SELECT Image from sysusertbl";
             java.sql.PreparedStatement ps=conn.prepareStatement(slectqry);
-            rs = ps.executeQuery(slectqry);  
-                        
+            rs = ps.executeQuery(slectqry);        
             return rs;
         }
         catch(Exception ex){

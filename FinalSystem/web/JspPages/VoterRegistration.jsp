@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Model.PollingDivisionRegister"%>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
@@ -296,10 +298,20 @@
                          </td>
                          <td>
                <div>
+                    <%
+                    try {
+                          PollingDivisionRegister pollingdetails=new PollingDivisionRegister();
+                          ResultSet rslts=pollingdetails.LoadPollingDivCombo(); %>
                  <select name="polingdiv" class="selectpicker">
-                    <option value="abc" >ABC</option>
-                    <option value="abc" >EFG</option>
-                    <option value="abc" >HIJ</option>
+                        <% while(rslts.next())
+                           { %> 
+                            <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
+                           <%}
+                     }
+                    catch(Exception exception1)
+                    {
+                         exception1.printStackTrace();
+                    }%>
                  </select> 
               </div>
                     </td>

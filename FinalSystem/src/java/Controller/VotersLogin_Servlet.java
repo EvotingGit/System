@@ -4,20 +4,23 @@
  */
 package Controller;
 
+import Model.LoginDetails;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author User
  */
-@WebServlet(name = "CandidatesRegister_Servlet", urlPatterns = {"/CandidatesRegister_Servlet"})
-public class CandidatesRegister_Servlet extends HttpServlet {
+@WebServlet(name = "VotersLogin_Servlet", urlPatterns = {"/VotersLogin_Servlet"})
+public class VotersLogin_Servlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -33,19 +36,28 @@ public class CandidatesRegister_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        LoginDetails login=new LoginDetails();
+        HttpSession session=request.getSession(true);
+        
         try {
-            /*
-             * TODO output your page here. You may use following sample code.
-             */
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CandidatesRegister_Servlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CandidatesRegister_Servlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {            
+             if(request.getParameter("loginBtn")!=null)
+             {
+                String _electcrdno=request.getParameter("ElctioncrdNo");
+                String _nicNo=request.getParameter("Nicno");
+                String _polldivision=request.getParameter("polingdiv");
+                
+                ResultSet rsltst=login.GetvoterLoginDetails(_nicNo,_polldivision);
+                if(rsltst.next())
+                {
+                }
+             }
+             
+        }
+        catch(Exception ex)
+        {
+            
+        }
+        finally {            
             out.close();
         }
     }

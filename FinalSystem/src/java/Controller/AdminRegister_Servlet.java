@@ -63,7 +63,6 @@ public class AdminRegister_Servlet extends HttpServlet {
         AdminRegister adminReg=new AdminRegister();
         UserRegister userreg=new UserRegister();
         CandiRegister candiReg=new CandiRegister();
-        Security securepass=new Security();
         VoterRegister voter=new VoterRegister();
         byte[] image=null; 
 
@@ -103,7 +102,7 @@ public class AdminRegister_Servlet extends HttpServlet {
                     String updateddate=null;
                     String usernm=request.getParameter("usernam");
                     String pass=request.getParameter("passwrd");
-                    String encrptpass=securepass.CallMainFunction(pass);
+                    String encrptpass=Md5Encryption.encrypt(pass);
                     
                     ResultSet rslt=userreg.insertUserdetails(UserID,userCode,usertype,fistname, lstname,gender,birthdy,mbno, lndno, nic, email,image,createdby,createddate,updatedby, updateddate);
                     if(rslt!=null)

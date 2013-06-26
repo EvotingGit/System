@@ -6,7 +6,6 @@ package Controller;
 
 import Model.AdminRegister;
 import Model.LoginDetails;
-import Model.Security;
 import Model.UserRegister;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +41,6 @@ public class LoginController extends HttpServlet {
         
         UserRegister users=new UserRegister();
         LoginDetails login=new LoginDetails();
-        Security decryp=new Security();
         HttpSession session=request.getSession(true);
          
         try {
@@ -55,12 +53,19 @@ public class LoginController extends HttpServlet {
                 if(rsltst.next())
                 {
                   String encrptpass= rsltst.getString(5);   
-                  String Passwrd=decryp.Decryption(planepass);
-                  if(Passwrd.equalsIgnoreCase(planepass))
+                  String plainpassagain=Md5Encryption.decrypt(encrptpass);
+                  if(plainpassagain.equalsIgnoreCase(planepass))
                   {
                      String fstName=rsltst.getString(1);
                      String lstName=rsltst.getString(2);
-                     String fullName=fstName +" "+ lstName;
+                     String usertype=rsltst.getString(3);
+                     if(usertype.equals("Administrator"))
+                     {
+                          String fullName=fstName +" "+ lstName;
+                          session.setAttribute("Admindetals", fullName);
+                          response.sendRedirect("../FinalSystem/JspPages/Adminregister.jsp");
+                     }
+                    
                   }               
                 }
             }

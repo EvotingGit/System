@@ -105,9 +105,10 @@ public class test extends HttpServlet {
 //        }
         try
         {
-            Testmd tst=new Testmd();
-            String strdate=request.getParameter("pro");
-            tst.abc(strdate);
+            String pass=request.getParameter("pro");
+            String encryptPas=Md5Encryption.encrypt(pass);
+            String plainpassagain=Md5Encryption.decrypt(encryptPas);
+            
         }
         catch(Exception ex)
         {    

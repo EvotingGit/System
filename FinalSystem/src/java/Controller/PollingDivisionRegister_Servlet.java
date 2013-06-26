@@ -46,7 +46,7 @@ public class PollingDivisionRegister_Servlet extends HttpServlet {
                String PollingDivisionID=createUUid.UniqueID();
                String PollingDivisionCode=request.getParameter("p_divisioncode");
                String PollingDivisionName=request.getParameter("p_divisionname");
-               int RegPoliticalParty=Integer.parseInt(request.getParameter("politicalpartyamount"));
+               int RegPoliticalParty=Integer.parseInt(request.getParameter("Seatsamount"));
                int RegVotersamuont=Integer.parseInt(request.getParameter("regisvoteramount"));
                String DistricID=request.getParameter("distrcid");
                

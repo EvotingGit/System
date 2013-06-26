@@ -232,13 +232,13 @@
                     </div>
                     </td>
                      </tr>  
-                       <tr style="visibility: hidden">
+                       <tr>
                     <td>
-                         <label>Registered Political Parties</label> 
+                         <label>Available Candidate Seats</label> 
                          </td>
                          <td>
                             <div> 
-                            <input name="politicalpartyamount" type="text" />
+                            <input name="Seatsamount" type="text" />
                             </div>
                          </td>
                 </tr>

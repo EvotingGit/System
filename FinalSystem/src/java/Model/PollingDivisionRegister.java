@@ -4,6 +4,7 @@
  */
 package Model;
 
+import  java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ public class PollingDivisionRegister extends Dbconnection{
         try
         {
              String query="INSERT INTO `electionsystemdb`.`PollingDivisionTbl` " +
-                          "(DivisionID,DivisionCode,DivisionName,RegisterdCandidates,RegisterdVoters,DistricID) "+
+                          "(DivisionID,DivisionCode,DivisionName,CandidatesSeats,RegisterdVoters,DistricID) "+
                           "VALUES (?,?,?,?,?,?);";
              
              java.sql.PreparedStatement prestate=conn.prepareStatement(query);
@@ -70,6 +71,22 @@ public class PollingDivisionRegister extends Dbconnection{
              return rsltst;
          }
      }
+      
+      public ResultSet LoadPollingDivCombo()
+      {
+          ResultSet rsltstcombo=null;
+        try
+        {
+           CallableStatement cs=conn.prepareCall("{call PollingDivComobo(?)}");
+           rsltstcombo = cs.executeQuery();
+            return rsltstcombo;
+        }
+        catch(Exception ex)
+        {
+            return rsltstcombo;
+        }
+      }
+      
       
      public ResultSet LoadDistricCombo()
      {

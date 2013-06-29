@@ -26,39 +26,56 @@ public class Testmd extends Dbconnection{
     
  java.sql.Connection conn=Createconnection();
     
-public void insertimage(byte[] b) {
+public void insertimage(String c) {
         boolean f=false;
     
      try
      {
-         
-        String sqlImageInsertDatabase="insert into upload_image (bImage) values(?)"; 
-       
-        java.sql.PreparedStatement prestate=conn.prepareStatement(sqlImageInsertDatabase);
-        prestate.setBytes(1, b);
-        prestate.executeUpdate(); 
-      
+        
+         File file = new File("D:/"+c.toString());
+	 FileInputStream fin = new FileInputStream(file);
+         String Inseret="insert into Image (photo) values(?)";
+         java.sql.PreparedStatement ps=conn.prepareStatement(Inseret);
+	 ps.setBinaryStream(1,fin,(int)file.length()); 
+         int result=ps.executeUpdate();
+          
+            ps.close();
+            conn.close(); 
      }
      catch(Exception ex)
      {
         throw new UnsupportedOperationException("Not yet implemented");
      }
     }
-
-public ResultSet getimages() {
-        try
-        {
-            ResultSet rs=null;
-            String slectqry="SELECT bImage from upload_image";
-            java.sql.PreparedStatement ps=conn.prepareStatement(slectqry);
-            rs = ps.executeQuery(slectqry);  
-                        
-            return rs;
-        }
-        catch(Exception ex){
-        throw new UnsupportedOperationException("Not yet implemented");
-        }
-    }
+/*public void getimages() {
+            try
+            {
+                Statement st1=con.createStatement();
+		ResultSet rs1 = st1.executeQuery("select * from Image");
+		String imgLen="";
+		if(rs1.next()){
+                    imgLen = rs1.getString(1);
+                    System.out.println(imgLen.length());
+		}	
+		rs1 = st1.executeQuery("select * from Image");
+		if(rs1.next()){
+                    int len = imgLen.length();
+                    byte [] rb = new byte[len];
+                    InputStream readImg = rs1.getBinaryStream(1);
+                    int index=readImg.read(rb, 0, len);	
+                    System.out.println("index"+index);
+                    st1.close();
+//                    response.reset();
+//                    response.setContentType("image/jpg");
+//                    response.getOutputStream().write(rb,0,len);
+//                    response.getOutputStream().flush();				
+		}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+                         throw new UnsupportedOperationException("Not yet implemented");
+		}
+    }*/
     
   
   public boolean  insertpass(String passw) throws SQLException
@@ -70,40 +87,7 @@ public ResultSet getimages() {
        return f;
   }
   
-  public String  encrypt(String pass)
-  {
-      String plainData=pass,cipherText,decryptedText;
-      try
-      {
-    KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-    keyGen.init(128);
-    SecretKey secretKey = keyGen.generateKey();
-    Cipher aesCipher = Cipher.getInstance("AES");
-    aesCipher.init(Cipher.ENCRYPT_MODE,secretKey);
-    byte[] byteDataToEncrypt = plainData.getBytes();
-    byte[] byteCipherText = aesCipher.doFinal(byteDataToEncrypt);
-    cipherText = new BASE64Encoder().encode(byteCipherText);
-//    aesCipher.init(Cipher.DECRYPT_MODE,secretKey,aesCipher.getParameters());
-//    byte[] byteDecryptedText = aesCipher.doFinal(byteCipherText);
-//    decryptedText = new String(byteDecryptedText);
-//    System.out.println("\n Plain Data : "+plainData+
-//    " \n Cipher Data : "+cipherText+" \n Decrypte");
-    return cipherText;
-      }
-      catch(Exception ex)
-      {
-          
-      }
-      return plainData;
-  }
-  
-  
- public String CallMainFunction(String abc)
- {
-   String Rest= encrypt(abc);
-    return Rest;
-    
- }
+
  public ResultSet chekpass() {
         ResultSet rs=null;
         try

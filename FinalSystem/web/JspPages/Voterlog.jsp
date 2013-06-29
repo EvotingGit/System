@@ -1,3 +1,5 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Model.PollingDivisionRegister"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +49,14 @@
 	
 	<!-- LESS 2 CSS -->
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" >
+    function submitlogin()
+    {       //validation part
+               loginBtn.click();
+           
+    }
+</script></head>
 <body>
 	
 	<!-- Start Content -->
@@ -130,42 +139,36 @@
       <div class="login-box main-content">
       <header><h2>Login</h2></header>
     	<section>
-    		<div class="message info">Enter UserName, Password and press Login</div>
-    		<form id="form" action="../VotersLogin_Servlet" method="post" class="clearfix">
+    		<form  name="votelogform" action="../VotersLogin_Servlet" method="post" class="clearfix">
 			<p>
-				<input type="text" id="username"  class="full" value="" name="ElctioncrdNo" required="required" placeholder="Username" />
+				<input type="text"   class="full"  name="ElctioncrdNo" required="required" placeholder="Election Card No" />
 			</p>
 			<p>
-				<input type="password" id="password" class="full" value="" name="Nicno" required="required" placeholder="Password" />
+				<input type="password"  class="full"  name="Nicno" required="required" placeholder="NIC No" />
 			</p>
                         <p>
-				<div>
-                    <%
+			<%
                     try {
-                          PollingDivisionRegister pollingdetails=new PollingDivisionRegister();
-                          ResultSet rslts=pollingdetails.LoadPollingDivCombo(); %>
-                 <select name="polingdiv" class="selectpicker">
-                        <% while(rslts.next())
-                           { %> 
-                            <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
+                          PollingDivisionRegister pollingDiv=new PollingDivisionRegister();
+                          ResultSet rslts=pollingDiv.LoadPollingDivCombo();%>
+                           <select name="pollid" class="selectpicker">
+                           <% while(rslts.next())
+                           { %>  
+                                <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
                            <%}
-                     }
+                      }
                     catch(Exception exception1)
                     {
                          exception1.printStackTrace();
                     }%>
-                 </select> 
-              </div>
+                     </select> 
+                 
 			</p>
 			<p class="clearfix">
-				<span class="fl">
-					<input type="checkbox" id="remember" class="" value="1" name="remember"/>
-					<label class="choice" for="remember" style="display:inline">Remember me</label>
-				</span>
-
-				<button class="button button-gray fr" type="submit" id="loginBtn">Login</button>			</p>
+				<button class="button button-gray fr" onclick="submitlogin();" type="Submit" name="loginBtn" id="loginBtn"> Login</button>
+			</p>
 		</form>
-		<ul><li><strong>HELP!</strong>&nbsp;<a href="#">I forgot my password!</a></li></ul>
+                    <ul><li><strong>HELP!</strong></li></ul>
     	</section>
     </div>
    

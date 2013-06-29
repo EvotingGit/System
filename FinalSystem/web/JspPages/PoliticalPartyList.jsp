@@ -165,6 +165,7 @@
 			</thead>
 			<tbody>
                              <%
+                             try{
                                 ResultSet insertreslt=null;
                                 ElectionPartyReg politicalreg=new ElectionPartyReg();
                                 insertreslt=politicalreg.LoadpolipartyList();
@@ -178,12 +179,16 @@
                                         <td class="center"><%= insertreslt.getString(4)%></td>
         				</tr>
 				 <% }
-              }
-            else{%>
+                        }
+                        else{%>
             <tr class="center">
                 
             </tr>
-            <%}   %>
+                        <%} 
+                 }
+                 catch(Exception ex)
+                        {
+                }%>
 			</tbody>
 		</table>
 	</div>

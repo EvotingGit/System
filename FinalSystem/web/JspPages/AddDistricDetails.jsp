@@ -268,36 +268,32 @@
 
             </table>  
                      <br/>
-<div class="relativeWrap">
-<div class="widget widget-gray widget-gray-white">
-	<div class="widget-head">
-		<h4 class="heading"> District Details</h4>
-	</div>
+<div class="widget-body center">
 	<div class="widget-body">
-		<table cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
+		<table cellpadding="0" cellspacing="0" border="0" >
 			<thead>
 				<tr>
-                                        <th style="visibility: hidden">District ID</th>
-					<th>District Code</th>
-					<th>District Name</th>
-					<th>Polling Divisions</th>
-					<th>Province Name</th>
+                                        <th style="display: none; width: 20"  >District ID</th>
+                                        <th style="width: 20">District Code</th>
+					<th style="width: 20">District Name</th>
+					<th style="width: 20">Polling Divisions</th>
+					<th style="width: 20">Province Name</th>
 				</tr>
 			</thead>
                         <tbody>
 			 <%
-            ResultSet insertreResultSetslt=null;
+            ResultSet insertreslt=null;
             DistricRegister membr=new DistricRegister();
             insertreslt=membr.ViewDistrict();
             if(insertreslt!=null){
                 while(insertreslt.next())
                 {%>
                 <tr class="gradeX">
-                    <td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
-                    <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
-			<td class="center"><%= insertreslt.getString(3)%></td>
-                        <td class="center"><%= insertreslt.getString(4)%></td>
-                        <td class="center"><%= insertreslt.getString(5)%></td>
+                    <td style="display: none; width: 20"><%= insertreslt.getString(1)%></td>
+                    <td class="center" style="width: 20"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
+			<td class="center" style="width: 20"><%= insertreslt.getString(3)%></td>
+                        <td class="center" style="width: 20"><%= insertreslt.getString(4)%></td>
+                        <td class="center" style="width: 20"><%= insertreslt.getString(5)%></td>
 		</tr>
             <% }
               }
@@ -309,9 +305,8 @@
                         </tbody>
 		</table>
 	</div>
-</div>
-</div>
 
+ </div> 
               </form>				
   </div> 
    </div> 	

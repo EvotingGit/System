@@ -17,7 +17,9 @@ public class PollingDivisionRegister extends Dbconnection{
     
     Connection conn =Createconnection();
     
-      public boolean InsertPollingDivision(String DivisionID,String DivisionCode,String DivisionName,int RegisterdCandidates,int RegisterdVoters, String DistricID)
+    //this insert function use to insert the district details in to database
+    //and this is return a boolean value according to the status
+    public boolean InsertPollingDivision(String DivisionID,String DivisionCode,String DivisionName,int RegisterdCandidates,int RegisterdVoters, String DistricID)
     {
         boolean flage=false;
         try
@@ -55,14 +57,15 @@ public class PollingDivisionRegister extends Dbconnection{
         }
     }
       
-      public ResultSet ViewPollingDivision()
-     {
+    //this function is returning a result set 
+    //which is contain the relavent details about the polling divisions
+    public ResultSet ViewPollingDivision()
+    {
          ResultSet rsltst=null;
          try
          {
-            String slectqry="select * From `electionsystemdb`.`PollingDivisionTbl`";
-            PreparedStatement ps=con.prepareStatement(slectqry);
-            rsltst=ps.executeQuery();
+            CallableStatement cs=Createconnection().prepareCall("{call GetPollingDiveDetails()}");
+            rsltst = cs.executeQuery();
             return rsltst;
          }
          catch(Exception ex)
@@ -72,13 +75,16 @@ public class PollingDivisionRegister extends Dbconnection{
          }
      }
       
-      public ResultSet LoadPollingDivCombo()
-      {
+    public ResultSet LoadPollingDivCombo()
+    {
           ResultSet rsltstcombo=null;
         try
         {
-           CallableStatement cs=conn.prepareCall("{call PollingDivComobo(?)}");
-           rsltstcombo = cs.executeQuery();
+           /*CallableStatement cs=conn.prepareCall("{call PollingDivComobo(?)}");
+           rsltstcombo = cs.executeQuery();*/
+            String slectqry="SELECT DivisionID,DivisionName FROM PollingDivisionTbl";
+            PreparedStatement ps=con.prepareStatement(slectqry);
+            rsltstcombo=ps.executeQuery();
             return rsltstcombo;
         }
         catch(Exception ex)

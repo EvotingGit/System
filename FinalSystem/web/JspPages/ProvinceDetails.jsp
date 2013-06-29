@@ -266,13 +266,8 @@
             </table>
       <br/>
       <br/>
-<div class="relativeWrap">
-<div class="widget widget-gray widget-gray-white">
-      <div class="widget-head">
-		<h4 class="heading">Province Details</h4>
-	</div>
-    <div class="widget-body">
-      <table  cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
+<div class="widget-body center">
+      <table  cellpadding="0" cellspacing="0" border="0">
           <thead>
               <tr>
                 <th style="visibility: hidden">Province ID</th>
@@ -307,8 +302,8 @@
               
           </tbody>
       </table>
-      </div>
-</div>
+  
+  </div> 
   </form>	
 	
    

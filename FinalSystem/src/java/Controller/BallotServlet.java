@@ -4,24 +4,20 @@
  */
 package Controller;
 
-import Model.LoginDetails;
-import Model.VoterRegister;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author User
  */
-@WebServlet(name = "VotersLogin_Servlet", urlPatterns = {"/VotersLogin_Servlet"})
-public class VotersLogin_Servlet extends HttpServlet {
+@WebServlet(name = "BallotServlet", urlPatterns = {"/BallotServlet"})
+public class BallotServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -37,37 +33,17 @@ public class VotersLogin_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        VoterRegister login=new VoterRegister();
-        
-        
         try {
-             if(request.getParameter("loginBtn")!=null)
-             {
-                String _electcrdno=request.getParameter("ElctioncrdNo");
-                String _nicNo=request.getParameter("Nicno");
-                String _pooliId=request.getParameter("pollid");
-                ResultSet rsltst=login.GetvoterLoginDetails(_nicNo,_pooliId);
-                if(rsltst.next())
-                {
-                  String _encrptelctioncrdno= rsltst.getString(1);   
-                   String _pollingdivID= rsltst.getString(3); 
-                  String _plainelecrdNo=Md5Encryption.decrypt(_encrptelctioncrdno);
-                  if(_plainelecrdNo.equalsIgnoreCase(_electcrdno)&& _pollingdivID.equals(_pooliId))
-                  {
-                          HttpSession session=request.getSession(true);
-                          session.setAttribute("Admindetals", "Sucess");
-                          response.sendRedirect("../FinalSystem/JspPages/BallotForm.jsp");
-                  }
-                }
-             }
-             
-        }
-        catch(Exception ex)
-        {
-            
-        }
-        finally {            
+           String emp_no = request.getParameter("p_Id").toString(); 
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet BallotServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet BallotServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {            
             out.close();
         }
     }

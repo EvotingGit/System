@@ -4,6 +4,7 @@
  */
 package Model;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +17,7 @@ public class DistricRegister extends Dbconnection{
     
     Connection conn=Createconnection();
     
+    //this function is use to insert the record into district table in the database
      public boolean InsertDistrict(String DistricID,String DistricCode,String DistricName,String NumberOfPollingDivitions,String ProvinceID)
     {
         boolean flage=false;
@@ -54,14 +56,15 @@ public class DistricRegister extends Dbconnection{
         }
     }
      
+     //get the inserted disrtic details and 
+     // return it as a result set
      public ResultSet ViewDistrict()
      {
          ResultSet rsltst=null;
          try
          {
-            String slectqry="select * From `electionsystemdb`.`DistricTbl`";
-            PreparedStatement ps=con.prepareStatement(slectqry);
-            rsltst=ps.executeQuery();
+            CallableStatement cs=Createconnection().prepareCall("{call ViewDistrictDetails()}");
+            rsltst = cs.executeQuery();
             return rsltst;
          }
          catch(Exception ex)

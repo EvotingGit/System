@@ -231,10 +231,10 @@
 		<h4 class="heading">Province Details</h4>
 	</div>
     <div class="widget-body">
-      <table  cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
+      <table  cellpadding="0" cellspacing="0" border="0" >
           <thead>
               <tr>
-                <th style="visibility: hidden">Election ID</th>
+                <th style="display: none; width: 20">Election ID</th>
                 <th>Election Code</th>
 		<th>Election Type</th>
                 <th>Year</th>
@@ -249,7 +249,7 @@
                 while(insertreslt.next())
                 {%>
                   <tr class="gradeX">
-                    <td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
+                    <td style="display: none; width: 20"><%= insertreslt.getString(1)%></td>
                     <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
                     <td class="center"><%= insertreslt.getString(3)%></td>
                     <td class="center"><%= insertreslt.getString(4)%></td>

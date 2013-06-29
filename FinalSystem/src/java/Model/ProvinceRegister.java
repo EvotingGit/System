@@ -24,6 +24,7 @@ public class ProvinceRegister  extends Dbconnection{
     private Context initCtx;  
     private Context envCtx;
 
+    //this methode is use to insert the data of the province into database
     public boolean InsertProvince(String ProvinceID,String ProvinceCode,String ProvinceName,String Description,String NumberOfDestrict)
     {
         boolean flage=false;
@@ -86,14 +87,12 @@ public class ProvinceRegister  extends Dbconnection{
         return stateList;
     }
     
+    //this will get the province details and use to load the combo box in the JSP page
      public ResultSet LoadProviceCombo()
      {
          ResultSet rsltst=null;
          try
         {
-           /* CallableStatement cs=Createconnection().prepareCall("{call CountAsignTask(?)}");
-            cs.setString(1, empid);
-            rs = cs.executeQuery();*/
             String slectqry="select ProvinceID,ProvinceName From  `electionsystemdb`.`ProvinceTbl`";
             PreparedStatement ps=con.prepareStatement(slectqry);
             rsltst=ps.executeQuery();
@@ -106,6 +105,7 @@ public class ProvinceRegister  extends Dbconnection{
         }
      }
      
+     //this may use to virew the all information about the province details
      public ResultSet ViewProvince()
      {
          ResultSet rsltst=null;

@@ -260,19 +260,18 @@
 <br/>
 <br/>
 <div class="widget-body center">
-		<table class="table table-bordered table-primary table-condensed">
+<table >
 			<thead>
 				<tr>
-                                        <th style="visibility: hidden">Polling ID</th>
+                                        <th style="display: none">Polling ID</th>
 					<th>Polling Division Code</th>
 					<th>Polling Division Name</th>
                         		<th>Registered Political Parties Amount </th>
                                         <th>Registered Political Voters Amount</th>
-                                        <th>District </th>
+                                        <th>District Name</th>
 				</tr>
-			
 			</thead>
-			<tbody>
+                        <tbody>
                             <%
                             ResultSet insertreslt=null;
                             PollingDivisionRegister pollingdiv=new PollingDivisionRegister();
@@ -280,8 +279,8 @@
                             if(insertreslt!=null){
                                 while(insertreslt.next())
                                 {%>
-				<tr>
-					<td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
+                                <tr>
+					<td style="display: none"><%= insertreslt.getString(1)%></td>
                                         <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
                                         <td class="center"><%= insertreslt.getString(3)%></td>
                                         <td class="center"><%= insertreslt.getString(4)%></td>
@@ -297,8 +296,8 @@
                             <%}   %>
 			</tbody>
 		</table>
-	</div>
-        </form>   				
+      </div> 
+   </form>   				
   </div> 
    </div> 		           
 

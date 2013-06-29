@@ -302,7 +302,7 @@
                     try {
                           PollingDivisionRegister pollingdetails=new PollingDivisionRegister();
                           ResultSet rslts=pollingdetails.LoadPollingDivCombo(); %>
-                 <select name="polingdiv" class="selectpicker">
+                             <select name="polingdiv" class="selectpicker">
                         <% while(rslts.next())
                            { %> 
                             <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>

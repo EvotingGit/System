@@ -75,22 +75,5 @@ public class LoginDetails extends Dbconnection {
             return rs;
         } 
     }
-    public ResultSet GetvoterLoginDetails(String loginnic,String polling)
-    {
-     ResultSet rs=null;
-        try
-        {
-            String slectqry="";
-            PreparedStatement ps=con.prepareStatement(slectqry);
-            ps.setString(1, loginnic);
-            ps.setString(1, polling);
-            rs=ps.executeQuery();
-            return  rs;
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Password incorrect ", ex);
-            return rs;
-        } 
-    }
+   
 }

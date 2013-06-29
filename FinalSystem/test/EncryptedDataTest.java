@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 
+import Controller.Md5Encryption;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -36,9 +37,13 @@ public class EncryptedDataTest {
     // AES (crypto) formate and its duplication 
     // 
      @Test
-     public void TestEncryptedData() {
+     public void TestEncryptDecryptedData() throws Exception {
          
          //it is in the correct formate and it is not duplicating 
+         String _pass="admin123";
+         String _encrptpass=Md5Encryption.encrypt(_pass);
+         String _decryptpass=Md5Encryption.decrypt(_encrptpass);
+         assertEquals(_pass, _decryptpass);
          // [Test Passed]
      }
 }

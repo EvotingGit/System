@@ -84,4 +84,21 @@ public class ElectionPartyReg extends Dbconnection{
        }
    }
    
+   public ResultSet LoadBallotaFormFillList()
+   {
+       ResultSet rsltst=null;
+        try
+        {
+           CallableStatement cs=Createconnection().prepareCall("{call FillBallotPaper()}");
+            rsltst = cs.executeQuery();
+            return rsltst;
+        }
+       catch(Exception ex)
+       {
+           ex.printStackTrace();
+           System.err.println(ex.getMessage());
+           return rsltst;
+       }
+   }
+   
 }

@@ -100,9 +100,7 @@ public class AdminRegister_Servlet extends HttpServlet {
                     String createddate=dateFormat.format(date);  
                     String updatedby=null;
                     String updateddate=null;
-                    String usernm=request.getParameter("usernam");
-                    String pass=request.getParameter("passwrd");
-                    String encrptpass=Md5Encryption.encrypt(pass);
+                   
                     
                     ResultSet rslt=userreg.insertUserdetails(UserID,userCode,usertype,fistname, lstname,gender,birthdy,mbno, lndno, nic, email,image,createdby,createddate,updatedby, updateddate);
                     if(rslt!=null)
@@ -115,6 +113,9 @@ public class AdminRegister_Servlet extends HttpServlet {
                             
                             if(post.equals("Administrator"))
                               {
+                                String usernm=request.getParameter("usernam");
+                                String pass=request.getParameter("passwrd");
+                                String encrptpass=Md5Encryption.encrypt(pass);
                                 String location=request.getParameter("loc");
                                 boolean boolrs1=adminReg.insertAdminDetail(UserId, location, createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
                                 if(boolrs1==true)
@@ -126,6 +127,9 @@ public class AdminRegister_Servlet extends HttpServlet {
                               }
                             if(post.equals("Candidate"))
                             {
+                                 String usernm=request.getParameter("usernam");
+                                 String pass=request.getParameter("passwrd");
+                                 String encrptpass=Md5Encryption.encrypt(pass);
                                  String partyid=request.getParameter("politicalparty");
                                  String seat=request.getParameter("seat");
                                  String electNo=request.getParameter("electno");
@@ -139,6 +143,9 @@ public class AdminRegister_Servlet extends HttpServlet {
                             }
                               if(post.equals("Sectary"))
                             {
+                                String usernm=request.getParameter("usernam");
+                                String pass=request.getParameter("passwrd");
+                                String encrptpass=Md5Encryption.encrypt(pass);
                                 Sectary sectry=new Sectary();
                                 String regparty=request.getParameter("regpoliparty");
                                 boolean boolrs1=sectry.InsertSectaryDetails(UserId,regparty,createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
@@ -152,12 +159,13 @@ public class AdminRegister_Servlet extends HttpServlet {
                               if(post.equals("Voter"))
                             {
                                  String electuuid  =createUUid.UniqueID();
-                                 CreateUniqueID.trimUUID(electuuid.toString());
+                                 String newelectuuid= CreateUniqueID.trimUUID(electuuid.toString());
                                  String stats="False"; 
                                  String poldiv=request.getParameter("polingdiv");
-                                 String voterpass=request.getParameter("nic");
-                                 String electNo=electuuid.toString();
-                                 boolean vtrboolrs1=voter.InsertVoterDetails(UserId,electNo,poldiv,stats,createdby,createddate,updatedby, updateddate,voterpass,post);
+                                 String electcrdNo=newelectuuid.toString();
+                                 String encrpyelectNo=Md5Encryption.encrypt(electcrdNo);
+                                 
+                                 boolean vtrboolrs1=voter.InsertVoterDetails(UserId,encrpyelectNo,poldiv,stats,createdby,createddate,updatedby,updateddate,post);
                                  if(vtrboolrs1==true)
                                 {
                                      HttpSession session=request.getSession(true);

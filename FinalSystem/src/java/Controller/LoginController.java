@@ -63,7 +63,7 @@ public class LoginController extends HttpServlet {
                      {
                           String fullName=fstName +" "+ lstName;
                           session.setAttribute("Admindetals", fullName);
-                          response.sendRedirect("../FinalSystem/JspPages/Adminregister.jsp");
+                          response.sendRedirect("../FinalSystem/JspPages/FINAL_TEMP.html");
                      }
                     
                   }               

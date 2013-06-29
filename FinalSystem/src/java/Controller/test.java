@@ -10,7 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -105,9 +107,9 @@ public class test extends HttpServlet {
 //        }
         try
         {
-            String pass=request.getParameter("pro");
-            String encryptPas=Md5Encryption.encrypt(pass);
-            String plainpassagain=Md5Encryption.decrypt(encryptPas);
+            String image=request.getParameter("image");          
+            Testmd xx=new Testmd();
+            xx.insertimage(image);
             
         }
         catch(Exception ex)
@@ -132,6 +134,35 @@ public class test extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             processRequest(request, response);
+             String connectionURL = "jdbc:mysql://192.168.10.59:3306/electionsystemdb";
+             java.sql.Connection con=null;
+            try{  
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con=DriverManager.getConnection(connectionURL,"root","root");  
+            Statement st1=con.createStatement();
+		ResultSet rs1 = st1.executeQuery("select * from Image");
+		String imgLen="";
+		if(rs1.next()){
+                    imgLen = rs1.getString(1);
+                    System.out.println(imgLen.length());
+		}	
+		rs1 = st1.executeQuery("select * from Image");
+		if(rs1.next()){
+                    int len = imgLen.length();
+                    byte [] rb = new byte[len];
+                    InputStream readImg = rs1.getBinaryStream(1);
+                    int index=readImg.read(rb, 0, len);	
+                    System.out.println("index"+index);
+                    st1.close();
+                   response.reset();
+                    response.setContentType("image/jpg");
+                   response.getOutputStream().write(rb,0,len);
+                    response.getOutputStream().flush();
+                }
+            }catch(Exception ex)
+            {
+                ex.toString();
+            }
        
     }
 

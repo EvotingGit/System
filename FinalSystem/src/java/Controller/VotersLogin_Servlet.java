@@ -51,13 +51,21 @@ public class VotersLogin_Servlet extends HttpServlet {
                 if(rsltst.next())
                 {
                   String _encrptelctioncrdno= rsltst.getString(1);   
-                   String _pollingdivID= rsltst.getString(3); 
+                  String _pollingdivID= rsltst.getString(3); 
+                  String userid= rsltst.getString(4);
                   String _plainelecrdNo=Md5Encryption.decrypt(_encrptelctioncrdno);
                   if(_plainelecrdNo.equalsIgnoreCase(_electcrdno)&& _pollingdivID.equals(_pooliId))
                   {
                           HttpSession session=request.getSession(true);
                           session.setAttribute("Admindetals", "Sucess");
+                          session.setAttribute("userid", userid);
                           response.sendRedirect("../FinalSystem/JspPages/BallotForm.jsp");
+                  }
+                  else
+                  {
+                       HttpSession session=request.getSession(true);
+                       session.setAttribute("Login", "Error");
+                       response.sendRedirect("../FinalSystem/JspPages/Adminlogin.jsp");
                   }
                 }
              }

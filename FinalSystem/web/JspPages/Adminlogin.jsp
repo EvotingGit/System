@@ -79,7 +79,15 @@
       <div class="login-box main-content">
       <header><h2>Login</h2></header>
     	<section>
-    		<div class="message info">Enter User Name and Password to Login</div>
+             <% if(session.getAttribute("mailsend")=="Error"){%>
+    		<div class="message act-danger">Invalid details provided, Please Try Again</div>
+            <% session.setAttribute("mailsend",null); 
+             }
+             else if(session.getAttribute("mailsend")=="Sucess"){%>
+             <div class="message act-danger">Please check you in-box</div><%
+             session.setAttribute("mailsend",null); 
+             } %> 
+                
     		<form name="formLogin"  id="formLogin" action="../LoginController" method="post" class="clearfix">
 			<p>
 				<input type="text" class="full" name="username" required="required" placeholder="User Name" />
@@ -88,15 +96,16 @@
 				<input type="password"  class="full"  name="password" required="required" placeholder="Password" />
 			</p>
 			<p class="clearfix">
-				<span class="fl">
+                             
+				<!--<span class="fl">
 					<input type="checkbox" id="remember" class="" value="1" name="remember"/>
 					<label class="choice" for="remember" style="display:inline">Remember me</label>
-				</span>
+				</span>-->
 
 				<button class="button button-gray fr" onclick="submitlogin();" type="Submit" name="loginBtn" id="loginBtn"> Login</button>
 			</p>
 		</form>
-		<ul><li><strong>HELP!</strong>&nbsp;<a href="#">I forgot my password!</a></li></ul>
+		<ul><li><strong>HELP!</strong>&nbsp;<a href="Forgetpass.jsp">I forgot my password!</a></li></ul>
     	</section>
     </div>
    

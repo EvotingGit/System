@@ -31,14 +31,23 @@ public class Md5Encryption {
         return encryptedValue;
     }
 
- public static String decrypt(String encryptedData) throws Exception {
+ public static String decrypt(String encryptedData){
+      String decryptedValue="";
+       try
+       {
         Key key = generateKey();
         Cipher c = Cipher.getInstance(ALGO);
         c.init(Cipher.DECRYPT_MODE, key);
         byte[] decordedValue = new BASE64Decoder().decodeBuffer(encryptedData);
         byte[] decValue = c.doFinal(decordedValue);
-        String decryptedValue = new String(decValue);
+        decryptedValue = new String(decValue);
         return decryptedValue;
+       }
+       catch(Exception ex)
+       {
+          ex.toString();
+          return decryptedValue;
+       }
     }
 
   private static Key generateKey() throws Exception {

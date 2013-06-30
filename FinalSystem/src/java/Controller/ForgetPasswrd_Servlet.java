@@ -4,8 +4,11 @@
  */
 package Controller;
 
+import Model.MailSender;
+import Model.forgetuserdetails;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author User
  */
-@WebServlet(name = "BallotServlet", urlPatterns = {"/BallotServlet"})
-public class BallotServlet extends HttpServlet {
+@WebServlet(name = "ForgetPasswrd_Servlet", urlPatterns = {"/ForgetPasswrd_Servlet"})
+public class ForgetPasswrd_Servlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -33,19 +36,37 @@ public class BallotServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        forgetuserdetails forgetuser=new forgetuserdetails();
+        MailSender mail=new MailSender();
         try {
-           
-           String emp_no1 = request.getParameter("code").toString(); 
-           
-           System.out.print(emp_no1);
-           String emp_no = request.getParameter("Cells[0].innerText").toString(); 
-            System.out.print(emp_no);
-            
-        } 
-        catch(Exception esd)
+            if(request.getParameter("sendBtn")!=null)
+            {
+                 String usermail=request.getParameter("email");
+                 String user=request.getParameter("usersname");
+                 
+                 ResultSet rsltst=forgetuser.Getforgetuserlogin(usermail,user);
+                  if(rsltst.next())
+                  {
+                    String email=rsltst.getString(1);
+                    String UserName=rsltst.getString(2);
+                    String Password=rsltst.getString(3);
+                    String plainpassagain=Md5Encryption.decrypt(Password);
+                    
+                    boolean sendmail=mail.Senderpassword(email, plainpassagain);
+                    if(sendmail==true){
+                         request.setAttribute("mailsend", "Sucess");
+                    }
+                    else{
+                      request.setAttribute("mailsend", "Error");
+                  } 
+                }
+            } 
+        }
+        catch(Exception ex)
         {
-            esd.toString();
-        }finally {            
+            ex.printStackTrace();
+        }finally
+        {
             out.close();
         }
     }

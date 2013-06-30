@@ -47,36 +47,7 @@ public void insertimage(String c) {
         throw new UnsupportedOperationException("Not yet implemented");
      }
     }
-/*public void getimages() {
-            try
-            {
-                Statement st1=con.createStatement();
-		ResultSet rs1 = st1.executeQuery("select * from Image");
-		String imgLen="";
-		if(rs1.next()){
-                    imgLen = rs1.getString(1);
-                    System.out.println(imgLen.length());
-		}	
-		rs1 = st1.executeQuery("select * from Image");
-		if(rs1.next()){
-                    int len = imgLen.length();
-                    byte [] rb = new byte[len];
-                    InputStream readImg = rs1.getBinaryStream(1);
-                    int index=readImg.read(rb, 0, len);	
-                    System.out.println("index"+index);
-                    st1.close();
-//                    response.reset();
-//                    response.setContentType("image/jpg");
-//                    response.getOutputStream().write(rb,0,len);
-//                    response.getOutputStream().flush();				
-		}
-		}
-		catch (Exception e){
-			e.printStackTrace();
-                         throw new UnsupportedOperationException("Not yet implemented");
-		}
-    }*/
-    
+
   
   public boolean  insertpass(String passw) throws SQLException
   {

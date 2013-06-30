@@ -61,7 +61,7 @@ public class LoginDetails extends Dbconnection {
        ResultSet rs=null;
         try
         {
-            String slectqry="SELECT sysusertbl.FirstName, sysusertbl.LastName,logindetails.UserType,logindetails.UserName,`logindetails`.`Password` "+ 
+            String slectqry="SELECT sysusertbl.UserID,sysusertbl.FirstName, sysusertbl.LastName,logindetails.UserType,logindetails.UserName,`logindetails`.`Password` "+ 
                             " FROM electionsystemdb.logindetails,electionsystemdb.sysusertbl"+
                             " where  logindetails.UserID=sysusertbl.UserID and logindetails.UserName=?";
             PreparedStatement ps=con.prepareStatement(slectqry);

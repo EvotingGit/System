@@ -55,69 +55,49 @@ public class test extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-//        byte[] b=null; 
-//         
-//        try {
-//               DiskFileItemFactory factory = new DiskFileItemFactory(); 
-//               ServletFileUpload sfu = new ServletFileUpload(factory); 
-//               List items = sfu.parseRequest(request); 
-//
-//               Iterator iter = items.iterator(); 
-//       
-//                while (iter.hasNext()) { 
-//                    FileItem item = (FileItem) iter.next(); 
-//                    if (!item.isFormField()) { 
-//                        b = item.get(); 
-//                    } 
-//                } 
-//                Testmd tst=new Testmd();
-//                tst.insertimage(b);
-//                
-//        }catch(Exception ex)
-//        {
-//            ex.toString();
-//        }
-//        finally {            
-//            out.close();
-//        }
+
+        String connectionURL = "jdbc:mysql://192.168.10.59:3306/electionsystemdb";
+             java.sql.Connection con=null;
+            try{  
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con=DriverManager.getConnection(connectionURL,"root","root");  
+            Statement st1=con.createStatement();
+		ResultSet rs1 = st1.executeQuery("select * from Image");
+		String imgLen="";
+		if(rs1.next()){
+                    imgLen = rs1.getString(1);
+                    System.out.println(imgLen.length());
+		}	
+		rs1 = st1.executeQuery("select * from Image");
+		if(rs1.next()){
+                    int len = imgLen.length();
+                    byte [] rb = new byte[len];
+                    InputStream readImg = rs1.getBinaryStream(1);
+                    int index=readImg.read(rb, 0, len);	
+                    System.out.println("index"+index);
+                    st1.close();
+                   response.reset();
+                  response.setContentType("image/jpg");
+                   response.getOutputStream().write(rb,0,len);
+                  response.getOutputStream().flush();
+                }
+            }catch(Exception ex)
+            {
+                ex.toString();
+            }
 //        try
 //        {
-//             System.out.println("inside jsp try");
-//             Testmd tst=new Testmd();
-//             ResultSet rsltst=tst.getimages();
-//             String imgLen = "";  
-//                while (rsltst.next()) {  
-//                    imgLen = rsltst.getString(1);  
-//                    System.out.println(imgLen.length());  
-//                    int len = imgLen.length();  
-//                    byte[] rb = new byte[len];  
-//                    InputStream readImg = rsltst.getBinaryStream(1);  
-//                    int index = readImg.read(rb, 0, len);  
-//                    System.out.println("Index.........." + index);  
-//  
-//                    response.reset();  
-//                    response.setContentType("image/jpg");  
-//                    response.getOutputStream().write(rb, 0, len);  
-//                    response.getOutputStream().flush();  
-//                }  
+//            String image=request.getParameter("image");          
+//            Testmd xx=new Testmd();
+//            xx.insertimage(image);
+//            
 //        }
 //        catch(Exception ex)
-//        {
-//            System.out.println("Error" + ex);  
+//        {    
+//        ex.toString();
+//        } finally {            
+//            out.close();
 //        }
-        try
-        {
-            String image=request.getParameter("image");          
-            Testmd xx=new Testmd();
-            xx.insertimage(image);
-            
-        }
-        catch(Exception ex)
-        {    
-        ex.toString();
-        } finally {            
-            out.close();
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -155,9 +135,9 @@ public class test extends HttpServlet {
                     System.out.println("index"+index);
                     st1.close();
                    response.reset();
-                    response.setContentType("image/jpg");
+                  response.setContentType("image/jpg");
                    response.getOutputStream().write(rb,0,len);
-                    response.getOutputStream().flush();
+                  response.getOutputStream().flush();
                 }
             }catch(Exception ex)
             {

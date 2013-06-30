@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author User
  */
-@WebServlet(name = "BallotServlet", urlPatterns = {"/BallotServlet"})
-public class BallotServlet extends HttpServlet {
+@WebServlet(name = "GenertePollingDivision_Province", urlPatterns = {"/GenertePollingDivision_Province"})
+public class GenertePollingDivision_Province extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -34,18 +34,16 @@ public class BallotServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-           
-           String emp_no1 = request.getParameter("code").toString(); 
-           
-           System.out.print(emp_no1);
-           String emp_no = request.getParameter("Cells[0].innerText").toString(); 
-            System.out.print(emp_no);
-            
-        } 
-        catch(Exception esd)
-        {
-            esd.toString();
-        }finally {            
+            if(request.getParameter("hiidenbtn")!=null)
+             {
+                request.getRequestDispatcher("PollingDivision_Province.jsp").forward(request, response);
+                response.sendRedirect("PollingDivision_Province.jsp");
+            }
+            if(request.getParameter("btngnerate")!=null)
+            {
+                
+            }
+        } finally {            
             out.close();
         }
     }

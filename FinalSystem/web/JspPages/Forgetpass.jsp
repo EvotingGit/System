@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-	<title>BootAdmin - Responsive Admin HTML Template</title>
+	<title> Administrator Login </title>
 	
 	<!-- Meta -->
 	<meta charset="utf-8" />
@@ -43,97 +42,19 @@
 	
 	<!-- Theme -->
 	<link rel="stylesheet" href="theme/css/style.min.css?1358876495" />
-	<link rel="stylesheet" href="WZ/css/smart_wizard.css" type="text/css"/>
+	
 	
 	
 	<!-- LESS 2 CSS -->
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
-    <script src="WZ/js/jquery.smartWizard.js"></script>
- 
-    <script type="text/javascript">
-    $(document).ready(function(){
-    	// Smart Wizard 	
-  		$('#wizard').smartWizard();
-      
-      function onFinishCallback(){
-        $('#wizard').smartWizard('showMessage','Finish Clicked');
-        //alert('Finish Clicked');
-      }     
-		});
-</script>
-
-<script type="application/javascript">
-    function setupLabel() {
-        if ($('.label_check input').length) {
-            $('.label_check').each(function(){ 
-                $(this).removeClass('c_on');
-            });
-            $('.label_check input:checked').each(function(){ 
-                $(this).parent('label').addClass('c_on');
-            });                
-        };
-        if ($('.label_radio input').length) {
-            $('.label_radio').each(function(){ 
-                $(this).removeClass('r_on');
-            });
-            $('.label_radio input:checked').each(function(){ 
-                $(this).parent('label').addClass('r_on');
-            });
-        };
-    };
-    $(document).ready(function(){
-        $('body').addClass('has-js');
-        $('.label_check, .label_radio').click(function(){
-            setupLabel();
-        });
-        setupLabel(); 
-    });
-</script>
-
-<script type="application/javascript">
-    $(document).ready(function(){
-$('#stTwo input[type=checkbox]').click(function() {
-
-    var bol = $('#stTwo input[type=checkbox]:checked').length >= 3;     
-    $('#stTwo input[type=checkbox]').not(":checked").attr("disabled",bol);
-	
-	if(bol)
-		$('#stTwo input[type=checkbox]').not(":checked").parent().addClass("dsb");
-		
-		else{
-		
-		$('#stTwo input[type=checkbox]').not(":checked").parent().removeClass("dsb");
-		}
-		
-});
-});
-</script>
-
-<script type="application/javascript">
-    $(document).ready(function(){
-$('#stOne input[type=checkbox]').click(function() {
-
-    var bol = $('#stOne input[type=checkbox]:checked').length >= 1;     
-    $('#stOne input[type=checkbox]').not(":checked").attr("disabled",bol);
-	
-	if(bol)
-		$('#stOne input[type=checkbox]').not(":checked").parent().addClass("dsb");
-		
-		else{
-		
-		$('#stOne input[type=checkbox]').not(":checked").parent().removeClass("dsb");
-		}
-		
-});
-});
-</script>
-
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<style type="text/css">
-<!--
-.style1 {color: #FFFFFF}
--->
-</style>
+<script type="text/javascript" >
+    function submitlogin()
+    {       //validation part
+               sendBtn.click();
+           
+    }
+</script>
 </head>
 <body>
 	
@@ -146,395 +67,65 @@ $('#stOne input[type=checkbox]').click(function() {
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<div class="positionWrapper">
-					<span class="line"></span>
-										<div class="profile">
-						<img src="#" class="avatar" alt="Profile" />
-						<span class="info hidden-phone">
-							<strong>Adrian Demian</strong>
-							<em>Content Manager</em>
-						</span>
-					</div>
-					<ul class="notif">
-						<li><a href="" class="glyphicons chat btn" rel="tooltip" data-placement="bottom" data-original-title="7 new chat message(s)"><i></i><span>7</span></a></li>
-						<li><a href="" class="glyphicons shopping_cart btn" rel="tooltip" data-placement="bottom" data-original-title="1 new product(s)"><i></i><span>1</span></a></li>
-						<li><a href="" class="glyphicons user_add btn" rel="tooltip" data-placement="bottom" data-original-title="4 new member(s)"><i></i><span>4</span></a></li>
-						<li><a href="" class="glyphicons envelope btn" rel="tooltip" data-placement="bottom" data-original-title="3 new email(s)"><i></i><span>3</span></a></li>
-					</ul>
-										<ul class="topnav hidden-phone">
-						<li>
-							<div class="btn-group">
-								<a href="#" class="btn-inverse dropdown-toggle" data-toggle="dropdown">
-								<img src="theme/images/lang/en.png" align="absmiddle" />
-								<span class="caret"></span></a>
-						    	<ul class="dropdown-menu pull-right">
-						      		<li class="active"><a href="?page=index&lang=en" title="English"><img src="theme/images/lang/en.png" align="absmiddle" /> English</a></li>
-						      		<li><a href="?page=index&lang=ro" title="Romanian"><img src="theme/images/lang/ro.png" align="absmiddle" /> Romanian</a></li>
-						      		<li><a href="?page=index&lang=it" title="Italian"><img src="theme/images/lang/it.png" align="absmiddle" /> Italian</a></li>
-						      		<li><a href="?page=index&lang=fr" title="French"><img src="theme/images/lang/fr.png" align="absmiddle" /> French</a></li>
-						    	</ul>
-						  	</div>
-						</li>
-												<li>
-							<a href="#themer" data-toggle="collapse" class="logout glyphicons eyedropper"><i></i><span>Themer</span></a>
-							<div id="themer" class="collapse">
-								<div class="wrapper">
-									<h4>Themer <span>color &amp; layout options</span></h4>
-									<ul>
-										<li>Theme: <select id="themer-theme" class="pull-right"></select><div class="clearfix"></div></li>
-										<li>Primary Color: <input type="minicolors" data-default="#ffffff" data-slider="hue" data-textfield="false" data-position="left" id="themer-primary-cp" /><div class="clearfix"></div></li>
-										<li class="advanced">Header Color: <input type="minicolors" data-slider="hue" data-default="#ffffff" data-textfield="false" data-position="left" id="themer-header-cp" /><div class="clearfix"></div></li>
-										<li class="advanced">Menu Color: <input type="minicolors" data-slider="hue" data-default="#ffffff" data-textfield="false" data-position="left" id="themer-menu-cp" /><div class="clearfix"></div></li>
-										<li>
-											<span class="link" id="themer-custom-reset">reset theme</span>
-											<span class="pull-right"><label>advanced <input type="checkbox" value="1" id="themer-advanced-toggle" /></label></span>
-										</li>
-									</ul>
-																		<hr class="separator" />
-									<ul>
-										<li>Menu position: <select id="themer-menu-position" class="pull-right"></select><div class="clearfix"></div></li>
-										<li>Menu size: <select id="themer-menu-size" class="pull-right"></select><div class="clearfix"></div></li>
-									</ul>
-																		<div id="themer-getcode" class="hide">
-										<hr class="separator" />
-										<button class="btn btn-primary btn-small pull-right btn-icon glyphicons download" id="themer-getcode-less"><i></i>Get LESS</button>
-										<button class="btn btn-inverse btn-small pull-right btn-icon glyphicons download" id="themer-getcode-css"><i></i>Get CSS</button>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
-						</li>
-																		<li>
-							<a href="login.html" class="logout glyphicons lock"><i></i><span>Logout</span></a>
-						</li>
-											</ul>
+					
+									
 				</div>
 			</div>
 		</div>
- <!--       middle start-->
-<div class="middle_main">
-	<table align="center" border="0" cellpadding="0" cellspacing="0">
-<tr><td> 
-<!-- Smart Wizard -->
-  		<div id="wizard" class="swMain">
-  			<ul>
-  				<li><a href="#step-1">
-                <label class="stepNumber">1</label>
-                <span class="stepDesc">
-                   Step 1<br />
-                   <small>Step 1 description</small>
-                </span>
-            </a></li>
-  				<li><a href="#step-2">
-                <label class="stepNumber">2</label>
-                <span class="stepDesc">
-                   Step 2<br />
-                   <small>Step 2 description</small>
-                </span>
-            </a></li>
-  			
-  				<li><a href="#step-3">
-                <label class="stepNumber">3</label>
-                <span class="stepDesc">
-                   Step 3<br />
-                   <small>Step 3 description</small>
-                </span>                   
-            </a></li>
-  			</ul>
-  			<div id="step-1">	
-           <!-- <h2 class="StepTitle">Step 1 Content</h2>-->
-          <div class="select_party_fm1">
-          
-          <div class="relativeWrap">
-	<div class="widget widget-gray widget-gray-white">
-		<div class="widget-head"><h4 class="heading">Bordered Table</h4></div>
-		<div class="widget-body">
-			<table class="table table-bordered partySymbole" id="stOne">
-				<thead>
-					<tr>
-						<th width="20" class="center">Approved Symbol</th>
-						<th width="250" class="center">Name of the Party</th>
-                        <th width="75" class="center">Your Vote</th>
-					</tr>
-				</thead>
-				<tbody>
-                                    <%
-            ResultSet rs=null;
-            Member membr=new Member();
-            rs=membr.MemberDetils();
-                while(rs.next())
-                {        
-                %>
-					<tr>
-						<td class="center"><label class="UPFA"></label></td>
-						<td><label> United People's Freedom Alliance </label> </td>
-                        <td class="center">
-                        <label class="check_img"></label>
-                        <span><input type="checkbox" class="ch"></span></td>
-					</tr>
-					<tr>
-						<td class="center"><label class="UNP"></label></td>
-						<td><label>United National Party</label></td>
-                        <td class="center"><span><input type="checkbox" class="ch"></span></td>
-					</tr>
-					<tr>
-						<td class="center"><label class="PLF"></label></td>
-						<td><label>People's Liberation Front </label></td>
-                        <td class="center"><span><input type="checkbox"></span></td>
-					</tr>
-                    
-                    
-                    <tr>
-                    <td class="center"><label class="NFF"></label></td>
-                    <td><label>National Freedom Front</label></td>
-                    <td class="center"><span><input type="checkbox"></span></td>
-                    </tr>
-                    
-                       <tr>
-                    <td class="center"><label class="NDF"></label></td>
-                    <td><label>New Democratic Front </label></td>
-                    <td class="center"><span><input type="checkbox"></span></td>
-                    </tr>
-                    
-           
-                    <tr>
-						<td class="center"><label class="JHU"></label></td>
-						<td><label>Jathika Hela Urumaya</label> </td>
-                        <td class="center"><span><input type="checkbox"></span></td>
-					</tr>
-					<tr>
-						<td class="center"><label class="MEP"></label></td>
-						<td><label>Mahajana Eksath Peramuna</label></td>
-                        <td class="center"><span><input type="checkbox"></span></td>
-					</tr>
-					<tr>
-						<td class="center"><label class="SLMC"></label></td>
-						<td><label>Sri Lanka Muslim Congress </label></td>
-                        <td class="center"><span><input type="checkbox"></span></td>
-					</tr>
-                    
-                    
-                    <tr>
-                    <td class="center"><label class="LSSP"></label></td>
-                    <td><label>Lanka Sama Samaja Party </label></td>
-                    <td class="center"><span><input type="checkbox"></span></td>
-                    </tr>
-                    
-                       <tr>
-                    <td class="center"><label class="RJP"></label></td>
-                    <td><label>Ruhunu Janatha Party </label></td>
-                    <td class="center"><span><input type="checkbox"></span></td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-				</tbody>
-			</table>
-		</div>
-	</div>
-	</div>
-          </div>
-          
-          
-        </div>
-  			<div id="step-2">
-           <table class="table table-bordered partySymbole" id="stTwo">
-				<thead>
-					<tr>
-						<th width="20" class="center">Number</th>
-						<th width="250" class="center">Name</th>
-                        <th width="75" class="center">Your Vote</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="center"><label class="v_number">12</label></td>
-						<td><label class="v_name">Pathirage Don Nimal Perera</label> </td>
-                        <td class="center">
-						<label class="label_check">
-                         <input type="checkbox" id="checkbox-01"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-02"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-03"/>
-                         </lable>
-                         </td>
-					</tr>
-					<tr>
-						<td class="center"><label class="v_number">08</label></td>
-						<td><label class="v_name">Rathnaweera Mudiyansage Janaka Dias</label></td>
-                        <td class="center"><label class="label_check">
-                         <input type="checkbox" id="checkbox-0111"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-0222"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-0333"/>
-                         </lable></td>
-					</tr>
-					<tr>
-						<td class="center"><label class="v_number">42</label></td>
-						<td><label class="v_name">Pannilage Don Sarath Kusumsiri</label></td>
-                        <td class="center"><label class="label_check">
-                         <input type="checkbox" id="checkbox-04"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-05"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-06"/>
-                         </lable></td>
-					</tr>
-                    
-                    
-                    <tr>
-                    <td class="center"><label class="v_number">25</label></td>
-                    <td><label class="v_name">Samaraweera Rajakaruna </label></td>
-                    <td class="center"><label class="label_check">
-                         <input type="checkbox" id="checkbox-07"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-08"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-09"/>
-                         </lable>
-					</td>
-                    </tr>
-                    
-                       <tr>
-                    <td class="center"><label class="v_number">12</label></td>
-                    <td><label class="v_name">Dulip Gajabamudali</label></td>
-                    <td class="center"><label class="label_check">
-                         <input type="checkbox" id="checkbox-010"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-012"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-013"/>
-                         </lable></td>
-                    </tr>
-                    
-           
-                    <tr>
-						<td class="center"><label class="v_number">35</label></td>
-						<td><label class="v_name">Pushpakumara Liyanage</label> </td>
-                        <td class="center">
-						<label class="label_check">
-                         <input type="checkbox" id="checkbox-014"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-015"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-016"/>
-                         </lable>
-						</td>
-					</tr>
-					<tr>
-						<td class="center"><label class="v_number">54</label></td>
-						<td><label class="v_name">Francis Kodithuwakku</label></td>
-                        <td class="center">
-						<label class="label_check">
-                         <input type="checkbox" id="checkbox-017"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-018"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-019"/>
-                         </lable>
-						</td>
-					</tr>
-					<tr>
-						<td class="center"><label class="v_number">04</label></td>
-						<td><label class="v_name">Rathnaweera Mudiyansege Aravinda Perumarl</label></td>
-                        <td class="center">
-						<label class="label_check">
-                         <input type="checkbox" id="checkbox-020"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-021"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-022"/>
-                         </lable>
-						</td>
-					</tr>
-                    
-                    
-                    <tr>
-                    <td class="center"><label class="v_number">05</label></td>
-                    <td><label class="v_name">Ranasingha arachchige Ruwini Madumarli </label></td>
-                    <td class="center">
-					<label class="label_check">
-                         <input type="checkbox" id="checkbox-023"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-024"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-025"/>
-                         </lable>
-					</td>
-                    </tr>
-                    
-                       <tr>
-                    <td class="center"><label class="v_number">13</label></td>
-                    <td><label class="v_name">Madura Jayasingha</label></td>
-                    <td class="center">
-					<label class="label_check">
-                         <input type="checkbox" id="checkbox-026"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-027"/>
-                         </lable>
-						 <label class="label_check">
-                         <input type="checkbox" id="checkbox-028"/>
-                         </lable>
-					</td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-				</tbody>
-			</table>
-        </div>                      
-  			<div id="step-3">
-           <div class="success_msg">
-           <span> Thank You Very Much</span>
-           </div>
-             				          
-        </div>
-  			
-  		</div>
-<!-- End SmartWizard Content -->  		
- 		
-</td></tr>
-</table>
+   <div class="middle_main">
 
-	</div>				
-	 <!--       middle end-->
-	 <span class="style1"></span>	
+   <div class="user_log">
+   
+      <div class="login-box main-content">
+      <header><h2>Forget Password</h2></header>
+    	<section>
+    		<div class="message info"></div>
+    		<form name="formLogin"  id="formLogin" action="../ForgetPasswrd_Servlet" method="post" class="clearfix">
+			<p>
+				<input type="text" class="full" name="email" required="required" placeholder="E-mail" />
+			</p>
+			<p>
+				<input type="text"  class="full"  name="usersname" required="required" placeholder="UserName" />
+			</p>
+			<p class="clearfix">
+			<button class="button button-gray fr" onclick="submitlogin();" type="Submit" name="sendBtn" id="sendBtn">Send</button>
+			</p>
+		</form>
+		<ul><li><strong></strong>&nbsp;<a href="Adminlogin.jsp">Back to Login</a></li></ul>
+    	</section>
+    </div>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   </div>
+   
+   
+   
+   
+   
+   
+   
+   
+   </div>     
+	
+
+					
+		
 		<!-- Sticky Footer -->
-<div id="footer">
+		<div id="footer">
 	      	<div class="wrap">
 	      		<p>Nalin Costa</p>
 	      	</div>
 	    </div>
 		
-</div>
+	</div>
+	
 	<!-- Cubiq iScroll -->
 	<!--[if gte IE 9]><!-->
 	<script src="theme/scripts/cubiq-iscroll/src/iscroll.js"></script>

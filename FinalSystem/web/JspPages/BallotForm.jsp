@@ -70,8 +70,9 @@
       }     
 		});
 </script>
-<script>
-    function GetXmlHttpObject()
+<script type="text/javascript">
+    
+function GetXmlHttpObject()
 {
     var xmlHttp=null;
     try
@@ -94,31 +95,71 @@
     return xmlHttp;
 }
 
-
     function loadcandidates(chkvalue)
     {
-        
-        xmlHttp=GetXmlHttpObject()  
+      
          if($(chkvalue).is(':checked')){ 
               var Row = document.getElementById("abc");
               var Cells = Row.getElementsByTagName("td");
               var poliId=Cells[0].innerText;
-
-        $.ajax
-        (
-            {
-                
-                url:'/WebApplication1/Controller',
-                data:"",
-                type:'post',
-                cache:false,
-                success:function(data){alert(data);},
-                error:function(){alert('error');}
+            alert(poliId);
+            xmlHttp=GetXmlHttpObject()       //Initializs the XMLHttpRequest() object.
+            if (xmlHttp==null){
+                alert ("Browser does not support HTTP Request")
+            return
             }
-        );
+            var url="newjsp.jsp"  // jsp for data extraction from the DB for the specified employee id
+            url=url+"?p_id="+poliId  // employee_id & page url is concatenated & arranged to send as  a query string
+            xmlHttp.open("GET",url,true)  // data being sent via the GET() asynchronously. That is why you have stated as true.
+            xmlHttp.send() //pass data to the getuser.jsp 
+            xmlHttp.onreadystatechange=stateChanged  //Called to the stateChanged  method. According to Ajax syntax () isn`t required to denote a method.
+
+
+                    //$.ajax
+       // (
+          //  {
+           //     url: '../BallotServlet',
+           //     data: {postVariableName: poliId},
+            //    type:'post',
+            //    cache:false,
+            //    success:function(data){alert(data);},
+            //    error:function(){alert('error');}
+           // }
+       // );
     }
+    else
+        {
+                 alert("Please Select Political Party Name");
+        }
          
 }
+
+function stateChanged()
+{
+        document.getElementById("cid").value ="";
+        document.getElementById("cNumber").value ="";
+        document.getElementById("cName").value ="";
+        
+        if (xmlHttp.readyState==4 || xmlHttp.status==200)    // 4 -> request finished and response is ready   // 200 ->"OK"
+        {
+
+            var showdata = xmlHttp.responseText;  // capture data sent from getuser.jsp from the  out.println(data);
+            var strar = showdata.split(":");  // response sent via out.println(data) as a stream is separated.
+
+       if(strar.length>1)
+         {
+            //data = ":" + rs.getString(2) + " : " + rs.getString(3) +":"+ emp_id;
+        // locations =  0                          1                                       2                    3
+        alert("Please Select Employee");
+        document.getElementById("cid").value= strar[1];
+        document.getElementById("cNumber").value= strar[2];
+        document.getElementById("cName").value= strar[3];
+       
+      }
+
+ }
+}
+
 </script>
 
 <script type="application/javascript">
@@ -195,7 +236,17 @@ $('#stOne input[type=checkbox]').click(function() {
 </style>
 </head>
 <body>
-	
+	<%
+   
+   if(session.getAttribute("Usrid")== null){
+            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
+            response.sendRedirect("404.html");
+      } 
+   else
+      {String Usrid=session.getAttribute("userid").toString();
+   }
+     
+     %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
@@ -297,7 +348,7 @@ $('#stOne input[type=checkbox]').click(function() {
                                     while(insertreslt.next())
                                     {%>
 					<tr id="abc">
-                                                <td class="center" width="20" style="display: none" ><%= insertreslt.getString(1) %></td>
+                                                <td name="code" class="center" width="20" style="display: none" ><%= insertreslt.getString(1) %></td>
 						<td class="center"><label class="UPFA"></label></td>
                                                 <td><label> <%= insertreslt.getString(3) %></label> </td>
                                                 <td class="center"><label class="label_check"></label><span><input type="checkbox" name="vote" onclick="loadcandidates(this);" class="ch"></span></td>
@@ -378,20 +429,13 @@ $('#stOne input[type=checkbox]').click(function() {
 					</tr>
 				</thead>
 				<tbody>
-                                    <%
-                                    try{
-                                        
-                                        if(candidatereslt!=null){
-                                            while(candidatereslt.next())
-                                            {
-                                            String FrstName= candidatereslt.getString(3);
-                                            String LstName= candidatereslt.getString(4);
-                                            String FullName=FrstName+ " "+LstName;
-                                            %>
+                                   
+                                  
+                                          
 					<tr>
-                                            <td class="center" style="display: none"><%= candidatereslt.getString(1) %></td>
-						<td class="center"><label class="v_number"><%= candidatereslt.getString(1) %></label></td>
-						<td><label class="v_name"><%= FullName %></label> </td>
+                                            <td class="center" style="display: none"><input type="text" name="cid" id="cid"/></td>
+                                            <td class="center" ><label class="v_number" name="cNumber" id="cNumber"></label></td>
+						<td><label class="v_name" name="cName" id="cName"></label> </td>
                                                 <td class="center">
                                                     <label class="label_check">
                                                     <input type="checkbox" id="checkbox-01"/>
@@ -404,17 +448,11 @@ $('#stOne input[type=checkbox]').click(function() {
                                                     </lable>
                                                 </td>
 					</tr>
-                                         <% }
-                                        }
-                                        else{%>
+                                        
                                         <tr class="center">
                 
                                         </tr>
-                                        <%} 
-                                        }
-                                        catch(Exception ex){
-                                            
-                                        }%>
+                                       
 				    <!--<tr>
 						<td class="center"><label class="v_number">08</label></td>
 						<td><label class="v_name">Rathnaweera Mudiyansage Janaka Dias</label></td>

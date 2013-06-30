@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>LOGIN </title>
+	<title>Voter Login </title>
 	
 	<!-- Meta -->
 	<meta charset="utf-8" />
@@ -44,6 +44,12 @@
 	
 	<!-- Theme -->
 	<link rel="stylesheet" href="theme/css/style.min.css?1358876495" />
+        
+        <!-- ColorPicker -->
+	<link rel="stylesheet" media="screen" href="theme/scripts/farbtastic/farbtastic.css" />
+
+        <!-- LESS 2 CSS -->
+	<script src="theme/scripts/less-1.3.3.min.js"></script>
 	
 	
 	
@@ -144,14 +150,14 @@
 				<input type="text"   class="full"  name="ElctioncrdNo" required="required" placeholder="Election Card No" />
 			</p>
 			<p>
-				<input type="password"  class="full"  name="Nicno" required="required" placeholder="NIC No" />
+				<input type="text"  class="full"  name="Nicno" required="required" placeholder="NIC No" />
 			</p>
                         <p>
 			<%
                     try {
                           PollingDivisionRegister pollingDiv=new PollingDivisionRegister();
                           ResultSet rslts=pollingDiv.LoadPollingDivCombo();%>
-                           <select name="pollid" class="selectpicker">
+                           <select name="pollid" class="full"  class="selectpicker">
                            <% while(rslts.next())
                            { %>  
                                 <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>

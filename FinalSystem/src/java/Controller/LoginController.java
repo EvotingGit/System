@@ -10,6 +10,7 @@ import Model.UserRegister;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,18 +53,23 @@ public class LoginController extends HttpServlet {
                 ResultSet rsltst=login.GetLoginDetails(user);
                 if(rsltst.next())
                 {
-                  String encrptpass= rsltst.getString(5);   
+                  String encrptpass= rsltst.getString(6);   
                   String plainpassagain=Md5Encryption.decrypt(encrptpass);
                   if(plainpassagain.equalsIgnoreCase(planepass))
                   {
-                     String fstName=rsltst.getString(1);
-                     String lstName=rsltst.getString(2);
-                     String usertype=rsltst.getString(3);
+                     String userId=rsltst.getString(1); 
+                     String fstName=rsltst.getString(2);
+                     String lstName=rsltst.getString(3);
+                     String usertype=rsltst.getString(4);
                      if(usertype.equals("Administrator"))
                      {
-                          String fullName=fstName +" "+ lstName;
-                          session.setAttribute("Admindetals", fullName);
-                          response.sendRedirect("../FinalSystem/JspPages/FINAL_TEMP.html");
+                         ArrayList list =new ArrayList();
+                         String fullName=fstName +" "+ lstName;
+                          list.add(fullName);
+                          list.add(userId);
+                          list.add(usertype);
+                          session.setAttribute("Admindetals", list);
+                          response.sendRedirect("../FinalSystem/JspPages/FINAL_TEMP_1.jsp");
                      }
                     
                   }               

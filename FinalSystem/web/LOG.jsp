@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>BootAdmin - Responsive Admin HTML Template</title>
+	<title>Main Page</title>
 	
 	<!-- Meta -->
 	<meta charset="utf-8" />
@@ -53,7 +53,7 @@
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
-		<div class="navbar main">
+		<!--<div class="navbar main">
 			<div class="innerpx">
 				<button type="button" class="btn btn-navbar hidden-desktop hidden-tablet">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
@@ -67,7 +67,7 @@
 							<em></em>
 						</span>
 					</div>
-					<ul class="notif">
+					<!--<ul class="notif">
 						<li><a href="" class="glyphicons chat btn" rel="tooltip" data-placement="bottom" data-original-title="7 new chat message(s)"><i></i><span>7</span></a></li>
 						<li><a href="" class="glyphicons shopping_cart btn" rel="tooltip" data-placement="bottom" data-original-title="1 new product(s)"><i></i><span>1</span></a></li>
 						<li><a href="" class="glyphicons user_add btn" rel="tooltip" data-placement="bottom" data-original-title="4 new member(s)"><i></i><span>4</span></a></li>
@@ -122,7 +122,7 @@
 											</ul>
 				</div>
 			</div>
-		</div>
+		</div>-->
    <div class="middle_main">
    <div class="select_user">
    
@@ -131,11 +131,11 @@
  <div class="topic">SELECT USER</div>
  
 <div class="user_button">
-<a href="JspPages/admin_log.html">
+<a href="JspPages/Adminlogin.jsp">
 <span class="user_button_inner">
 <img width="77px" height="87px" src="JspPages/IMG/admin.png">
 </span>
-<span>Admin</span>
+<span>System Users</span>
 </a>
 </div>
 
@@ -143,11 +143,11 @@
 
 
 <div class="user_button">
-<a href="JspPages/user_log.html">
+<a href="JspPages/Voterlog.jsp">
 <span class="user_button_inner">
 <img width="77px" height="87px" src="JspPages/IMG/user.png">
 </span>
-<span>User</span>
+<span>Voters</span>
 </a>
 </div>
 

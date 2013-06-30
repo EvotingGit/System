@@ -4,35 +4,40 @@
     Author     : User
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-        <form action="../test" method="get">
-            <table>
-                <tr>
-                 <td>
-                         <div style="padding-bottom: 11px;"> 
-                         <div class="fileupload fileupload-new" data-provides="fileupload">
-			<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
-			<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-			<div>
-			<span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span>
-                        <input type="file" name="image" /></span>
-		    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-			</div>
-			</div>
-                      </div>
-                    </td>
-                </tr>
-            </table>
-            <input type="submit" value="click" />
-            <input type="submit" value="view" />
-        </form>
-    </body>
-</html>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%  
+      String poli_id = request.getParameter("p_id").toString(); // query string capture
+      %>
+      alert(poli_id);
+      <% String  data ="";
+      Connection conn = null;
+      int sumcount=0;
+      Statement st;
+    try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/electionsystemdb", "root", "");
+            String query = "SELECT  candidatetble.UserID, candidatetble.PreferenceNo,sysusertbl.FirstName,sysusertbl.LastName "+
+                           " FROM electionsystemdb.candidatetble,electionsystemdb.sysusertbl,electionsystemdb.politicalpartytbl "+
+                           " WHERE  candidatetble.UserID=sysusertbl.UserID AND candidatetble.PoliPartyID=politicalpartytbl.PoliPartyID "+
+                           " AND  candidatetble.PoliPartyID='"+poli_id.trim()+"'";
+            st = conn.createStatement();
+            ResultSet  rs = st.executeQuery(query);
+                while(rs.next())
+                {
+                    String cid=rs.getString(1);
+                    String cNo=rs.getString(2);
+                    String candiFstName=rs.getString(3);
+                    String candiLstName=rs.getString(4);
+                    String FulName=candiFstName+" "+ candiLstName;
+                    
+                    data = ":" + cid + ":" + cNo+" "+ FulName;  // data concatenation separated via  ?:?
+                }
+                out.println(data);  // used to send data to the response object of the combo.jsp
+        }
+        catch (Exception e) {
+             e.printStackTrace();
+    }
+ %>

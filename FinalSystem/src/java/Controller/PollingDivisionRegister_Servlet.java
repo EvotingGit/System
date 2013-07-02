@@ -47,7 +47,7 @@ public class PollingDivisionRegister_Servlet extends HttpServlet {
                String PollingDivisionCode=request.getParameter("p_divisioncode");
                String PollingDivisionName=request.getParameter("p_divisionname");
                int RegPoliticalParty=Integer.parseInt(request.getParameter("Seatsamount"));
-               int RegVotersamuont=Integer.parseInt(request.getParameter("regisvoteramount"));
+               int RegVotersamuont=0;//Integer.parseInt(request.getParameter("regisvoteramount"));
                String DistricID=request.getParameter("distrcid");
                
                PollingDivisionRegister pollingDivisionRegmodel=new PollingDivisionRegister();
@@ -56,7 +56,7 @@ public class PollingDivisionRegister_Servlet extends HttpServlet {
                 {
                         HttpSession session=request.getSession(true);
                         session.setAttribute("Register", "Sucess");
-                        response.sendRedirect("../Evoting/JspPages/AddPollingDivisionDetails.jsp");
+                        response.sendRedirect("../FinalSystem/JspPages/AddPollingDivisionDetails.jsp");
                 }
            }
         } finally {            

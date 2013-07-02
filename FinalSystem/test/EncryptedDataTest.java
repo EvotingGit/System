@@ -32,18 +32,17 @@ public class EncryptedDataTest {
     public void tearDown() {
     }
     // TODO add test methods here.
+    
     // The methods connect with the data encryption function
     // in that case this unit test wether user pass word is correctly encrypted in 
-    // AES (crypto) formate and its duplication 
-    // 
+    // AES (crypto) formate and its duplication
      @Test
      public void TestEncryptDecryptedData() throws Exception {
-         
-         //it is in the correct formate and it is not duplicating 
+
          String _pass="admin123";
          String _encrptpass=Md5Encryption.encrypt(_pass);
          String _decryptpass=Md5Encryption.decrypt(_encrptpass);
          assertEquals(_pass, _decryptpass);
-         // [Test Passed]
+         //[Test Passed]
      }
 }

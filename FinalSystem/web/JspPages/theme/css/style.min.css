@@ -829,6 +829,12 @@ background: linear-gradient(to bottom, #000000 2%,#45484d 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#45484d',GradientType=0 ); /* IE6-9 */}	
 
 .admin_register_wrapper form{ margin:0px;}
+
+.tbNormal thead th{color:#333333; text-shadow:#000 0px 1px 0px;
+background: #333; text-align:center;
+
+}
+
 /*gk end*/
 
 

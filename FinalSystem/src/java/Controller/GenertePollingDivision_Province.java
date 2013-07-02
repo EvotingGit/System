@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.SeatDetailsRpt;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,6 +35,7 @@ public class GenertePollingDivision_Province extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        SeatDetailsRpt rprtgenrter=new SeatDetailsRpt();
         try {
             if(request.getParameter("hiidenbtn")!=null)
              {
@@ -41,9 +44,30 @@ public class GenertePollingDivision_Province extends HttpServlet {
             }
             if(request.getParameter("btngnerate")!=null)
             {
-                
+                boolean reprt=false;
+                HttpSession session=request.getSession(true);
+                String provinceId = request.getParameter("provinceid");
+                 if(provinceId!=null)
+                 {
+                     reprt= rprtgenrter.GenrateSeatDetails(provinceId);
+                         if(reprt==true)
+                         {
+                            session.setAttribute("SectaryRegister", "Sucess");
+                            response.sendRedirect("../FinalSystem/JspPages/PollingDivision_Province.jsp"); 
+                         } 
+                         else
+                         {
+                           session.setAttribute("SectaryRegister", "Error");
+                           response.sendRedirect("../FinalSystem/JspPages/PollingDivision_Province.jsp");
+                         }
+                 }
             }
-        } finally {            
+        }
+        catch(Exception ex)
+        {
+            ex.toString();
+        }
+        finally {            
             out.close();
         }
     }

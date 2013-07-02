@@ -1,12 +1,13 @@
-<%@page import="Model.PollingDivisionRegister"%>
+<%@page import="Model.ElectionPartyReg"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page import="Model.ProvinceRegister"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-		<title>Online Election Voting </title>
+	<title>Political Party Details Reports</title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -52,14 +53,21 @@
 	<link rel="stylesheet" href="theme/css/style.min.css?1359188899" />
 	
 	
-	<!-- DataTables -->
-	<link rel="stylesheet" media="screen" href="theme/scripts/DataTables/media/css/DT_bootstrap.css" />
 	
 	<!-- LESS 2 CSS -->
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
+        
+         <script type="text/javascript">
+            // Allows to auto click on a given button when clicked on the form twice.
+            function autoload()
+            {
+                var autocall=document.getElementById("hiidenbtn");
+                autocall.click();
+            }
+        </script>
 	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
-<body>
+<body ondblclick="autoload ();">
 	
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
@@ -180,127 +188,73 @@
 						<div class="rrow scroll-y" id="mainYScroller">
 							 
                            <!--  our GK start-->
-               <div class="middle_main">
+                             <div class="middle_main">
 
 <div class="admin_register_wrapper">
-   <div class="reg_form_header"><h4> Polling Division Details</h4></div>
-
-   <form name="PollingDiviregform" method="post" action="../PollingDivisionRegister_Servlet">
+   <div class="reg_form_header"><h4>Polling Divisions for Provinces</h4></div>
+            <form action="../GeneratePoliticalPartyReport" name="reportfrm" method="post">
+               <% 
+                if(session.getAttribute("report")=="Sucess")
+                    {%> 
+                         <div class="act-success">
+                            <span> Report Generated Successfully</span>
+                        </div>
+                          <%    session.setAttribute("report",null);
+                    }  
+                               else if(session.getAttribute("report")=="Error"){
+               %> 
+                         <div class="act-danger">
+                            <span> Report Generated Fails</span>
+                        </div>
+                          <%    session.setAttribute("report",null);
+                    } 
+                    %> 
              <table class="admin_reg_tb">
                 <tr>
-                    <td>
-                         <label>Polling Division Code</label> 
-                         </td>
-                         <td>
-                            <div> 
-                            <input name="p_divisioncode" type="text" />
-                            </div>
-                         </td>
-                </tr>
-                <tr>
-                      <td>
-                         <label>Polling Division Name</label> 
-                         </td>
-                         <td>
-                            <div> 
-                            <input name="p_divisionname" type="text" />
-                            </div>
-                        </td>
-                     </tr>
-                      <tr>
                    <td>                 
-                   <div>
-                   <label>District Name</label>    
-                    </div>
-                    </td>
+                        <div>
+                            <label>Select Political Party</label>    
+                        </div>
+                   </td>
                    <td>
-                    <div><%
-                    try {
-                          PollingDivisionRegister pollingDiv=new PollingDivisionRegister();
-                          ResultSet rslts=pollingDiv.LoadDistricCombo();%>
-                           <select name="distrcid" class="selectpicker">
-                           <% while(rslts.next())
-                           { %>  
-                                <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
-                           <%}
-                      }
-                    catch(Exception exception1)
-                    {
-                         exception1.printStackTrace();
-                    }%>
-                     </select> 
-                    </div>
-                    </td>
-                     </tr>  
-                       <tr>
-                    <td>
-                         <label>Available Candidate Seats Count </label> 
-                         </td>
-                         <td>
-                            <div> 
-                            <input name="Seatsamount" type="text" />
-                            </div>
-                         </td>
-                </tr>
-                       <tr style="visibility: hidden">
-                    <td>
-                         <label>Registered Voters</label> 
-                         </td>
-                         <td>
-                            <div> 
-                            <input name="regisvoteramount" type="text" />
-                            </div>
-                         </td>
-                </tr>
-            <tr>
-<td></td>
-<td>            <input type="submit" value="Submit" class="reg_submit" name="polldivisionregbtn" id="polldivisionregbtn"/></td>
-</tr>
-      </table>      
-<br/>
-<br/>
- <div class="reg_form_header"><h4>Polling Division Details</h4></div>
- <div style="margin: 0 21%;position: relative;width: 100%;">
-<table class="table table-bordered tbNormal">
-			<thead>
-				<tr>
-                                        <th style="display: none">Polling ID</th>
-					<th>Polling Division Code</th>
-					<th>Polling Division Name</th>
-                        		<th>Registered Political Parties Amount </th>
-                                        <th>Registered Political Voters Amount</th>
-                                        <th>District Name</th>
-				</tr>
-			</thead>
-                        <tbody>
-                            <%
-                            ResultSet insertreslt=null;
-                            PollingDivisionRegister pollingdiv=new PollingDivisionRegister();
-                            insertreslt=pollingdiv.ViewPollingDivision();
-                            if(insertreslt!=null){
-                                while(insertreslt.next())
-                                {%>
-                                <tr>
-					<td style="display: none"><%= insertreslt.getString(1)%></td>
-                                        <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
-                                        <td class="center"><%= insertreslt.getString(3)%></td>
-                                        <td class="center"><%= insertreslt.getString(4)%></td>
-                                        <td class="center"><%= insertreslt.getString(5)%></td>
-                                        <td class="center"><%= insertreslt.getString(6)%></td>
-				</tr>
-                                 <% }
-                            }
-                        else{%>
-                            <tr class="center">
-                
-                            </tr>
-                            <%}   %>
-			</tbody>
-		</table>
-       </div> 
-   </form>   				
+                       <div>
+                           <Select name="partyId" class="selectpicker"> 
+                           <option value="All">All</option>
+                           <%
+                           try {
+                            ElectionPartyReg electiongroup=new ElectionPartyReg();
+                            ResultSet rslts=electiongroup.LoadpolipartyCombo();%>
+                           
+                            <% while(rslts.next())
+                            { %>  
+                                    <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
+                            <%}
+                        }
+                        catch(Exception exception1)
+                        {
+                            exception1.printStackTrace();
+                        }%>
+                     </select>  
+                      </div>
+                     </td>
+                     <td>
+                          <div>
+                               <input type="submit" value="Generate" name="btngnerate" id="btngnerate" class="reg_submit"/>
+                               <input type="submit" value="Add" name="hiidenbtn" id="hiidenbtn" style="visibility: hidden"/>
+                         </div>
+                     </td>
+               </tr>  
+            </table>  
+                     <br/>
+<div class="widget-body center">
+	<div class="widget-body">
+		
+	</div>
+
+ </div> 
+              </form>				
   </div> 
-   </div> 		           
+   </div> 
 
      <!--  our GK end-->
 

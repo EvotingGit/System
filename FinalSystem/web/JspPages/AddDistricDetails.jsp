@@ -268,16 +268,17 @@
 
             </table>  
                      <br/>
-<div class="widget-body center">
-	<div class="widget-body">
-		<table cellpadding="0" cellspacing="0" border="0" >
+                     <div class="reg_form_header"><h4>District Details</h4></div>	
+
+	<div style="margin: 0 21%;position: relative;width: 100%;">
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered tbNormal">
 			<thead>
 				<tr>
                                         <th style="display: none; width: 20"  >District ID</th>
-                                        <th style="width: 20">District Code</th>
-					<th style="width: 20">District Name</th>
-					<th style="width: 20">Polling Divisions</th>
-					<th style="width: 20">Province Name</th>
+                                        <th style="width: 30">District Code</th>
+					<th style="width: 30">District Name</th>
+					<th style="width: 30">Polling Divisions</th>
+					<th style="width: 30">Province Name</th>
 				</tr>
 			</thead>
                         <tbody>
@@ -290,10 +291,10 @@
                 {%>
                 <tr class="gradeX">
                     <td style="display: none; width: 20"><%= insertreslt.getString(1)%></td>
-                    <td class="center" style="width: 20"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
-			<td class="center" style="width: 20"><%= insertreslt.getString(3)%></td>
-                        <td class="center" style="width: 20"><%= insertreslt.getString(4)%></td>
-                        <td class="center" style="width: 20"><%= insertreslt.getString(5)%></td>
+                    <td class="center" style="width: 30"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
+			<td class="center" style="width: 30"><%= insertreslt.getString(3)%></td>
+                        <td class="center" style="width: 30"><%= insertreslt.getString(4)%></td>
+                        <td class="center" style="width: 30"><%= insertreslt.getString(5)%></td>
 		</tr>
             <% }
               }
@@ -306,7 +307,7 @@
 		</table>
 	</div>
 
- </div> 
+
               </form>				
   </div> 
    </div> 	

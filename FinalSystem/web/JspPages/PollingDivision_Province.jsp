@@ -204,7 +204,7 @@
                    <td>
                        <div>
                            <Select name="provinceid" class="selectpicker"> 
-                           <option value="-1">All</option>
+                           <option value="All">All</option>
                            <%
                            try {
                             ProvinceRegister provincecombo=new ProvinceRegister();

@@ -266,15 +266,16 @@
             </table>
       <br/>
       <br/>
-<div class="widget-body center">
-      <table  cellpadding="0" cellspacing="0" border="0">
+       <div class="reg_form_header"><h4>Province Details</h4></div>
+<div style="margin: 0 21%;position: relative;width: 100%;">
+     <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered tbNormal">
           <thead>
               <tr>
-                <th style="visibility: hidden">Province ID</th>
-                <th>Province Code</th>
-		<th>Province Name</th>
-                <th>Description</th>
-		<th>Districts</th>
+                <th style="display:  none; width: 20">Province ID</th>
+                <th style="width: 20">Province Code</th>
+		<th style="width: 30">Province Name</th>
+                <th style="width: 30">Description</th>
+		<th style="width: 30">Districts</th>
             </tr>
           </thead>
           <tbody>
@@ -286,7 +287,7 @@
                 while(insertreslt.next())
                 {%>
                   <tr class="gradeX">
-                    <td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
+                    <td style="display:  none"><%= insertreslt.getString(1)%></td>
                     <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
 			<td class="center"><%= insertreslt.getString(3)%></td>
                         <td class="center"><%= insertreslt.getString(4)%></td>

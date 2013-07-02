@@ -5,21 +5,22 @@
 package Controller;
 
 import Model.ElectionPartyReg;
+import Model.PoliticalPartyRpts;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author User
  */
-@WebServlet(name = "BallotServlet", urlPatterns = {"/BallotServlet"})
-public class BallotServlet extends HttpServlet {
+@WebServlet(name = "GeneratePoliticalPartyReport", urlPatterns = {"/GeneratePoliticalPartyReport"})
+public class GeneratePoliticalPartyReport extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -35,16 +36,40 @@ public class BallotServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        ElectionPartyReg electiongrup=new ElectionPartyReg();
+        PoliticalPartyRpts poliPartyRpt=new PoliticalPartyRpts();
         try {
-           String politicl_Id = request.getParameter("postVariableName").toString(); 
-           ResultSet data=electiongrup.GetCandiesbyPolitcalP_ID(politicl_Id);
-           
-        } 
-        catch(Exception esd)
+           if(request.getParameter("hiidenbtn")!=null)
+             {
+                request.getRequestDispatcher("politicalparydetailRpt.jsp").forward(request, response);
+                response.sendRedirect("politicalparydetailRpt.jsp");
+            }
+            if(request.getParameter("btngnerate")!=null)
+            {
+                 HttpSession session=request.getSession(true);
+                 boolean reprt=false;
+                 String Poli_partyId = request.getParameter("partyId");
+                 if(Poli_partyId!=null)
+                 {
+                    reprt= poliPartyRpt.GenrateSeatDetails(Poli_partyId);
+                    if(reprt==true)
+                    {
+                    session.setAttribute("report", "Sucess");
+                    response.sendRedirect("../FinalSystem/JspPages/politicalparydetailRpt.jsp");
+
+                    } 
+                    else
+                    {
+                    session.setAttribute("report", "Error");
+                    response.sendRedirect("../FinalSystem/JspPages/politicalparydetailRpt.jsp");
+                    }
+                 }
+                
+            }
+        }catch(Exception ex)
         {
-            esd.toString();
-        }finally {            
+             ex.toString();
+        }
+        finally {            
             out.close();
         }
     }

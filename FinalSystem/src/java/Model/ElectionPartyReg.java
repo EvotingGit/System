@@ -101,4 +101,22 @@ public class ElectionPartyReg extends Dbconnection{
        }
    }
    
+   public ResultSet GetCandiesbyPolitcalP_ID(String PoliticalId)
+   {
+        ResultSet rsltst=null;
+        try
+        {
+           CallableStatement cs=Createconnection().prepareCall("{call GetCandidatesDetailsbypoliId(?)}");
+           cs.setString(1,PoliticalId);
+           rsltst = cs.executeQuery();
+           return rsltst;
+        }
+       catch(Exception ex)
+       {
+           ex.printStackTrace();
+           System.err.println(ex.getMessage());
+           return rsltst;
+       }
+   }
+ 
 }

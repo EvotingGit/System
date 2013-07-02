@@ -58,6 +58,48 @@
 	<!-- LESS 2 CSS -->
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
     <script src="WZ/js/jquery.smartWizard.js"></script>
+    
+<script type="text/javascript">
+    
+
+    function loadcandidates(chkvalue)
+    {
+      
+         if($(chkvalue).is(':checked')){ 
+              var Row = document.getElementById("abc");
+              var Cells = Row.getElementsByTagName("td");
+              var poliId=Cells[0].innerText;
+            alert(poliId);
+             $.get('../BallotServlet',{postVariableName: poliId},function(responseJson) 
+                {
+                  if(responseJson!=null){
+                       $.each(responseJson, function(key,value) {
+                       });
+                }
+                }
+ /*          $.ajax
+         (
+           {
+                url: '../BallotServlet',
+                data: {postVariableName: poliId},
+                type:'post',
+                cache:false,
+                success:function(data){
+                    alert(data);
+                    $('#stTwo').html(data);
+                  },
+                error:function(){alert('error');}
+            }
+       );*/
+    }
+    else
+        {
+                 alert("Please Select Political Party Name");
+        }
+         
+}
+
+    </script>
  
     <script type="text/javascript">
     $(document).ready(function(){
@@ -72,28 +114,6 @@
 </script>
 <script type="text/javascript">
     
-function GetXmlHttpObject()
-{
-    var xmlHttp=null;
-    try
-    {
-    // Firefox, Opera 8.0+, Safari
-    xmlHttp=new XMLHttpRequest();  // Via xmlHttp possible to update parts of a web page, without reloading the whole page. xmlHttp object creation is browser specific
-    }
-    catch (e)
-    {
-    //Internet Explorer
-    try
-    {
-    xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
-    }
-    catch (e)
-    {
-    xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    }
-    return xmlHttp;
-}
 
     function loadcandidates(chkvalue)
     {
@@ -103,61 +123,26 @@ function GetXmlHttpObject()
               var Cells = Row.getElementsByTagName("td");
               var poliId=Cells[0].innerText;
             alert(poliId);
-            xmlHttp=GetXmlHttpObject()       //Initializs the XMLHttpRequest() object.
-            if (xmlHttp==null){
-                alert ("Browser does not support HTTP Request")
-            return
+           $.ajax
+         (
+           {
+                url: '../BallotServlet',
+                data: {postVariableName: poliId},
+                type:'post',
+                cache:false,
+                success:function(data){
+                    alert(data);
+                    $('#stTwo').html(data);
+                  },
+                error:function(){alert('error');}
             }
-            var url="newjsp.jsp"  // jsp for data extraction from the DB for the specified employee id
-            url=url+"?p_id="+poliId  // employee_id & page url is concatenated & arranged to send as  a query string
-            xmlHttp.open("GET",url,true)  // data being sent via the GET() asynchronously. That is why you have stated as true.
-            xmlHttp.send() //pass data to the getuser.jsp 
-            xmlHttp.onreadystatechange=stateChanged  //Called to the stateChanged  method. According to Ajax syntax () isn`t required to denote a method.
-
-
-                    //$.ajax
-       // (
-          //  {
-           //     url: '../BallotServlet',
-           //     data: {postVariableName: poliId},
-            //    type:'post',
-            //    cache:false,
-            //    success:function(data){alert(data);},
-            //    error:function(){alert('error');}
-           // }
-       // );
+       );
     }
     else
         {
                  alert("Please Select Political Party Name");
         }
          
-}
-
-function stateChanged()
-{
-        document.getElementById("cid").value ="";
-        document.getElementById("cNumber").value ="";
-        document.getElementById("cName").value ="";
-        
-        if (xmlHttp.readyState==4 || xmlHttp.status==200)    // 4 -> request finished and response is ready   // 200 ->"OK"
-        {
-
-            var showdata = xmlHttp.responseText;  // capture data sent from getuser.jsp from the  out.println(data);
-            var strar = showdata.split(":");  // response sent via out.println(data) as a stream is separated.
-
-       if(strar.length>1)
-         {
-            //data = ":" + rs.getString(2) + " : " + rs.getString(3) +":"+ emp_id;
-        // locations =  0                          1                                       2                    3
-        alert("Please Select Employee");
-        document.getElementById("cid").value= strar[1];
-        document.getElementById("cNumber").value= strar[2];
-        document.getElementById("cName").value= strar[3];
-       
-      }
-
- }
 }
 
 </script>
@@ -238,13 +223,13 @@ $('#stOne input[type=checkbox]').click(function() {
 <body>
 	<%
    
-   if(session.getAttribute("Usrid")== null){
-            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
-            response.sendRedirect("404.html");
-      } 
-   else
-      {String Usrid=session.getAttribute("userid").toString();
-   }
+  // if(session.getAttribute("Usrid")== null){
+  //          out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
+  //          response.sendRedirect("404.html");
+    //  } 
+  // else
+      //{String Usrid=session.getAttribute("userid").toString();
+   //}
      
      %>
 	<!-- Start Content -->
@@ -433,7 +418,7 @@ $('#stOne input[type=checkbox]').click(function() {
                                   
                                           
 					<tr>
-                                            <td class="center" style="display: none"><input type="text" name="cid" id="cid"/></td>
+                                            <td class="center" style="display: none"></td>
                                             <td class="center" ><label class="v_number" name="cNumber" id="cNumber"></label></td>
 						<td><label class="v_name" name="cName" id="cName"></label> </td>
                                                 <td class="center">

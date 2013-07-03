@@ -69,34 +69,33 @@
               var Row = document.getElementById("abc");
               var Cells = Row.getElementsByTagName("td");
               var poliId=Cells[0].innerText;
-            alert(poliId);
-             $.get('../BallotServlet',{postVariableName: poliId},function(responseJson) 
+                alert(poliId);
+             $.post('../BallotServlet',{postVariableName: poliId},function(responseJson) 
                 {
                   if(responseJson!=null){
+                      $("#stTwo").find("tr:gt(0)").remove();
+                      var table1 = $("#stTwo");
                        $.each(responseJson, function(key,value) {
+                           var rowNew = $( "<tr>\n\
+                                           <td class='center' style=display: none' ></td> \n\
+                                            <td class='center' ><label class='v_number'></label></td>\n\
+                                            <td><label class='v_name'></label> </td>\n\
+                                            <td class='center'><label class='label_check'><input type='checkbox' id='checkbox-01'/>\n\
+                                            </lable><label class='label_check'><input type='checkbox' id='checkbox-02'/></lable>\n\
+                                            <label class=label_check><input type='checkbox' id='checkbox-03'/></lable></td></tr>");
+                        rowNew.children().eq(0).text(value['UserID']).hide(); 
+                        rowNew.children().eq(1).text(value['Name']); 
+                        rowNew.children().eq(2).text(value['PreferenceNo']); 
+                        rowNew.appendTo(table1);
                        });
-                }
-                }
- /*          $.ajax
-         (
-           {
-                url: '../BallotServlet',
-                data: {postVariableName: poliId},
-                type:'post',
-                cache:false,
-                success:function(data){
-                    alert(data);
-                    $('#stTwo').html(data);
-                  },
-                error:function(){alert('error');}
-            }
-       );*/
+                    }
+                });
+
     }
     else
         {
                  alert("Please Select Political Party Name");
-        }
-         
+        }  
 }
 
     </script>
@@ -111,40 +110,6 @@
         //alert('Finish Clicked');
       }     
 		});
-</script>
-<script type="text/javascript">
-    
-
-    function loadcandidates(chkvalue)
-    {
-      
-         if($(chkvalue).is(':checked')){ 
-              var Row = document.getElementById("abc");
-              var Cells = Row.getElementsByTagName("td");
-              var poliId=Cells[0].innerText;
-            alert(poliId);
-           $.ajax
-         (
-           {
-                url: '../BallotServlet',
-                data: {postVariableName: poliId},
-                type:'post',
-                cache:false,
-                success:function(data){
-                    alert(data);
-                    $('#stTwo').html(data);
-                  },
-                error:function(){alert('error');}
-            }
-       );
-    }
-    else
-        {
-                 alert("Please Select Political Party Name");
-        }
-         
-}
-
 </script>
 
 <script type="application/javascript">
@@ -417,22 +382,7 @@ $('#stOne input[type=checkbox]').click(function() {
                                    
                                   
                                           
-					<tr>
-                                            <td class="center" style="display: none"></td>
-                                            <td class="center" ><label class="v_number" name="cNumber" id="cNumber"></label></td>
-						<td><label class="v_name" name="cName" id="cName"></label> </td>
-                                                <td class="center">
-                                                    <label class="label_check">
-                                                    <input type="checkbox" id="checkbox-01"/>
-                                                    </lable>
-                                                    <label class="label_check">
-                                                    <input type="checkbox" id="checkbox-02"/>
-                                                    </lable>
-                                                    <label class="label_check">
-                                                    <input type="checkbox" id="checkbox-03"/>
-                                                    </lable>
-                                                </td>
-					</tr>
+					
                                         
                                         <tr class="center">
                 

@@ -51,6 +51,12 @@
 	<!-- Theme -->
 	<link rel="stylesheet" href="theme/css/style.min.css?1359188899" />
 	
+        <script type="text/javascript">
+            function refreshpage(){
+                document.forms.chrtform.submit();
+            }
+        </script>
+            
 	
 	
 	<!-- LESS 2 CSS -->
@@ -231,13 +237,18 @@
                </tr>  
             </table>  
                      <br/>
+              </form>
+                     
+                     <br>
 <div class="widget-body center">
 	<div class="widget-body">
-		
+            <form id="chrtform" name="chrtform" action ="../">
+                <img src="chart" width="500" height="400" />
+                <input type="submit" name="hiidenbtn" onload="refreshpage()" id="hiidenchrtbtn" style="visibility: hidden"/>
+            </form>
 	</div>
 
  </div> 
-              </form>				
   </div> 
    </div> 
 

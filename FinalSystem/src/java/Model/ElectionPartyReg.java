@@ -5,6 +5,7 @@
 package Model;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,22 +102,49 @@ public class ElectionPartyReg extends Dbconnection{
        }
    }
    
-   public ResultSet GetCandiesbyPolitcalP_ID(String PoliticalId)
+//   public ResultSet GetCandiesbyPolitcalP_ID(String PoliticalId)
+//   {
+//        ResultSet rsltst=null;
+//        try
+//        {
+//           CallableStatement cs=Createconnection().prepareCall("{call GetCandidatesDetailsbypoliId(?)}");
+//           cs.setString(1,PoliticalId);
+//           rsltst = cs.executeQuery();
+//           return rsltst;
+//        }
+//       catch(Exception ex)
+//       {
+//           ex.printStackTrace();
+//           System.err.println(ex.getMessage());
+//           return rsltst;
+//       }
+//   }
+   
+   public ArrayList<CandidatesModel> GetCandiesbyPolitcalP_ID(String PoliticalId) 
    {
         ResultSet rsltst=null;
-        try
-        {
+        ArrayList<CandidatesModel> candiList = new ArrayList<CandidatesModel>();
+        
+        try {
            CallableStatement cs=Createconnection().prepareCall("{call GetCandidatesDetailsbypoliId(?)}");
            cs.setString(1,PoliticalId);
            rsltst = cs.executeQuery();
-           return rsltst;
+           while(rsltst.next()) { 
+             CandidatesModel candi=new CandidatesModel();
+             candi.setUserID(rsltst.getString("UserID"));
+             String Fname=rsltst.getString("FirstName");
+             String LstName=rsltst.getString("LastName");
+             String FulName=Fname+ LstName;
+             candi.setName(FulName);
+             candi.setPreferenceNo(rsltst.getString("PreferenceNo"));
+             
+             candiList.add(candi);
+            }
         }
-       catch(Exception ex)
-       {
-           ex.printStackTrace();
-           System.err.println(ex.getMessage());
-           return rsltst;
-       }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return candiList;
    }
  
 }

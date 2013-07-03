@@ -19,7 +19,7 @@ import javax.naming.InitialContext;
 public class ProvinceRegister  extends Dbconnection{
     
     Connection conn=Createconnection();
-    public List<ProvinceModel> stateList ;  
+    public List<CandidatesModel> stateList ;  
     private DataSource myDS;  
     private Context initCtx;  
     private Context envCtx;
@@ -62,30 +62,6 @@ public class ProvinceRegister  extends Dbconnection{
         }
     }
     
-    public List<ProvinceModel> getStateList() 
-    {
-        ResultSet rsltst=null;
-        stateList=new ArrayList<ProvinceModel>();
-        try
-        {
-            String slectqry="select ProvinceID,ProvinceName From  `electionsystemdb`.`ProvinceTbl`";
-            PreparedStatement ps=con.prepareStatement(slectqry);
-            rsltst=ps.executeQuery();
-            while(rsltst.next())
-            {
-               String provinceID=rsltst.getString("ProvinceID");
-               String provinceName=rsltst.getString("ProvinceName");
-               ProvinceModel province=new ProvinceModel(provinceID,provinceName);
-               stateList.add(province);
-            }
-            
-        }
-        catch(Exception exp)
-        {
-            exp.toString();
-        }
-        return stateList;
-    }
     
     //this will get the province details and use to load the combo box in the JSP page
      public ResultSet LoadProviceCombo()

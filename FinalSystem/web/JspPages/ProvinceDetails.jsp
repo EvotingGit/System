@@ -88,8 +88,8 @@
 										<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>Adrian Demian</strong>
-							<em>Content Manager</em>
+							<strong>username</strong>
+							<em>usertype</em>
 						</span>
 					</div>
 					<!--<ul class="notif">
@@ -143,7 +143,7 @@
 							</div>
 						</li>-->
 																		<li>
-							<a href="login.html" class="logout glyphicons lock"><i></i><span>Logout</span></a>
+							<a href="SignOut.jsp" class="logout glyphicons lock"><i></i><span>Logout</span></a>
 						</li>
 											</ul>
 				</div>

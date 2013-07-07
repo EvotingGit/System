@@ -59,10 +59,11 @@
 <script type="text/javascript" >
     function submitlogin()
     {       //validation part
-               loginBtn.click();
-           
+               loginBtn.click();  
     }
-</script></head>
+</script>
+
+</head>
 <body>
 	
 	<!-- Start Content -->
@@ -183,7 +184,7 @@
 				<button class="button button-gray fr" onclick="submitlogin();" type="Submit" name="loginBtn" id="loginBtn"> Login</button>
 			</p>
 		</form>
-                    <ul><li><strong>HELP!</strong></li></ul>
+                     <ul><li><strong><a onclick="loadhelp();" >HELP!</a></strong></li></ul>
     	</section>
     </div>
    

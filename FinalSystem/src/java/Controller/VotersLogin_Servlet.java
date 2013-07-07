@@ -51,13 +51,14 @@ public class VotersLogin_Servlet extends HttpServlet {
                 ResultSet rsltst=login.GetvoterLoginDetails(_nicNo,_pooliId);
                 if(rsltst.next())
                 {
-                  String _encrptelctioncrdno= rsltst.getString(1);   
+                  String _encrptelctioncrdno= rsltst.getString(1);
+                  String _plainelecrdNo=Md5Encryption.decrypt(_encrptelctioncrdno);
                   String _pollingdivID= rsltst.getString(3); 
                   String userid= rsltst.getString(4);
                   userprof.add(_pollingdivID);
                   userprof.add(userid);
-                  String _plainelecrdNo=Md5Encryption.decrypt(_encrptelctioncrdno);
-                  if(_plainelecrdNo.equalsIgnoreCase(_electcrdno)&& _pollingdivID.equals(_pooliId))
+                  
+                  if(_plainelecrdNo.equalsIgnoreCase(_electcrdno)/*&& _pollingdivID.equals(_pooliId)*/)
                   {
                           HttpSession session=request.getSession(true);
                           session.setAttribute("Admindetals", "Sucess");

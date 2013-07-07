@@ -160,12 +160,12 @@ public class AdminRegister_Servlet extends HttpServlet {
                             {
                                  String electuuid  =createUUid.UniqueID();
                                  String newelectuuid= CreateUniqueID.trimUUID(electuuid.toString());
-                                 String stats="False"; 
+                                 String status="False"; 
                                  String poldiv=request.getParameter("polingdiv");
                                  String electcrdNo=newelectuuid.toString();
                                  String encrpyelectNo=Md5Encryption.encrypt(electcrdNo);
                                  
-                                 boolean vtrboolrs1=voter.InsertVoterDetails(UserId,encrpyelectNo,poldiv,stats,createdby,createddate,updatedby,updateddate,post);
+                                 boolean vtrboolrs1=voter.InsertVoterDetails(UserId,encrpyelectNo,poldiv,status,createdby,createddate,updatedby,updateddate,post);
                                  HttpSession session=request.getSession(true);
                                  if(vtrboolrs1==true)
                                 {    session.setAttribute("Register", "Sucess");

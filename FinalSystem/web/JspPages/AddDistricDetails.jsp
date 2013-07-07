@@ -65,8 +65,8 @@
 <body>
 	<% 
    /*String username="";
- * 
    String usertype="";
+ * 
    String userid=session.getAttribute("userid").toString();
     if(session.getAttribute("username")== null){
             out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
@@ -90,8 +90,8 @@
 										<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>Adrian Demian</strong>
-							<em>Content Manager</em>
+							<strong>username</strong>
+							<em>usertype</em>
 						</span>
 					</div>
 					<!--<ul class="notif">
@@ -145,7 +145,7 @@
 							</div>
 						</li>-->
 																		<li>
-							<a href="login.html" class="logout glyphicons lock"><i></i><span>Logout</span></a>
+                                                                                                                                                    <a href="SignOut.jsp" class="logout glyphicons lock"><i></i><span>Logout</span></a>
 						</li>
 											</ul>
 				</div>
@@ -246,6 +246,7 @@
                           ProvinceRegister provincecombo=new ProvinceRegister();
                           ResultSet rslts=provincecombo.LoadProviceCombo();%>
                            <Select name="provinceid" class="selectpicker"> 
+                           <option value="0">Select a Province </option>
                            <% while(rslts.next())
                            { %>  
                                 <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>

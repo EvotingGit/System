@@ -68,7 +68,20 @@
 	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body ondblclick="autoload ();">
-	
+	<% 
+   /*String username="";
+   String usertype="";
+ * 
+   String userid=session.getAttribute("userid").toString();
+    if(session.getAttribute("username")== null){
+            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
+            response.sendRedirect("404.html");
+      } 
+   else {
+        username=session.getAttribute("username").toString();
+        usertype=session.getAttribute("usrtype").toString();
+   }*/
+   %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
@@ -82,8 +95,8 @@
 										<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>Adrian Demian</strong>
-							<em>Content Manager</em>
+							<strong>username</strong>
+							<em>usertype</em>
 						</span>
 					</div>
 					<!--<ul class="notif">
@@ -137,7 +150,7 @@
 							</div>
 						</li>-->
 																		<li>
-							<a href="login.html" class="logout glyphicons lock"><i></i><span>Logout</span></a>
+							<a href="SignOut.jsp" class="logout glyphicons lock"><i></i><span>Logout</span></a>
 						</li>
 											</ul>
 				</div>

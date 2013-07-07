@@ -10,6 +10,7 @@ import Model.Testmd;
 import Model.Votes;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -41,24 +42,25 @@ public class setvotesServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         ElectionPartyReg electiongrup=new ElectionPartyReg();
-         ArrayList item =new ArrayList();
-        ArrayList<CandidatesModel> candidateList = new ArrayList<CandidatesModel>();
-       Testmd tst=new Testmd();
+        ArrayList item =new ArrayList();
+        ArrayList candidateidlist =new ArrayList();
+        Votes vote=new Votes();
+        HttpSession session=request.getSession(true);
         try {
             if(request.getParameter("hidenvotes") !=null)
             {
            
                  String partyvote=request.getParameter("vote");
-                 ResultSet resultSet=tst.Getcandiesbyparty(partyvote);
-                 HttpSession session=request.getSession(true);
+                 ResultSet resultSet=electiongrup.Getcandiesbyparty(partyvote);
+                 
                  if(resultSet!=null)
                     {
                          String fullName=partyvote;
                          item.add(fullName);
-                         
-                          session.setAttribute("partyvote", item);
-                          response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
+                         session.setAttribute("partyvote", item);
+                         response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
                     }
                  else
                  {response.sendRedirect("../FinalSystem/JspPages/BallotFormTest_1.jsp");
@@ -66,29 +68,25 @@ public class setvotesServlet extends HttpServlet {
             }
             else if(request.getParameter("prefvote") !=null)
                  {
-                     
-                     String candid=request.getParameter("checkbox1");
-                     String prfer2=request.getParameter("checkbox2");
-                     String prfer3=request.getParameter("checkbox3");
-                     String hidnpolitic="01ec7040-1c57-4c27-ba4d-eb76a18c43cd";
+                     String[] checkboxNamesList=request.getParameterValues("checkbox");
+                     for (int i = 0; i < checkboxNamesList.length; i++) {
+                             String candidateid=checkboxNamesList[i];
+                            // if null, it means checkbox is not in request
+                            if (candidateid != null){
+                                candidateidlist.add(candidateid.toString());       
+                            }
+                         }
+                     String hidnpolitic= request.getParameter("politicalId");
                      String userid="1736ef4b-06cc-4ac3-ba45-ee20ebe48b33";//request.getParameter("");
-                     Votes vt=new Votes();
-                     vt.Insertvote(userid, hidnpolitic, candid, prfer2, prfer3);
+                     
+                     boolean voterslt= vote.Insertvote(userid, hidnpolitic,candidateidlist);
+                     if(voterslt==true){
+                           session.setAttribute("VoteSucess", "Sucess");
+                           response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
+          
+                     }
                  }
-         
-          
-          
-          
-//          
-//          if(resultSet!=null)
-//          {
-//               HttpSession session=request.getSession(true);
-//          request.setAttribute("resultSet", resultSet);
-//          response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
-//          }
-//         
- 
-          //String x="";
+
         }catch(Exception ex)
         {
             ex.toString();

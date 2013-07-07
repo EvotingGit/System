@@ -8,10 +8,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,11 +17,12 @@ import java.util.logging.Logger;
  * @author User
  */
 public class Votes extends Dbconnection{
+  
   Connection conn=Createconnection(); 
   CreateUniqueID createUUid=new CreateUniqueID();
   String status="true";
   Double votecount=1.0;
-  Map<String, Integer> map = new HashMap<String, Integer>();
+  Map<String, Integer> candidatedictionary = null;
   
   //this is the cunstructer in this class
   public Votes()
@@ -33,17 +31,11 @@ public class Votes extends Dbconnection{
   }
   
   // insert the votes in to vote tables 
-  public boolean  Insertvote(String UserId,String p_party_id, String prifer_1,String prifer_2,String prifer_3) throws SQLException
+  public boolean  Insertvote(String UserId,String p_party_id,ArrayList candidateidlist) throws SQLException
   {
        
        boolean flage=false;
        String VoterID=createUUid.UniqueID();
-       ArrayList candidatelist =new ArrayList();
-       candidatelist.add(prifer_1);
-       candidatelist.add(prifer_2);
-       candidatelist.add(prifer_3);
-       GetPrferncecount(candidatelist);
-       
       try
       {
           
@@ -56,41 +48,18 @@ public class Votes extends Dbconnection{
             if(rslt>0)
             {
                 //boolean prferncerslt=Addprefernce(VoterID,UserId,prifer_1, prifer_2, prifer_3);
+                Map<String, Integer> prferncedictionary =GetPrferncecount(candidateidlist);
+                Addprefernce(VoterID,prferncedictionary);
                 return flage=true;
             }
             return  flage;
-      }catch(Exception ext)
-      {
-            ext.printStackTrace();
-            System.err.println(ext.getMessage());
-            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Record Not Found !", ext);
-            return flage; 
       }
-      finally
+      catch(SQLException sqlex)
       {
-          conn.close();
-      }
-  }
-  
-  //this use t oinsert the prfeence for perticular candidates,
-  //this return a bollean value
-  public boolean Addprefernce(String vote_Id,String UserId, String prifer_1,String prifer_2,String prifer_3) throws SQLException
-  {
-      boolean flage=false;
-      String PrfernceID=createUUid.UniqueID();
-      try
-      {
-          CallableStatement cs=Createconnection().prepareCall("{call AddPreference(?,?,?,?)}");
-          cs.setString(1, PrfernceID);
-          cs.setString(2, vote_Id);
-          cs.setString(3, UserId);
-          cs.setDouble(4, votecount);
-          int rslt=cs.executeUpdate();
-            if(rslt>0)
-            {
-                return flage=true;
-            }
-            return  flage;
+            sqlex.printStackTrace();
+            System.err.println(sqlex.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Connection Error !", sqlex);
+            return flage;
       }
       catch(Exception ext)
       {
@@ -104,43 +73,100 @@ public class Votes extends Dbconnection{
           conn.close();
       }
   }
-
-  public void GetPrferncecount(ArrayList candidatelist) {
+  
+ public Map<String, Integer> GetPrferncecount(ArrayList candidatelist) {
         
-        String candidateId1="";
-        String candidateId2 ="";
-        String candidateId3 ="";
-        String Matched="";
-        int prfercont=0;
+        String candidateId="";
+        String Cand_ID="";
+        int prfercont=1;
+        int curentcout=0;
+        candidatedictionary=new HashMap<String, Integer>();
         try
         {
             if(candidatelist!=null)
             {
                 Iterator iter = candidatelist.iterator();
                 while(iter.hasNext()){
-                    candidateId1 =String.valueOf(iter.next()) ;
-                    candidateId2 =String.valueOf(iter.next()) ;
-                    candidateId3 =String.valueOf(iter.next()) ;
-                }
-                if(candidateId1==candidateId2){
-                    Matched=candidateId1;
-                    
-                    if(Matched==candidateId3)
-                    {
-                        Matched=candidateId3;
-                        prfercont=3;
-                        map.put(Matched, prfercont);
-                        //System.out.println(map.get("dog"));
+                    candidateId =String.valueOf(iter.next()) ;
+                    if(candidatedictionary.containsKey(candidateId)){
+                       curentcout = candidatedictionary.get(candidateId.toString());
+                       curentcout++;
+                       candidatedictionary.put(Cand_ID, curentcout);
+                   }
+                    else{
+                        Cand_ID=candidateId;
+                        candidatedictionary.put(Cand_ID, prfercont);
                     }
-                        prfercont=3;
-                }
+                 }
             }
+             return candidatedictionary;
         }
         catch(Exception ex)
         {
-        throw new UnsupportedOperationException("Not yet implemented");
+            ex.printStackTrace();
+            System.err.println(ex.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "No Preference Found !", ex);
+            return candidatedictionary;
+        }
+        finally
+        {
+             return candidatedictionary;
         }
     }
-   
-    
+
+  
+  
+  //this use t oinsert the prfeence for perticular candidates,
+  //this return a bollean value
+ private boolean Addprefernce(String VoterID, Map<String, Integer> prferncedictionary){
+
+     boolean flage=false;
+     // Get a set of the entries
+     Set set = prferncedictionary.entrySet();
+     // Get an iterator
+     Iterator newitor = set.iterator();
+     int rslt=0;
+     
+      try
+      {
+         CallableStatement cs=Createconnection().prepareCall("{call AddPreference(?,?,?,?)}");
+         while(newitor.hasNext()) {
+         Map.Entry mapEntry = (Map.Entry)newitor.next();
+         String PrfernceID=createUUid.UniqueID();
+         
+         cs.setString(1, PrfernceID);
+         cs.setString(2, VoterID);
+         cs.setString(3, mapEntry.getKey().toString());
+         cs.setDouble(4, Double.parseDouble(mapEntry.getValue().toString()));
+         rslt=cs.executeUpdate();
+         }
+          if(rslt>0)
+            {
+                //after add the prefernece and the votings 
+                // voter status must update to remove the duplication of revoting
+                
+                return flage=true; 
+            }
+            return flage;
+      }
+       catch(SQLException sqlex)
+      {
+            sqlex.printStackTrace();
+            System.err.println(sqlex.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Connection Error !", sqlex);
+           //conn.close();
+            return flage;
+      }
+      catch(Exception ext)
+      {
+            ext.printStackTrace();
+            System.err.println(ext.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Record Not Found !", ext);
+            return flage; 
+      }
+      finally
+      {
+          return flage;
+      }
+    }  
 }

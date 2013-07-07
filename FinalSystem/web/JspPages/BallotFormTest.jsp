@@ -173,15 +173,11 @@ $('#stTwo input[type=checkbox]').click(function() {
 </script>
 
 <script type="text/javascript">
-        function addvotes()
-        {
-            // var Row = document.getElementById("abc");
-             // var Cells = Row.getElementsByTagName("td");
-             // var poliId=Cells[0].innerText;
-              var partyvote=document.getElementById("votes");
-              var prefervote=document.getElementById("hidenvotes");
-              partyvote.click();
-              prefervote.click();
+        function submitvote(partID)
+        {             
+              var partyidpress=document.getElementById("hidenvotes");
+              partyidpress.click();
+              
         }
 </script>
 
@@ -331,7 +327,7 @@ $('#stOne input[type=checkbox]').click(function() {
                                                 <td name="code" class="center" width="20" style="display: none" ><%= insertreslt.getString(1) %></td>
 						<td class="center"><label class="UPFA"></label></td>
                                                 <td><label> <%= insertreslt.getString(3) %></label> </td>
-                                                <td class="center"><label class="label_check"></label><span><input type="checkbox" name="vote" id="checkbox" value="<%= insertreslt.getString(1) %>" class="ch"></span></td>
+                                                <td class="center"><label class="label_check"></label><span><input type="checkbox" name="vote" id="checkbox" value="<%= insertreslt.getString(1) %>" class="ch" onclick="submitvote(this.value);" ></span></td>
 					</tr>
                                          <% }
                                         }
@@ -392,7 +388,7 @@ $('#stOne input[type=checkbox]').click(function() {
    
 				</tbody>
 			</table>
-                                    <input type="submit" name="hidenvotes" id="hidenvotes"/>
+                                    <input type="submit" name="hidenvotes" style="display: none" id="hidenvotes"/>
                     </form>
                                     
 		</div>
@@ -426,7 +422,7 @@ $('#stOne input[type=checkbox]').click(function() {
                                 ResultSet gettreslt=null;
                                 gettreslt=politicalreg.Getcandiesbyparty(poliid);
                                 int count=1; %>
-                                <input type="hidden" value="<%= poliid %>"
+                                <input type="hidden" style="display: none" name="politicalId" value="<%= poliid %>"
                                 <%
                                 if(gettreslt!=null){
                                     while(gettreslt.next())
@@ -439,13 +435,13 @@ $('#stOne input[type=checkbox]').click(function() {
                                         <label class="v_name"><%=gettreslt.getString(3) %></label>
                                         </td>
                                         <td class="center">
-                                            <label class="label_check"><input type="checkbox" name="checkbox1" value="<%= gettreslt.getString(1) %>" id=<%= count %>/>
+                                            <label class="label_check"><input type="checkbox" name="checkbox" value="<%= gettreslt.getString(1) %>" id=<%= count %>/>
                                        </lable>
                                        <label class="label_check">
-                                          <input type="checkbox" name="checkbox2" value="<%= gettreslt.getString(1) %>" id=<%= count++ %>/>
+                                          <input type="checkbox" name="checkbox" value="<%= gettreslt.getString(1) %>" id=<%= count++ %>/>
                                         </lable>
                                         <label class="label_check">
-                                          <input type="checkbox" name="checkbox3" value="<%= gettreslt.getString(1) %>" id=<%= count++ %> />
+                                          <input type="checkbox" name="checkbox" value="<%= gettreslt.getString(1) %>" id=<%= count++ %> />
                                        </lable>
                                         </td>
                                      </tr>

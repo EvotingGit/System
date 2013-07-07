@@ -20,7 +20,7 @@ public class Votes extends Dbconnection{
   
   Connection conn=Createconnection(); 
   CreateUniqueID createUUid=new CreateUniqueID();
-  String status="true";
+  Byte status=1;
   Double votecount=1.0;
   Map<String, Integer> candidatedictionary = null;
   
@@ -33,12 +33,10 @@ public class Votes extends Dbconnection{
   // insert the votes in to vote tables 
   public boolean  Insertvote(String UserId,String p_party_id,ArrayList candidateidlist) throws SQLException
   {
-       
        boolean flage=false;
        String VoterID=createUUid.UniqueID();
       try
       {
-          
           CallableStatement cs=Createconnection().prepareCall("{call InsrtVotes(?,?,?,?)}");
           cs.setString(1, VoterID);
           cs.setString(2, p_party_id);
@@ -49,8 +47,19 @@ public class Votes extends Dbconnection{
             {
                 //boolean prferncerslt=Addprefernce(VoterID,UserId,prifer_1, prifer_2, prifer_3);
                 Map<String, Integer> prferncedictionary =GetPrferncecount(candidateidlist);
-                Addprefernce(VoterID,prferncedictionary);
-                return flage=true;
+                boolean prefernrslt= Addprefernce(VoterID,prferncedictionary);
+                
+                //after add the prefernece and the votings 
+                // voter status must update to remove the duplication of revoting
+                if(prefernrslt==true)
+                {
+                    VoterRegister voterreg=new VoterRegister();
+                    boolean resltvoterreg= voterreg.UpdateVoterStatus(UserId,status);
+                    if(resltvoterreg==true){
+                        return flage=true;
+                    }     
+                }
+                return flage=false;
             }
             return  flage;
       }
@@ -142,9 +151,6 @@ public class Votes extends Dbconnection{
          }
           if(rslt>0)
             {
-                //after add the prefernece and the votings 
-                // voter status must update to remove the duplication of revoting
-                
                 return flage=true; 
             }
             return flage;

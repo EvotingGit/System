@@ -38,17 +38,20 @@ public class VotersLogin_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-         ArrayList userprof =new ArrayList();
+        ArrayList userprof =new ArrayList();
         VoterRegister login=new VoterRegister();
-        
-        
+
         try {
              if(request.getParameter("loginBtn")!=null)
              {
                 String _electcrdno=request.getParameter("ElctioncrdNo");
                 String _nicNo=request.getParameter("Nicno");
                 String _pooliId=request.getParameter("pollid");
-                ResultSet rsltst=login.GetvoterLoginDetails(_nicNo,_pooliId);
+                
+                boolean isvoted=login.Isvotedbefore(_nicNo);
+                if(isvoted!=true)
+                {
+                    ResultSet rsltst=login.GetvoterLoginDetails(_nicNo,_pooliId);
                 if(rsltst.next())
                 {
                   String _encrptelctioncrdno= rsltst.getString(1);
@@ -72,8 +75,8 @@ public class VotersLogin_Servlet extends HttpServlet {
                        response.sendRedirect("../FinalSystem/JspPages/Voterlog.jsp");
                   }
                 }
-             }
-             
+               }
+            }  
         }
         catch(Exception ex)
         {

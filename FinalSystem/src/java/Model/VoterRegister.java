@@ -4,10 +4,7 @@
  */
 package Model;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,6 +56,7 @@ public class VoterRegister  extends UserRegister{
             return flage;
         }
     }
+    
     //this function reslt set get the login details based on the nice no
      public ResultSet GetvoterLoginDetails(String loginnic,String polingDivid)
     {
@@ -78,5 +76,67 @@ public class VoterRegister  extends UserRegister{
             return rsltst;
         } 
     }
+     
+     public boolean UpdateVoterStatus(String UseId, byte status)
+     {
+         
+         boolean flage=false;
+         try{
+            CallableStatement cs=Createconnection().prepareCall("{call UpdateStatus(?,?)}");
+            cs.setString(1, UseId);
+            cs.setByte(2,status);
+            int rslt=cs.executeUpdate();
+            if(rslt>0){
+                    return flage=true;
+            }
+            return flage;
+         }
+         catch(SQLException sqlex)
+         {
+            sqlex.printStackTrace();
+            System.err.println(sqlex.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Connection Error !", sqlex);
+            return flage;
+        }
+        catch(Exception ext)
+        {
+            ext.printStackTrace();
+            System.err.println(ext.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Record Not Updated !", ext);
+            return flage; 
+        }
+     }
+     
+     public boolean Isvotedbefore(String UseId){
+          boolean flage=false;
+          ResultSet rsltst=null;
+          
+         try{
+            CallableStatement cs=Createconnection().prepareCall("{call Isvoted(?)}");
+            cs.setString(1, UseId);
+            rsltst = cs.executeQuery();
+            while(rsltst.next()){
+                  byte status=rsltst.getByte(1); 
+                  if(status==1){
+                      return flage=true;
+                  }
+            }
+            return flage;
+         }
+         catch(SQLException sqlex)
+         {
+            sqlex.printStackTrace();
+            System.err.println(sqlex.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Connection Error !", sqlex);
+            return flage;
+        }
+        catch(Exception ext)
+        {
+            ext.printStackTrace();
+            System.err.println(ext.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Record Not Updated !", ext);
+            return flage; 
+        }
+     }
     
 }

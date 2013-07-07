@@ -63,7 +63,8 @@ public class setvotesServlet extends HttpServlet {
                          response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
                     }
                  else
-                 {response.sendRedirect("../FinalSystem/JspPages/BallotFormTest_1.jsp");
+                 {
+                     response.sendRedirect("../FinalSystem/JspPages/BallotFormTest_1.jsp");
                  }
             }
             else if(request.getParameter("prefvote") !=null)

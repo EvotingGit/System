@@ -48,14 +48,17 @@ public class ProvinceRegister_Servlet extends HttpServlet {
                String ProDecription=request.getParameter("decrp");
                String No_of_district=request.getParameter("Nodistrcs");
                
+               HttpSession session=request.getSession(true);
                ProvinceRegister provincemodel=new ProvinceRegister();
                boolean rslt = provincemodel.InsertProvince(ProvinceID, ProvinceCode, ProvinceName, ProDecription, No_of_district);
-               if(rslt==true)
-                {
-                        HttpSession session=request.getSession(true);
+               if(rslt==true){ 
                         session.setAttribute("Register", "Sucess");
-                        response.sendRedirect("~/JspPages/ProvinceDetails.jsp");
+                        response.sendRedirect("../FinalSystem/JspPages/ProvinceDetails.jsp");
                 }
+               else {
+                   session.setAttribute("Register", "Error");
+                   response.sendRedirect("../FinalSystem/JspPages/ProvinceDetails.jsp");
+               }
            }
         } finally {            
             out.close();

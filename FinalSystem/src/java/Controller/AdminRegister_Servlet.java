@@ -166,12 +166,16 @@ public class AdminRegister_Servlet extends HttpServlet {
                                  String encrpyelectNo=Md5Encryption.encrypt(electcrdNo);
                                  
                                  boolean vtrboolrs1=voter.InsertVoterDetails(UserId,encrpyelectNo,poldiv,stats,createdby,createddate,updatedby,updateddate,post);
+                                 HttpSession session=request.getSession(true);
                                  if(vtrboolrs1==true)
-                                {
-                                     HttpSession session=request.getSession(true);
-                                     session.setAttribute("Register", "Sucess");
-                                     response.sendRedirect("../Evoting/JspPages/Adminregister.jsp");
+                                {    session.setAttribute("Register", "Sucess");
+                                     response.sendRedirect("../FinalSystem/JspPages/VoterRegistration.jsp");
                                 }
+                                 else
+                                 {
+                                     session.setAttribute("Register", "Error");
+                                     response.sendRedirect("../FinalSystem/JspPages/VoterRegistration.jsp");
+                                 }
                             }
                             
                         }

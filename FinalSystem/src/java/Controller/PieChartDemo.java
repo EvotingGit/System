@@ -4,13 +4,25 @@
  */
 package Controller;
 
+import Model.Dbconnection;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import java.io.OutputStream;
+import java.sql.SQLException;
+import org.jfree.chart.entity.StandardEntityCollection;
+import org.jfree.data.jdbc.JDBCPieDataset;
 
 /**
  *
@@ -38,10 +50,36 @@ public class PieChartDemo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-          if(request.getParameter("hiidenchrtbtn")!=null){
+            Dbconnection dbcon=new  Dbconnection();
+            Connection connection= dbcon.Createconnection();
+         // if(request.getParameter("hiidenchrtbtn1")!=null){
               
-           }
-        } finally {            
+              JDBCPieDataset dataset = new JDBCPieDataset(connection);
+              try {
+                    dataset.executeQuery("SELECT ProvinceTbl.ProvinceName,pollingdivisiontbl.CandidatesSeats"
+                                       + " FROM  electionsystemdb.ProvinceTbl,electionsystemdb.districtbl,electionsystemdb.pollingdivisiontbl "+
+                                         " WHERE ProvinceTbl.ProvinceID=districtbl.ProvinceID AND  PollingDivisionTbl.DistricID=districtbl.DistricID");
+                    JFreeChart chart = ChartFactory.createPieChart("Country - Revenue Chart", dataset, true, true, false);
+                    chart.setBorderPaint(Color.black);
+                    chart.setBorderStroke(new BasicStroke(10.0f));
+                    chart.setBorderVisible(true);
+                    if (chart != null) {
+                    int width = 500;
+                    int height = 350;
+                    final ChartRenderingInfo info = new ChartRenderingInfo(new StandardEntityCollection());
+                    response.setContentType("image/png");
+                    //ChartUtilities.writeChartAsPNG(out, chart, width, height,info);
+}
+              }
+             catch (SQLException e) {
+                e.printStackTrace();
+                }
+          // }
+        }catch(Exception ex)
+        {
+            ex.toString();
+        }
+        finally {            
             out.close();
         }
     }
@@ -60,6 +98,38 @@ public class PieChartDemo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        try {
+          if(request.getParameter("hiidenchrtbtn")!=null){
+              Dbconnection dbcon=new  Dbconnection();
+              Connection connection= dbcon.Createconnection();
+              JDBCPieDataset dataset = new JDBCPieDataset(connection);
+              try {
+                   dataset.executeQuery("SELECT ProvinceTbl.ProvinceName,pollingdivisiontbl.CandidatesSeats"
+                                       + " FROM  electionsystemdb.ProvinceTbl,electionsystemdb.districtbl,electionsystemdb.pollingdivisiontbl "+
+                                         " WHERE ProvinceTbl.ProvinceID=districtbl.ProvinceID AND  PollingDivisionTbl.DistricID=districtbl.DistricID");
+                    JFreeChart chart = ChartFactory.createPieChart("Country - Revenue Chart", dataset, true, true, false);
+                    chart.setBorderPaint(Color.black);
+                    chart.setBorderStroke(new BasicStroke(10.0f));
+                    chart.setBorderVisible(true);
+                    if (chart != null) {
+                    int width = 500;
+                    int height = 350;
+                    final ChartRenderingInfo info = new ChartRenderingInfo(new StandardEntityCollection());
+                    response.setContentType("image/png");
+                    OutputStream out=response.getOutputStream();
+                    ChartUtilities.writeChartAsPNG(out, chart, width, height,info);
+                    //OutputStream out=response.getOutputStream();
+                   // ChartUtilities.writeChartAsPNG(out, chart, width, height,info);
+}
+              }
+                catch (SQLException e) {
+                e.printStackTrace();
+                }
+           }
+        }catch(Exception ex)
+        {
+            ex.toString();
+        }
     }
 
     /**
@@ -75,6 +145,7 @@ public class PieChartDemo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**

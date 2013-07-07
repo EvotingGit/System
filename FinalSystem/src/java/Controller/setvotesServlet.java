@@ -6,15 +6,13 @@ package Controller;
 
 import Model.CandidatesModel;
 import Model.ElectionPartyReg;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
+import Model.Testmd;
+import Model.Votes;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author User
  */
-@WebServlet(name = "BallotServlet", urlPatterns = {"/BallotServlet"})
-public class BallotServlet extends HttpServlet {
+@WebServlet(name = "setvotesServlet", urlPatterns = {"/setvotesServlet"})
+public class setvotesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -39,42 +37,63 @@ public class BallotServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
- private static final long serialVersionUID = 1L;
-
- public BallotServlet() { }
-    
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        HttpSession session=request.getSession(true);
         ElectionPartyReg electiongrup=new ElectionPartyReg();
+         ArrayList item =new ArrayList();
+        ArrayList<CandidatesModel> candidateList = new ArrayList<CandidatesModel>();
+       Testmd tst=new Testmd();
         try {
-            String partyvote=request.getParameter("vote").toString(); 
-            ArrayList item =new ArrayList();
-            String politicalparty=partyvote;
-            item.add(politicalparty);
-            if(item!=null)
+            if(request.getParameter("hidenvotes") !=null)
             {
-                session.setAttribute("partyvote", item);
-                response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
+           
+                 String partyvote=request.getParameter("vote");
+                 ResultSet resultSet=tst.Getcandiesbyparty(partyvote);
+                 HttpSession session=request.getSession(true);
+                 if(resultSet!=null)
+                    {
+                         String fullName=partyvote;
+                         item.add(fullName);
+                         
+                          session.setAttribute("partyvote", item);
+                          response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
+                    }
+                 else
+                 {response.sendRedirect("../FinalSystem/JspPages/BallotFormTest_1.jsp");
+                 }
             }
-            //Gson gson = new Gson();
-            //JsonElement element = gson.toJsonTree(candidateList, new TypeToken<List<CandidatesModel>>(){}.getType());
-           else{
-                response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
-           }
-            //JsonArray jsonArray = element.getAsJsonArray();
-            //response.setContentType("application/json");
-            //response.getWriter().print(jsonArray);      
-        } 
-        catch(Exception esd)
+            else if(request.getParameter("prefvote") !=null)
+                 {
+                     
+                     String candid=request.getParameter("checkbox1");
+                     String prfer2=request.getParameter("checkbox2");
+                     String prfer3=request.getParameter("checkbox3");
+                     String hidnpolitic="01ec7040-1c57-4c27-ba4d-eb76a18c43cd";
+                     String userid="1736ef4b-06cc-4ac3-ba45-ee20ebe48b33";//request.getParameter("");
+                     Votes vt=new Votes();
+                     vt.Insertvote(userid, hidnpolitic, candid, prfer2, prfer3);
+                 }
+         
+          
+          
+          
+//          
+//          if(resultSet!=null)
+//          {
+//               HttpSession session=request.getSession(true);
+//          request.setAttribute("resultSet", resultSet);
+//          response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
+//          }
+//         
+ 
+          //String x="";
+        }catch(Exception ex)
         {
-            esd.toString();
-        }finally {            
+            ex.toString();
+        }
+        finally {            
             out.close();
         }
     }
@@ -108,24 +127,6 @@ public class BallotServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-//         ElectionPartyReg electiongrup=new ElectionPartyReg();
-//        ArrayList<CandidatesModel> candidateList = new ArrayList<CandidatesModel>();
-//        try {
-//            String politicl_Id = request.getParameter("postVariableName").toString(); 
-//            candidateList=electiongrup.GetCandiesbyPolitcalP_ID(politicl_Id);
-//            Gson gson = new Gson();
-//            JsonElement element = gson.toJsonTree(candidateList, new TypeToken<List<CandidatesModel>>(){}.getType());
-//
-//            JsonArray jsonArray = element.getAsJsonArray();
-//            response.setContentType("application/json");
-//            response.getWriter().print(jsonArray);
-//               
-//        } 
-//        catch(Exception esd)
-//        {
-//            esd.toString();
-//        }
     }
 
     /**

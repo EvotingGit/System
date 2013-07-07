@@ -119,5 +119,38 @@ public void insertimage(String c) {
 			System.out.println(e1.getMessage());
 		}
 	}
+ 
+ public ResultSet Getcandiesbyparty(String PartyId)
+ {
+     ResultSet rs=null;
+     try
+     {
+         CallableStatement cs=Createconnection().prepareCall("{call GetCandidatesDetailsbypoliId(?)}");
+           cs.setString(1,PartyId);
+           rs = cs.executeQuery();
+           if(rs!=null)
+           {
+               return rs;
+           }
+           return rs=null;
+          
+         
+     }catch(Exception ex)
+     {
+         ex.toString();
+         return rs;
+     }
+ }
+ 
+ 
+ public class Types
+{
+  private String name;
+  private String pcaNo;
+  private String ip;
+  //constructors
+  //getter-setters
+}
+ 
             
 }

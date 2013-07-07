@@ -49,14 +49,17 @@ public class DistrictRegister_Servlet extends HttpServlet {
                String NumberOfPollingDivitions=request.getParameter("Nodistrcs");
                String ProvinceID=request.getParameter("provinceid");
                
+               HttpSession session=request.getSession(true);
                DistricRegister districRegmodel=new DistricRegister();
                boolean rslt = districRegmodel.InsertDistrict(DistricID, DistricCode, DistricName, NumberOfPollingDivitions, ProvinceID);
-               if(rslt==true)
-                {
-                        HttpSession session=request.getSession(true);
-                        session.setAttribute("Register", "Sucess");
-                        response.sendRedirect("../Evoting/JspPages/AddDistricDetails.jsp");
+               if(rslt==true) {
+                    session.setAttribute("Register", "Sucess");
+                    response.sendRedirect("../FinalSystem/JspPages/AddDistricDetails.jsp");
                 }
+               else {
+                   session.setAttribute("Register", "Sucess");
+                   response.sendRedirect("../FinalSystem/JspPages/AddDistricDetails.jsp");
+               }
            }
         } finally {            
             out.close();

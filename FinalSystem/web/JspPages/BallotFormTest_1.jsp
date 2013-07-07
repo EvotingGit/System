@@ -4,6 +4,12 @@
     Author     : User
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Testmd"%>
+<%@page import="Model.CandidatesModel"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <%@page import="Model.ElectionPartyReg"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -168,6 +174,19 @@ $('#stTwo input[type=checkbox]').click(function() {
 });
 </script>
 
+<script type="text/javascript">
+        function addvotes()
+        {
+            // var Row = document.getElementById("abc");
+             // var Cells = Row.getElementsByTagName("td");
+             // var poliId=Cells[0].innerText;
+              var partyvote=document.getElementById("votes");
+              var prefervote=document.getElementById("hidenvotes");
+              partyvote.click();
+              prefervote.click();
+        }
+</script>
+
 <script type="application/javascript">
     $(document).ready(function(){
 $('#stOne input[type=checkbox]').click(function() {
@@ -187,6 +206,8 @@ $('#stOne input[type=checkbox]').click(function() {
 });
 </script>
 
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
 <!--
@@ -195,17 +216,6 @@ $('#stOne input[type=checkbox]').click(function() {
 </style>
 </head>
 <body>
-	<%
-   
-  // if(session.getAttribute("Usrid")== null){
-  //          out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
-  //          response.sendRedirect("404.html");
-    //  } 
-  // else
-      //{String Usrid=session.getAttribute("userid").toString();
-   //}
-     
-     %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
@@ -280,7 +290,7 @@ $('#stOne input[type=checkbox]').click(function() {
                 </span>                   
             </a></li>
   			</ul>
-                  
+                    
   			<div id="step-1">	
            <!-- <h2 class="StepTitle">Step 1 Content</h2>-->
           <div class="select_party_fm1">
@@ -289,6 +299,7 @@ $('#stOne input[type=checkbox]').click(function() {
 	<div class="widget widget-gray widget-gray-white">
 		<div class="widget-head"><h4 class="heading">Bordered Table</h4></div>
 		<div class="widget-body">
+                    <form action="../setvotesServlet" name="advotes" method="post">
 			<table class="table table-bordered partySymbole" id="stOne" name="partytbl">
 				<thead>
 					<tr>
@@ -311,7 +322,7 @@ $('#stOne input[type=checkbox]').click(function() {
                                                 <td name="code" class="center" width="20" style="display: none" ><%= insertreslt.getString(1) %></td>
 						<td class="center"><label class="UPFA"></label></td>
                                                 <td><label> <%= insertreslt.getString(3) %></label> </td>
-                                                <td class="center"><label class="label_check"></label><span><input type="checkbox" name="vote" id="checkbox" onclick="loadcandidates(this);" class="ch"></span></td>
+                                                <td class="center"><label class="label_check"></label><span><input type="checkbox" name="vote" id="checkbox" value="<%= insertreslt.getString(1) %>" class="ch"></span></td>
 					</tr>
                                          <% }
                                         }
@@ -372,12 +383,16 @@ $('#stOne input[type=checkbox]').click(function() {
    
 				</tbody>
 			</table>
+                                    <input type="submit" name="hidenvotes" id="hidenvotes" hidden="true"/>
+                    </form>
+                                    
 		</div>
 	</div>
 	</div>
         </div>
                        </div>
   			<div id="step-2">
+                            <form action="../setvotesServlet" name="advotes" method="post">
            <table class="table table-bordered partySymbole" id="stTwo">
 				<thead>
                                     
@@ -389,15 +404,49 @@ $('#stOne input[type=checkbox]').click(function() {
 					</tr>
 				</thead>
 				<tbody>
-                                   
-                                  
-                                          
-					
-                                        
-                                        <tr class="center">
-                
-                                        </tr>
-                                       
+                                    <tr>
+                                        <%
+                                try{
+                                String poliid="";
+                                ArrayList list = (ArrayList) session.getAttribute("partyvote");
+                                Iterator iter = list.iterator();
+                                
+                                while(iter.hasNext()){
+                                        poliid=String.valueOf(iter.next()) ;
+                                }
+                                   ResultSet insertreslt=null;
+                                   Testmd tst=new Testmd();
+                                insertreslt=tst.Getcandiesbyparty(poliid);
+                                if(insertreslt!=null){
+                                    while(insertreslt.next())
+                                    {%>
+                                        <td class="center" style="display: none">
+                                            <label class="v_number" style><%= insertreslt.getString(1) %></label>
+                                    </td>
+                                    <td>
+                                        <label class="v_name"><%=insertreslt.getString(2) %></label>
+                                    </td>
+                                    <td class="center">
+                                        <label class="label_check">
+                                            <input type="checkbox" id="checkbox-0111"/>
+                                        </lable>
+                                        <label class="label_check">
+                                            <input type="checkbox" id="checkbox-0222"/>
+                                        </lable>
+                                        <label class="label_check">
+                                            <input type="checkbox" id="checkbox-0333"/>
+                                        </lable>
+                                    </td>
+                                     </tr>
+                                      <% }
+                                        }
+                                        else{%>
+                                   <tr class="center">  </tr>
+                                        <%} 
+                                        }
+                                        catch(Exception ex){
+                                            
+                                        }%>
 				    <!--<tr>
 						<td class="center"><label class="v_number">08</label></td>
 						<td><label class="v_name">Rathnaweera Mudiyansage Janaka Dias</label></td>
@@ -528,7 +577,9 @@ $('#stOne input[type=checkbox]').click(function() {
                     </tr>-->
                                 </tbody>
 			</table>
-                            <input type="submit" name="vote" value="Vote" id="votes" onclick="submitvotes(this);" />
+                                 <input type="submit" name="prefvote" value="Vote" id="votes" onclick="addvotes();" />
+                               </form> 
+                           
         </div>                      
   			<div id="step-3">
            <div class="success_msg">
@@ -536,7 +587,7 @@ $('#stOne input[type=checkbox]').click(function() {
            </div>
              				          
         </div>
-                   
+                    
   		</div>
 <!-- End SmartWizard Content -->  		
  		

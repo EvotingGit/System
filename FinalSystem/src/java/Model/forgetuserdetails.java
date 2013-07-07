@@ -52,4 +52,32 @@ public class forgetuserdetails extends Dbconnection {
            //return rsltst;
         }
    }
+   
+   public boolean ResetPassword(String _username, String _defltPass)
+   {
+      boolean changegs=false;     
+        try
+        {
+            CallableStatement cs=Createconnection().prepareCall("{call Resetpassword(?,?)}");
+            cs.setString(1, _defltPass);  
+            cs.setString(2, _username);
+            int rslt=cs.executeUpdate();
+            if(rslt>0)
+            {
+               return changegs=true;
+            }
+            return changegs=false;
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            System.err.println(ex.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Invalid Details Provided!", ex);
+            return changegs=false;
+        }
+        finally
+        {
+           //return rsltst;
+        }
+   }
 }

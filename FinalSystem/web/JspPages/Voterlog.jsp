@@ -145,6 +145,15 @@
       <div class="login-box main-content">
       <header><h2>Login</h2></header>
     	<section>
+             <% if(session.getAttribute("Login")=="Error"){%>
+                          <div class="message act-danger">Login Fails, Please Try Again</div>
+                            <% session.setAttribute("Register",null); 
+                            }
+                            else if(session.getAttribute("Login")=="Sucess"){%>
+                            <div class="message act-success">Voter Login Successfully</div><%
+                            session.setAttribute("Register",null); 
+                            } %> 
+                            
     		<form  name="votelogform" action="../VotersLogin_Servlet" method="post" class="clearfix">
 			<p>
 				<input type="text"   class="full"  name="ElctioncrdNo" required="required" placeholder="Election Card No" />

@@ -242,9 +242,9 @@
                      <br>
 <div class="widget-body center">
 	<div class="widget-body">
-            <form id="chrtform" name="chrtform" action ="../">
+            <form id="chrtform" name="chrtform" action ="../PieChartDemo">
                 <img src="chart" width="500" height="400" />
-                <input type="submit" name="hiidenbtn" onload="refreshpage()" id="hiidenchrtbtn" style="visibility: hidden"/>
+                <input type="submit" name="hiidenchrtbtn1" id="hiidenchrtbtn1" />
             </form>
 	</div>
 

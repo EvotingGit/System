@@ -267,6 +267,17 @@
       <br/>
       <br/>
        <div class="reg_form_header"><h4>Province Details</h4></div>
+       <br>
+       <% if(session.getAttribute("Register")=="Error"){%>
+    		<div class="message act-danger">Invalid details provided, Please Try Again</div>
+            <% session.setAttribute("Register",null); 
+             }
+             else if(session.getAttribute("Register")=="Sucess"){%>
+             <div class="message act-success">Add Province Successfully</div><%
+             session.setAttribute("Register",null); 
+             } %> 
+                
+       
 <div style="margin: 0 21%;position: relative;width: 100%;">
      <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered tbNormal">
           <thead>

@@ -58,7 +58,7 @@
 	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
-	
+	 
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
@@ -183,6 +183,14 @@
 <div class="admin_register_wrapper">
    <div class="reg_form_header"><h4>Voter Registration</h4></div>
  <form name="Voterregform" method="post" action="../AdminRegister_Servlet">
+      <% if(session.getAttribute("Register")=="Error"){%>
+                          <div class="message act-danger">Invalid details provided, Please Try Again</div>
+                            <% session.setAttribute("Register",null); 
+                            }
+                            else if(session.getAttribute("Register")=="Sucess"){%>
+                            <div class="message act-success">Voter Registration Successfully</div><%
+                            session.setAttribute("Register",null); 
+                            } %> 
              <table class="admin_reg_tb">
                 <tr>
                     <td>

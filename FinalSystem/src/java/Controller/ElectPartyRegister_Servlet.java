@@ -75,12 +75,12 @@ public class ElectPartyRegister_Servlet extends HttpServlet {
                 {
                        
                         session.setAttribute("ElectPartyRegister", "Sucess");
-                        response.sendRedirect("../JspPages/PoliticalPartyList.jsp");
+                        response.sendRedirect("../FinalSystem/JspPages/PoliticalPartyList.jsp");
                 }
                 else
                 {
                     session.setAttribute("ElectPartyRegister", "Error");
-                    response.sendRedirect("../JspPages/ElectionPartyregister.jsp");
+                    response.sendRedirect("../FinalSystem/JspPages/ElectionPartyregister.jsp");
                 }
            }
         }

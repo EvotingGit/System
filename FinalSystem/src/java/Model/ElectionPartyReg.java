@@ -102,49 +102,51 @@ public class ElectionPartyReg extends Dbconnection{
        }
    }
    
-//   public ResultSet GetCandiesbyPolitcalP_ID(String PoliticalId)
+public ResultSet Getcandiesbyparty(String PartyId)
+ {
+     ResultSet rs=null;
+     try
+     {
+         CallableStatement cs=Createconnection().prepareCall("{call GetCandidatesDetailsbypoliId(?)}");
+           cs.setString(1,PartyId);
+           rs = cs.executeQuery();
+           if(rs!=null)
+           {
+               return rs;
+           }
+           return rs=null;
+     }catch(Exception ex)
+     {
+         ex.toString();
+         return rs;
+     }
+ }
+   
+//   public ArrayList<CandidatesModel> GetCandiesbyPolitcalP_ID(String PoliticalId) 
 //   {
 //        ResultSet rsltst=null;
-//        try
-//        {
+//        ArrayList<CandidatesModel> candiList = new ArrayList<CandidatesModel>();
+//        
+//        try {
 //           CallableStatement cs=Createconnection().prepareCall("{call GetCandidatesDetailsbypoliId(?)}");
 //           cs.setString(1,PoliticalId);
 //           rsltst = cs.executeQuery();
-//           return rsltst;
+//           while(rsltst.next()) { 
+//             CandidatesModel candi=new CandidatesModel();
+//             candi.setUserID(rsltst.getString("UserID"));
+//             String Fname=rsltst.getString("FirstName");
+//             String LstName=rsltst.getString("LastName");
+//             String FulName=Fname+ LstName;
+//             candi.setName(FulName);
+//             candi.setPreferenceNo(rsltst.getString("PreferenceNo"));
+//             
+//             candiList.add(candi);
+//            }
 //        }
-//       catch(Exception ex)
-//       {
-//           ex.printStackTrace();
-//           System.err.println(ex.getMessage());
-//           return rsltst;
-//       }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return candiList;
 //   }
-   
-   public ArrayList<CandidatesModel> GetCandiesbyPolitcalP_ID(String PoliticalId) 
-   {
-        ResultSet rsltst=null;
-        ArrayList<CandidatesModel> candiList = new ArrayList<CandidatesModel>();
-        
-        try {
-           CallableStatement cs=Createconnection().prepareCall("{call GetCandidatesDetailsbypoliId(?)}");
-           cs.setString(1,PoliticalId);
-           rsltst = cs.executeQuery();
-           while(rsltst.next()) { 
-             CandidatesModel candi=new CandidatesModel();
-             candi.setUserID(rsltst.getString("UserID"));
-             String Fname=rsltst.getString("FirstName");
-             String LstName=rsltst.getString("LastName");
-             String FulName=Fname+ LstName;
-             candi.setName(FulName);
-             candi.setPreferenceNo(rsltst.getString("PreferenceNo"));
-             
-             candiList.add(candi);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return candiList;
-   }
- 
+// 
 }

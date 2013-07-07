@@ -9,6 +9,7 @@ import Model.VoterRegister;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +38,7 @@ public class VotersLogin_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+         ArrayList userprof =new ArrayList();
         VoterRegister login=new VoterRegister();
         
         
@@ -53,19 +54,21 @@ public class VotersLogin_Servlet extends HttpServlet {
                   String _encrptelctioncrdno= rsltst.getString(1);   
                   String _pollingdivID= rsltst.getString(3); 
                   String userid= rsltst.getString(4);
+                  userprof.add(_pollingdivID);
+                  userprof.add(userid);
                   String _plainelecrdNo=Md5Encryption.decrypt(_encrptelctioncrdno);
                   if(_plainelecrdNo.equalsIgnoreCase(_electcrdno)&& _pollingdivID.equals(_pooliId))
                   {
                           HttpSession session=request.getSession(true);
                           session.setAttribute("Admindetals", "Sucess");
-                          session.setAttribute("userid", userid);
+                          session.setAttribute("userprof", userprof);
                           response.sendRedirect("../FinalSystem/JspPages/BallotForm.jsp");
                   }
                   else
                   {
                        HttpSession session=request.getSession(true);
                        session.setAttribute("Login", "Error");
-                       response.sendRedirect("../FinalSystem/JspPages/Adminlogin.jsp");
+                       response.sendRedirect("../FinalSystem/JspPages/Voterlog.jsp");
                   }
                 }
              }

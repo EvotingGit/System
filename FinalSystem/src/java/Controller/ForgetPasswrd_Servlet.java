@@ -50,15 +50,22 @@ public class ForgetPasswrd_Servlet extends HttpServlet {
                     String email=rsltst.getString(1);
                     String UserName=rsltst.getString(2);
                     String Password=rsltst.getString(3);
-                    String plainpassagain=Md5Encryption.decrypt(Password);
-                    
-                    boolean sendmail=mail.Senderpassword(email, plainpassagain);
-                    if(sendmail==true){
-                         request.setAttribute("mailsend", "Sucess");
+                    String DefultPass="defult123";
+                    String encrypdefltpass=Md5Encryption.encrypt(DefultPass);
+                    boolean defltrestlset=forgetuser.ResetPassword(UserName,encrypdefltpass);
+                    if(defltrestlset==true)
+                    {
+                         boolean sendmail=mail.Senderpassword(email, DefultPass);
+                            if(sendmail==true){
+                                request.setAttribute("mailsend", "Sucess");
+                                response.sendRedirect("../FinalSystem/JspPages/Forgetpass.jsp");
+                            }
+                            else{
+                            request.setAttribute("mailsend", "Error");
+                            response.sendRedirect("../FinalSystem/JspPages/Forgetpass.jsp");
+                        } 
                     }
-                    else{
-                      request.setAttribute("mailsend", "Error");
-                  } 
+                   
                 }
             } 
         }

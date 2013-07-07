@@ -79,6 +79,15 @@
       <div class="login-box main-content">
       <header><h2>Forget Password</h2></header>
     	<section>
+              <% if(session.getAttribute("mailsend")=="Error"){%>
+    		<div class="message act-danger">Invalid details provided, Please Try Again</div>
+            <% session.setAttribute("mailsend",null); 
+             }
+             else if(session.getAttribute("mailsend")=="Sucess"){%>
+             <div class="message act-danger">Please check you in-box</div><%
+             session.setAttribute("mailsend",null); 
+             } %> 
+                
     		<div class="message info"></div>
     		<form name="formLogin"  id="formLogin" action="../ForgetPasswrd_Servlet" method="post" class="clearfix">
 			<p>

@@ -260,6 +260,14 @@
 <br/>
 <br/>
  <div class="reg_form_header"><h4>Polling Division Details</h4></div>
+                        <% if(session.getAttribute("Register")=="Error"){%>
+                          <div class="message act-danger">Invalid details provided, Please Try Again</div>
+                            <% session.setAttribute("Register",null); 
+                            }
+                            else if(session.getAttribute("Register")=="Sucess"){%>
+                            <div class="message act-success">Add District Successfully</div><%
+                            session.setAttribute("Register",null); 
+                            } %> 
  <div style="margin: 0 21%;position: relative;width: 100%;">
 <table class="table table-bordered tbNormal">
 			<thead>

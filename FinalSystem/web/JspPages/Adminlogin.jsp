@@ -83,7 +83,10 @@
     		<div class="message act-danger">Invalid details provided, Please Try Again</div>
             <% session.setAttribute("mailsend",null); 
              }
-             else if(session.getAttribute("mailsend")=="Sucess"){%>
+             if(session.getAttribute("Admindetals")=="Error"){%>
+                 <div class="message act-danger">Invalid login provided, Please Try Again</div>
+             <%}
+             if(session.getAttribute("mailsend")=="Sucess"){%>
              <div class="message act-danger">Please check you in-box</div><%
              session.setAttribute("mailsend",null); 
              } %> 

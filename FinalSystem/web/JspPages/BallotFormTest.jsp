@@ -64,46 +64,7 @@
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
     <script src="WZ/js/jquery.smartWizard.js"></script>
     
-<script type="text/javascript">
-    
 
-    function loadcandidates(chkvalue)
-    {
-      
-         if($(chkvalue).is(':checked')){ 
-              var Row = document.getElementById("abc");
-              var Cells = Row.getElementsByTagName("td");
-              var poliId=Cells[0].innerText;
-                alert(poliId);
-             $.post('../BallotServlet',{postVariableName: poliId},function(responseJson) 
-                {
-                  if(responseJson!=null){
-                      $("#stTwo").find("tr:gt(0)").remove();
-                      var table1 = $("#stTwo");
-                       $.each(responseJson, function(key,value) {
-                           var rowNew = $( "<tr>\n\
-                                           <td class='center' style='display: none' ></td> \n\
-                                            <td class='center' ><label class='v_number'></label></td>\n\
-                                            <td><label class='v_name'></label> </td>\n\
-                                            <td class='center'><input type='checkbox' id='checkbox-01'/>\n\
-                                           <input type='checkbox' id='checkbox-02'/>\n\
-                                           <input type='checkbox' id='checkbox-03'/></td></tr>");
-                        rowNew.children().eq(0).text(value['UserID']).hide(); 
-                        rowNew.children().eq(1).text(value['Name']); 
-                        rowNew.children().eq(2).text(value['PreferenceNo']); 
-                        rowNew.appendTo(table1);
-                       });
-                    }
-                });
-
-    }
-    else
-        {
-                 alert("Please Select Political Party Name");
-        }  
-}
-
-    </script>
     
     <script type="text/javascript">
       function submitvotes(values){
@@ -211,15 +172,14 @@ $('#stOne input[type=checkbox]').click(function() {
 </head>
 <body>
 	<%
-   
-  // if(session.getAttribute("Usrid")== null){
-  //          out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
-  //          response.sendRedirect("404.html");
-    //  } 
-  // else
-      //{String Usrid=session.getAttribute("userid").toString();
-   //}
-     
+                String divisioniid="";
+                String userid="";
+                ArrayList userdetaillist = (ArrayList) session.getAttribute("userprof");
+                Iterator iterlist = userdetaillist.iterator();
+                while(iterlist.hasNext()){
+                    divisioniid=String.valueOf(iterlist.next()) ;
+                    userid=String.valueOf(iterlist.next()) ;
+                }
      %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
@@ -412,17 +372,19 @@ $('#stOne input[type=checkbox]').click(function() {
                                     <tr>
                                              <%
                                 try{
-                                ElectionPartyReg politicalreg=new ElectionPartyReg();politicalreg=new ElectionPartyReg();
-                                String poliid="";
+                                String politicid="";
+                                ElectionPartyReg politicalreg=new ElectionPartyReg();
                                 ArrayList list = (ArrayList) session.getAttribute("partyvote");
                                 Iterator iter = list.iterator();
                                 while(iter.hasNext()){
-                                        poliid=String.valueOf(iter.next()) ;
+                                        politicid=String.valueOf(iter.next()) ;
                                 }
                                 ResultSet gettreslt=null;
-                                gettreslt=politicalreg.Getcandiesbyparty(poliid);
+                                gettreslt=politicalreg.Getcandiesbyparty(politicid);
                                 int count=1; %>
-                                <input type="hidden" style="display: none" name="politicalId" value="<%= poliid %>"
+                                <input type="hidden" style="display: none" name="politicalId" value="<%= politicid %>" />
+                                <input type="hidden" style="display: none" name="userId" value="<%= userid %>" />
+                                <input type="hidden" style="display: none" name="divisionid" value="<%= divisioniid %>" />
                                 <%
                                 if(gettreslt!=null){
                                     while(gettreslt.next())

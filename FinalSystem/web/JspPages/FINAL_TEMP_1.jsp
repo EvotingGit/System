@@ -65,8 +65,8 @@
          String userid="";
          String type="";
         while(iter.hasNext()){
-                 userid=String.valueOf(iter.next()) ;
-                 username=String.valueOf(iter.next());
+                 username=String.valueOf(iter.next()) ;
+                 userid=String.valueOf(iter.next());
                  type=String.valueOf(iter.next());
           }
  

@@ -154,7 +154,7 @@
 		<table cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
 			<thead>
 				<tr>
-					<th style="visibility: hidden">Sectary ID</th>
+					<th>Sectary Code</th>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Mobile No</th>
@@ -172,8 +172,8 @@
                                     while(insertreslt.next())
                                     {%>
 				<tr class="gradeX">
-					<td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
-                                        <td class="left"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
+					<td class="left"><%= insertreslt.getString(1)%></td>
+                                        <td class="left"><%= insertreslt.getString(2)%></td>
                                         <td class="left"><%= insertreslt.getString(3)%></td>
                                         <td class="left"><%= insertreslt.getString(4)%></td>
                                         <td class="left"><%= insertreslt.getString(5)%></td>

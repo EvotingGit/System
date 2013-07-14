@@ -24,7 +24,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.jasper.tagplugins.jstl.core.Catch;
+//import org.apache.jasper.tagplugins.jstl.core.Catch;
 import javax.servlet.http.Part;
 
 import java.sql.ResultSet;
@@ -64,6 +64,7 @@ public class AdminRegister_Servlet extends HttpServlet {
         UserRegister userreg=new UserRegister();
         CandiRegister candiReg=new CandiRegister();
         VoterRegister voter=new VoterRegister();
+        MailSender mail=new MailSender();
         byte[] image=null; 
 
         try {
@@ -120,6 +121,7 @@ public class AdminRegister_Servlet extends HttpServlet {
                                 boolean boolrs1=adminReg.insertAdminDetail(UserId, location, createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
                                 if(boolrs1==true)
                                 {
+                                    mail.SenderegisterSucess(email, pass);
                                      HttpSession session=request.getSession(true);
                                      session.setAttribute("AdminRegister", "Sucess");
                                      response.sendRedirect("../FinalSystem/JspPages/Adminregister.jsp");
@@ -136,6 +138,7 @@ public class AdminRegister_Servlet extends HttpServlet {
                                  boolean boolrs1=candiReg.insertCandiDetail(UserId,partyid,seat,electNo,createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
                                  if(boolrs1==true)
                                 {
+                                     mail.SenderegisterSucess(email, pass);
                                      HttpSession session=request.getSession(true);
                                      session.setAttribute("CandidateRegister", "Sucess");
                                      response.sendRedirect("../FinalSystem/JspPages/CandidateList.jsp");
@@ -151,6 +154,7 @@ public class AdminRegister_Servlet extends HttpServlet {
                                 boolean boolrs1=sectry.InsertSectaryDetails(UserId,regparty,createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
                                  if(boolrs1==true)
                                 {
+                                     mail.SenderegisterSucess(email, pass);
                                      HttpSession session=request.getSession(true);
                                      session.setAttribute("SectaryRegister", "Sucess");
                                      response.sendRedirect("../FinalSystem/JspPages/SecatryList.jsp");
@@ -160,15 +164,17 @@ public class AdminRegister_Servlet extends HttpServlet {
                             {
                                  String electuuid  =createUUid.UniqueID();
                                  String newelectuuid= CreateUniqueID.trimUUID(electuuid.toString());
-                                 String status="False"; 
+                                 byte status=0; 
                                  String poldiv=request.getParameter("polingdiv");
                                  String electcrdNo=newelectuuid.toString();
-                                 String encrpyelectNo=Md5Encryption.encrypt(electcrdNo);
+                                 //String encrpyelectNo=Md5Encryption.encrypt(electcrdNo);
                                  
-                                 boolean vtrboolrs1=voter.InsertVoterDetails(UserId,encrpyelectNo,poldiv,status,createdby,createddate,updatedby,updateddate,post);
+                                 boolean vtrboolrs1=voter.InsertVoterDetails(UserId,electcrdNo,poldiv,status,createdby,createddate,updatedby,updateddate,post);
                                  HttpSession session=request.getSession(true);
                                  if(vtrboolrs1==true)
-                                {    session.setAttribute("Register", "Sucess");
+                                {     
+                                      mail.SenderegisterSucess(email, electcrdNo); 
+                                     session.setAttribute("Register", "Sucess");
                                      response.sendRedirect("../FinalSystem/JspPages/VoterRegistration.jsp");
                                 }
                                  else

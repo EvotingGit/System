@@ -4,10 +4,7 @@
  */
 package Controller;
 
-import Model.CandidatesModel;
-import Model.ElectionPartyReg;
-import Model.Testmd;
-import Model.Votes;
+import Model.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -47,23 +44,21 @@ public class setvotesServlet extends HttpServlet {
         ArrayList item =new ArrayList();
         ArrayList candidateidlist =new ArrayList();
         Votes vote=new Votes();
+        String PartyId="";
         HttpSession session=request.getSession(true);
         try {
             if(request.getParameter("hidenvotes") !=null)
             {
-           
-                 String partyvote=request.getParameter("vote");
-                 ResultSet resultSet=electiongrup.Getcandiesbyparty(partyvote);
+                 PartyId=request.getParameter("vote");
+                 ResultSet resultSet=electiongrup.Getcandiesbyparty(PartyId);
                  
                  if(resultSet!=null)
                     {
-                         String fullName=partyvote;
-                         item.add(fullName);
+                         item.add(PartyId);
                          session.setAttribute("partyvote", item);
                          response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
                     }
-                 else
-                 {
+                 else{
                      response.sendRedirect("../FinalSystem/JspPages/BallotFormTest_1.jsp");
                  }
             }
@@ -78,13 +73,27 @@ public class setvotesServlet extends HttpServlet {
                             }
                          }
                      String hidnpolitic= request.getParameter("politicalId");
-                     String userid="1736ef4b-06cc-4ac3-ba45-ee20ebe48b33";//request.getParameter("");
+                     String userid=request.getParameter("userId");
+                     String encrpyuserid=Md5Encryption.encrypt(userid);
+                     String pollingdidviosnId=request.getParameter("divisionid");
                      
-                     boolean voterslt= vote.Insertvote(userid, hidnpolitic,candidateidlist);
+                     boolean voterslt= vote.Insertvote(encrpyuserid, hidnpolitic,candidateidlist,pollingdidviosnId);
                      if(voterslt==true){
+                          
+                           ArrayList sucesvotedetails=new ArrayList();
+                           VoteSummary votesumary=new VoteSummary();
+                           
+                           sucesvotedetails.add(userid);
+                           sucesvotedetails.add(hidnpolitic);
+                           sucesvotedetails.add(pollingdidviosnId);
+                           votesumary.CreateVoteSummary(sucesvotedetails);
                            session.setAttribute("VoteSucess", "Sucess");
                            response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
-          
+                     }
+                     else
+                     {
+                          session.setAttribute("VoteSucess", "Error");
+                          response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
                      }
                  }
 

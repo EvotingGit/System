@@ -157,7 +157,7 @@
 		<table cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
 			<thead>
 				<tr>
-					<th style="visibility: hidden"> Candidate ID</th>
+					<th>Candidate Code</th>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Political Party</th>
@@ -173,11 +173,11 @@
                                     while(insertreslt.next())
                                     {%>
 				<tr class="gradeX">
-					<td style="visibility: hidden"><%= insertreslt.getString(1)%></td>
-                                        <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
-                                        <td class="center"><%= insertreslt.getString(3)%></td>
-                                        <td class="center"><%= insertreslt.getString(5)%></td>
-                                        <td class="center"><%= insertreslt.getString(6)%></td>
+					<td class="left"><%= insertreslt.getString(1)%></td>
+                                        <td class="left"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
+                                        <td class="left"><%= insertreslt.getString(3)%></td>
+                                        <td class="left"><%= insertreslt.getString(5)%></td>
+                                        <td class="left"><%= insertreslt.getString(6)%></td>
 				</tr>
 				 <% }
               }

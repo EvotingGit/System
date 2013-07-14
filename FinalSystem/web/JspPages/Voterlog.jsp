@@ -147,12 +147,16 @@
       <header><h2>Login</h2></header>
     	<section>
              <% if(session.getAttribute("Login")=="Error"){%>
-                          <div class="message act-danger">Login Fails, Please Try Again</div>
-                            <% session.setAttribute("Register",null); 
+                          <div class="message act-danger">Login Fails, Try Again please</div>
+                            <% session.setAttribute("Login",null); 
                             }
-                            else if(session.getAttribute("Login")=="Sucess"){%>
+                            if(session.getAttribute("Login")=="Sucess"){%>
                             <div class="message act-success">Voter Login Successfully</div><%
-                            session.setAttribute("Register",null); 
+                            session.setAttribute("Login",null); 
+                            } 
+                            if(session.getAttribute("VoteSucess")=="Error"){%>
+                            <div class="message act-success">You are already voted</div><%
+                            session.setAttribute("VoteSucess",null); 
                             } %> 
                             
     		<form  name="votelogform" action="../VotersLogin_Servlet" method="post" class="clearfix">

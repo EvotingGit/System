@@ -4,6 +4,7 @@
  */
 package Model;
 
+import Controller.Md5Encryption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
 public class LoginDetails extends Dbconnection {
     
     Connection con=Createconnection();
-    
+    MailSender mail=new MailSender();
     public boolean insertlogindetl(String UserId,String UserName,String Password, String Post)
     {
        boolean flag=false;
@@ -35,6 +36,11 @@ public class LoginDetails extends Dbconnection {
             int rslt=ps.executeUpdate();
             if(rslt>0)
             {
+                if(Post!="Voter")
+                {
+                    String planpass=Md5Encryption.decrypt(Password);
+                    mail.SenderegisterSucess(UserName, planpass);
+                }
                 flag=true;
             }
             return flag;

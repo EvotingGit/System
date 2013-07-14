@@ -1,12 +1,26 @@
-<%@page import="Model.ElectionPartyReg"%>
+<%@page import="Model.Testmd"%>
+<%@page import="Model.DistricRegister"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page import="Model.ProvinceRegister"%>
+<%@page import="org.jfree.data.jdbc.JDBCPieDataset"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
+<%@ page import="org.jfree.chart.ChartFactory" %>
+<%@ page import="org.jfree.chart.ChartUtilities" %>
+
+<%@ page import="org.jfree.chart.JFreeChart" %>
+<%@ page import="org.jfree.chart.plot.PlotOrientation"%>
+<%@ page import="org.jfree.data.*" %>
+<%@ page import="org.jfree.data.jdbc.JDBCCategoryDataset"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <head>
-	<title>Political Party List</title>
+	<title> Online Election Voting </title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -36,8 +50,8 @@
 	<!-- Uniform -->
 	<link rel="stylesheet" media="screen" href="theme/scripts/pixelmatrix-uniform/css/uniform.default.css" />
 
-	<!-- DataTables -->
-	<link rel="stylesheet" media="screen" href="theme/scripts/DataTables/media/css/DT_bootstrap.css" />
+	<!-- ColorPicker -->
+	<link rel="stylesheet" media="screen" href="theme/scripts/farbtastic/farbtastic.css" />
 
 	<!-- JQuery v1.8.2 -->
 	<script src="theme/scripts/jquery-1.8.2.min.js"></script>
@@ -49,8 +63,11 @@
 	<link rel="stylesheet" media="screen" href="theme/scripts/jquery-miniColors/jquery.miniColors.css" />
 	
 	<!-- Theme -->
-	<link rel="stylesheet" href="theme/css/style.min.css?1359188932" />
+	<link rel="stylesheet" href="theme/css/style.min.css?1359188899" />
 	
+        <!-- DataTables -->
+	<link rel="stylesheet" media="screen" href="theme/scripts/DataTables/media/css/DT_bootstrap.css" />
+
 	
 	
 	<!-- LESS 2 CSS -->
@@ -58,7 +75,24 @@
 	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
-	
+         
+    
+    
+    
+	<% 
+   /*String username="";
+   String usertype="";
+ * 
+   String userid=session.getAttribute("userid").toString();
+    if(session.getAttribute("username")== null){
+            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
+            response.sendRedirect("404.html");
+      } 
+   else {
+        username=session.getAttribute("username").toString();
+        usertype=session.getAttribute("usrtype").toString();
+   }*/
+   %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
@@ -69,18 +103,67 @@
 				</button>
 				<div class="positionWrapper">
 					<span class="line"></span>
-						<div class="profile">
+										<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>Adrian Demian</strong>
-							<em>Content Manager</em>
+							<strong>username</strong>
+							<em>usertype</em>
 						</span>
-                                            </div>
-					<ul class="topnav hidden-phone">
-						<li>
-							<a href="login.html" class="logout glyphicons lock"><i></i><span>Logout</span></a>
+					</div>
+					<!--<ul class="notif">
+						<li><a href="" class="glyphicons chat btn" rel="tooltip" data-placement="bottom" data-original-title="7 new chat message(s)"><i></i><span>7</span></a></li>
+						<li><a href="" class="glyphicons shopping_cart btn" rel="tooltip" data-placement="bottom" data-original-title="1 new product(s)"><i></i><span>1</span></a></li>
+						<li><a href="" class="glyphicons user_add btn" rel="tooltip" data-placement="bottom" data-original-title="4 new member(s)"><i></i><span>4</span></a></li>
+						<li><a href="" class="glyphicons envelope btn" rel="tooltip" data-placement="bottom" data-original-title="3 new email(s)"><i></i><span>3</span></a></li>
+					</ul>-->
+										<ul class="topnav hidden-phone">
+						<!--<li>
+							<div class="btn-group">
+								<a href="#" class="btn-inverse dropdown-toggle" data-toggle="dropdown">
+								<img src="theme/images/lang/en.png" align="absmiddle" />
+								<span class="caret"></span></a>
+						    	<ul class="dropdown-menu pull-right">
+						      		<li class="active"><a href="?page=form_elements&lang=en" title="English"><img src="theme/images/lang/en.png" align="absmiddle" /> English</a></li>
+						      		<li><a href="?page=form_elements&lang=ro" title="Romanian"><img src="theme/images/lang/ro.png" align="absmiddle" /> Romanian</a></li>
+						      		<li><a href="?page=form_elements&lang=it" title="Italian"><img src="theme/images/lang/it.png" align="absmiddle" /> Italian</a></li>
+						      		<li><a href="?page=form_elements&lang=fr" title="French"><img src="theme/images/lang/fr.png" align="absmiddle" /> French</a></li>
+						      		<li><a href="?page=form_elements&lang=pl" title="Polish"><img src="theme/images/lang/pl.png" align="absmiddle" /> Polish</a></li>
+						    	</ul>
+						  	</div>
+						</li>-->
+					<!--							<li>
+							<a href="#themer" data-toggle="collapse" class="logout glyphicons eyedropper"><i></i><span>Themer</span></a>
+							<div id="themer" class="collapse">
+								<div class="wrapper">
+									<h4>Themer <span>color &amp; layout options</span></h4>
+									<ul>
+										<li>Theme: <select id="themer-theme" class="pull-right"></select><div class="clearfix"></div></li>
+										<li>Primary Color: <input type="minicolors" data-default="#ffffff" data-slider="hue" data-textfield="false" data-position="left" id="themer-primary-cp" /><div class="clearfix"></div></li>
+										<li class="advanced">Header Color: <input type="minicolors" data-slider="hue" data-default="#ffffff" data-textfield="false" data-position="left" id="themer-header-cp" /><div class="clearfix"></div></li>
+										<li class="advanced">Menu Color: <input type="minicolors" data-slider="hue" data-default="#ffffff" data-textfield="false" data-position="left" id="themer-menu-cp" /><div class="clearfix"></div></li>
+										<li>
+											<span class="link" id="themer-custom-reset">reset theme</span>
+											<span class="pull-right"><label>advanced <input type="checkbox" value="1" id="themer-advanced-toggle" /></label></span>
+										</li>
+									</ul>
+																		<hr class="separator" />
+									<ul>
+										<li>Menu position: <select id="themer-menu-position" class="pull-right"></select><div class="clearfix"></div></li>
+										<li>Menu size: <select id="themer-menu-size" class="pull-right"></select><div class="clearfix"></div></li>
+									</ul>
+																		<div id="themer-getcode" class="hide">
+										<hr class="separator" />
+										<button class="btn btn-primary btn-small pull-right btn-icon glyphicons download" id="themer-getcode-less"><i></i>Get LESS</button>
+										<button class="btn btn-inverse btn-small pull-right btn-icon glyphicons download" id="themer-getcode-css"><i></i>Get CSS</button>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>
+						</li>-->
+																		<li>
+                                                                                                                                                    <a href="SignOut.jsp" class="logout glyphicons lock"><i></i><span>Logout</span></a>
 						</li>
-					</ul>
+											</ul>
 				</div>
 			</div>
 		</div>
@@ -108,25 +191,16 @@
 									<li class="glyphicons adress_book"><a href="bookings.html"><i></i><span>Bookings</span></a></li>
 									<li class="glyphicons charts"><a href="charts.html"><i></i><span>Charts</span></a></li>
 									<li class="glyphicons cogwheels"><a href="ui.html"><i></i><span>UI Elements</span></a></li>
-									<li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span>Forms</span></a>
-										<ul class="collapse" id="menu_forms">
-											<li class=""><a href="form_demo.html" class="glyphicons user"><i></i><span>My Account</span></a></li>
-											<li class=""><a href="form_elements.html" class="glyphicons show_big_thumbnails"><i></i><span>Form Elements</span></a></li>
-											<li class=""><a href="form_validator.html" class="glyphicons circle_ok"><i></i><span>Form Validator</span></a></li>
-											<!-- <li class=""><a href="form_wizzard.html" class="glyphicons share_alt"><i></i><span>Form Wizzard</span></a></li> -->
-											<li class=""><a href="file_managers.html" class="glyphicons file_import"><i></i><span>File Managers</span></a></li>
-										</ul>
-									</li>
-									<li class="hasSubmenu2 currentScroll">
+									
+									<!--<li class="hasSubmenu2">
 										<a data-toggle="collapse" class="glyphicons table" href="#menu_tables"><i></i><span>Tables</span></a>
-										<ul class="collapse in" id="menu_tables">
+										<ul class="collapse" id="menu_tables">
 											<li class=""><a href="tables.html" class="glyphicons show_thumbnails"><i></i><span>Classic Tables</span></a></li>
 											<li class=""><a href="tables_themed.html" class="glyphicons show_thumbnails"><i></i><span>Themed Tables</span></a></li>
-											<li class=" active"><a href="tables_enhanced.html" class="glyphicons show_thumbnails"><i></i><span>Enhanced Tables</span></a></li>
+											<li class=""><a href="tables_enhanced.html" class="glyphicons show_thumbnails"><i></i><span>Enhanced Tables</span></a></li>
 										</ul>
 									</li>
-									<li class="glyphicons calendar"><a href="calendar.html"><i></i><span>Calendar</span></a></li>
+									<li class="glyphicons calendar"><a href="calendar.html"><i></i><span>Calendar</span></a></li>-->
 								</ul>
 							</div>
 							<span class="navarrow hide">
@@ -136,65 +210,62 @@
 					</div>
 					<div class="span10 col main-right">
 						<div class="rrow scroll-y" id="mainYScroller">
-							<div class="inner topRight"><ul class="breadcrumb">
-	<li><a href="index.html" class="glyphicons home"><i></i> BootAdmin</a></li>
-	<li class="divider"></li>
-	<li>Tables</li>
-	<li class="divider"></li>
-	<li>Enhanced Tables</li>
-</ul><br />
+							 
+                           <!--  our GK start-->
+                              <div class="middle_main">
+   <%
 
-<h2 class="glyphicons show_thumbnails"><i></i> Enhanced Tables</h2>
-<div class="separator"></div>
+ //String query="SELECT * FROM msc_app.chart_test";
+/*JDBCCategoryDataset dataset=new JDBCCategoryDataset("jdbc:mysql://localhost:3306/msc_app",
+"com.mysql.jdbc.Driver","root","");*/
+  
+//dataset.executeQuery( query);
+    
+    //JFreeChart chart = ChartFactory .createPieChart("Latest 3 batches student registrations as relative portion", dataset, true, true, false);
+        
+//dataset.executeQuery( query);
+/*JFreeChart chart = ChartFactory .createBarChart3D(
+"Batchwise Student Registrations",
+"Batch",
+"Student Amount",
+dataset,
+PlotOrientation.VERTICAL,true, true, false);*/
+
+try
+{
+
+ JDBCCategoryDataset dataset=null;
+   Testmd axc=new Testmd();
+   String abc="";
+   dataset=axc.Barchart();
+    ResultSet  xx=(ResultSet)dataset;
+    while(xx.next()){
+        abc=xx.getString(1);
+    }
+ JFreeChart chart = ChartFactory.createBarChart3D("Batchwise Student Registrations","Batch",abc,dataset,PlotOrientation.VERTICAL,true, true, false);
+ ChartUtilities.saveChartAsJPEG(new File("D:/Software/JAVA/New folder (2)/images/chart2.jpg"), chart, 600, 600);
+Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler D:/Software/JAVA/New folder (2)/images/chart2.jpg");
+response.sendRedirect("Adminlogin.jsp");
+%>
+
+<center>
+    <img src="images/chart2.jpg" width="800" height="550" border="8">
+</center>
+<%
 
 
-<div class="relativeWrap">
-<div class="widget widget-gray widget-gray-white">
-	<div class="widget-head">
-		<h4 class="heading">Political Party List</h4>
-	</div>
-	<div class="widget-body">
-		<table cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
-			<thead>
-				<tr>
-					<th>Polyparty Code</th>
-					<th>Political Party Code</th>
-					<th>Political Party Name</th>
-					<th>Registered Candidates</th>
-					</tr>
-			</thead>
-			<tbody>
-                             <%
-                             try{
-                                ResultSet insertreslt=null;
-                                ElectionPartyReg politicalreg=new ElectionPartyReg();
-                                insertreslt=politicalreg.LoadpolipartyList();
-                                if(insertreslt!=null){
-                                    while(insertreslt.next())
-                                    {%>
-				<tr class="gradeX">
-					<td class="left"><%= insertreslt.getString(1)%></td>
-                                        <td class="left"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
-                                        <td class="center"><%= insertreslt.getString(3)%></td>
-                                        <td class="center"><%= insertreslt.getString(4)%></td>
-        				</tr>
-				 <% }
-                        }
-                        else{%>
-            <tr class="center">
-                
-            </tr>
-                        <%} 
-                 }
-                 catch(Exception ex)
-                        {
-                }%>
-			</tbody>
-		</table>
-	</div>
-</div>
-</div>
-<br />							</div>
+}
+catch (Exception e)
+{
+System.out.println("Problem in creating chart.");
+}
+%>
+
+   </div> 	
+
+     <!--  our GK end-->
+
+
 						</div>
 					</div>
 				</div>
@@ -347,6 +418,9 @@
 	<script src="theme/scripts/jquery.cookie.js"></script>
 	<script src="theme/scripts/themer.js"></script>
 	
+	<!-- ColorPicker -->
+	<script src="theme/scripts/farbtastic/farbtastic.js" type="text/javascript"></script>
+
 	
 	
 	<!-- Resize Script -->
@@ -355,11 +429,6 @@
 	<!-- Uniform -->
 	<script src="theme/scripts/pixelmatrix-uniform/jquery.uniform.min.js"></script>
 	
-	
-	<!-- DataTables -->
-	<script src="theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
-	<script src="theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>
-
 	<!-- Bootstrap Script -->
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	

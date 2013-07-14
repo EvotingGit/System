@@ -4,6 +4,7 @@
  */
 package Model;
 
+import Controller.Md5Encryption;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
 public class VoterRegister  extends UserRegister{
     Connection conn=Createconnection(); 
     
-    public boolean InsertVoterDetails(String UserId,String ElectionCrdNo,String poldivID,String stats,String createdby,String createddate,String updatedby,String updateddate,String post)
+    public boolean InsertVoterDetails(String UserId,String ElectionCrdNo,String poldivID,byte stats,String createdby,String createddate,String updatedby,String updateddate,String post)
     {
         boolean flage=false;
         String polipartyID="";
@@ -29,7 +30,7 @@ public class VoterRegister  extends UserRegister{
             prestate.setString(1, UserId);
             prestate.setString(2, ElectionCrdNo);
             prestate.setString(3, poldivID);
-            prestate.setString(4, stats);
+            prestate.setByte(4, stats);
             prestate.setString(5, createdby);
             prestate.setString(6, createddate);
             prestate.setString(7, updatedby);
@@ -38,7 +39,15 @@ public class VoterRegister  extends UserRegister{
             int rslt=prestate.executeUpdate();
             if(rslt>0)
             {
-               flage=true;
+                //update the polling division register voter count 
+                PollingDivisionRegister polingdivisionReg=new PollingDivisionRegister();
+                int regAmount=polingdivisionReg.GetCurrentVoteamount(poldivID);
+                regAmount++;
+                boolean updatesrsl=polingdivisionReg.UpdateRegisterVoters(poldivID,regAmount);
+                if(updatesrsl==true){
+                    return flage=true;
+                }
+                return flage;
             }
             else
             {
@@ -86,6 +95,12 @@ public class VoterRegister  extends UserRegister{
             cs.setString(1, UseId);
             cs.setByte(2,status);
             int rslt=cs.executeUpdate();
+             /*String updatequry="Update VoterDetailTbl SET VoterDetailTbl.Status=? WHERE VoterDetailTbl.UserID=?";
+             PreparedStatement prestate=conn.prepareStatement(updatequry);
+             String plainUse_id=Md5Encryption.decrypt(UseId);
+             prestate.setByte(1, status);
+             prestate.setString(2, plainUse_id);
+             int rslt=prestate.executeUpdate();*/
             if(rslt>0){
                     return flage=true;
             }

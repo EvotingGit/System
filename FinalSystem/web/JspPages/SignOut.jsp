@@ -14,14 +14,15 @@
     <body>
        
         <%
-        session.removeAttribute("adminflg");
-        response.sendRedirect("Newfolder/Login.jsp");
+        session.removeAttribute("Admindetals");
+        response.sendRedirect("Adminlogin.jsp");
+        session.setAttribute("Admindetals",null);
         
         session.removeAttribute("PMuser");
-        response.sendRedirect("Newfolder/Login.jsp");
+        response.sendRedirect("Adminlogin.jsp");
         
-        session.removeAttribute("PMMflg");
-        response.sendRedirect("Newfolder/Login.jsp");
+        session.removeAttribute("P;MMflg");
+        response.sendRedirect("Adminlogin.jsp");
          %>
     </body>
 </html>

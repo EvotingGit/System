@@ -4,13 +4,12 @@
  */
 package Model;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import Controller.Md5Encryption;
+import java.sql.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.jsp.jstl.sql.Result;
 
 /**
  *
@@ -23,7 +22,7 @@ public class Votes extends Dbconnection{
   Byte status=1;
   Double votecount=1.0;
   Map<String, Integer> candidatedictionary = null;
-  
+  int curentAlcount=0;
   //this is the cunstructer in this class
   public Votes()
   {
@@ -31,16 +30,18 @@ public class Votes extends Dbconnection{
   }
   
   // insert the votes in to vote tables 
-  public boolean  Insertvote(String UserId,String p_party_id,ArrayList candidateidlist) throws SQLException
+  public boolean  Insertvote(String UserId,String p_party_id,ArrayList candidateidlist,String pollingdidviosnId) throws SQLException
   {
        boolean flage=false;
        String VoterID=createUUid.UniqueID();
+       PollingDivisionRegister pollingdivisionReg=new PollingDivisionRegister();
+       String plainuserid=Md5Encryption.decrypt(UserId);
       try
       {
           CallableStatement cs=Createconnection().prepareCall("{call InsrtVotes(?,?,?,?)}");
           cs.setString(1, VoterID);
           cs.setString(2, p_party_id);
-          cs.setString(3, UserId);
+          cs.setString(3, plainuserid);
           cs.setDouble(4, votecount);
           int rslt=cs.executeUpdate();
             if(rslt>0)
@@ -54,9 +55,17 @@ public class Votes extends Dbconnection{
                 if(prefernrslt==true)
                 {
                     VoterRegister voterreg=new VoterRegister();
-                    boolean resltvoterreg= voterreg.UpdateVoterStatus(UserId,status);
+                    boolean resltvoterreg= voterreg.UpdateVoterStatus(plainuserid,status);
                     if(resltvoterreg==true){
-                        return flage=true;
+                     
+                        //update the polling divison table voted count (valid votes amount)
+                        int curentvotes=pollingdivisionReg.GetCurrentVoteamount(VoterID);
+                        curentvotes++;
+                        boolean addresult=pollingdivisionReg.Updatevotedcount(pollingdidviosnId,curentvotes);
+                        if(addresult==true){
+                            return flage=true;
+                        }
+                         return flage=false;
                     }     
                 }
                 return flage=false;
@@ -134,6 +143,7 @@ public class Votes extends Dbconnection{
      Set set = prferncedictionary.entrySet();
      // Get an iterator
      Iterator newitor = set.iterator();
+     
      int rslt=0;
      
       try
@@ -174,5 +184,68 @@ public class Votes extends Dbconnection{
       {
           return flage;
       }
-    }  
+    } 
+  
+
+    public ArrayList CurrentPrgress() {
+        
+        ResultSet resltd=null;
+        ArrayList progresslist=new ArrayList();
+       try{
+            CallableStatement cs=Createconnection().prepareCall("{call GetcurrentProgrss()}");
+            resltd = cs.executeQuery(); 
+            if(resltd.next())
+               {
+                   int Allcount=GetCurentAllVotes();
+                   String progressofpartyName=resltd.getString(1); 
+                   int progressofpartyValue=resltd.getInt(2);
+                   double presentage=calculatepresentage(Allcount,progressofpartyValue);
+                   progresslist.add(progressofpartyName);
+                   progresslist.add(presentage);
+               }
+            return progresslist;
+       } catch(Exception ext)
+        {
+            ext.printStackTrace();
+            System.err.println(ext.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Record Not Found !", ext);
+            return progresslist; 
+      }
+    }
+
+    private int GetCurentAllVotes() throws SQLException {
+        
+        try
+        {
+            ResultSet resltd=null;
+            CallableStatement cs=Createconnection().prepareCall("{call GetAllVotesCountCurrntly()}");
+            resltd = cs.executeQuery(); 
+            if(resltd.next())
+            {
+                curentAlcount=resltd.getInt(1);
+            }
+            return curentAlcount;
+        }catch(Exception exc)
+        {
+            exc.toString();
+        }finally{
+            con.close();
+            return curentAlcount;
+        }
+    }
+
+    private double calculatepresentage(int Allcount,int progressofpartyValue) {
+        try
+        {
+            double newallcunt=(double)Allcount;
+            double currentcunt=(double)progressofpartyValue;
+            double presentagevalue=(currentcunt/newallcunt)*100;
+                    
+            return presentagevalue;
+        }
+        catch(Exception exc){
+        throw new UnsupportedOperationException("Not yet implemented");
+        }
+    }
+ 
 }

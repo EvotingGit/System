@@ -14,10 +14,11 @@ import java.security.spec.KeySpec;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.crypto.spec.DESedeKeySpec;
-import org.apache.catalina.util.Base64;
 import sun.misc.*; 
 import java.util.UUID;
 import java.util.Date;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
+import org.jfree.data.jdbc.JDBCPieDataset;
 /**
  *
  * @author User
@@ -33,12 +34,17 @@ public void insertimage(String c) {
      {
         
          File file = new File("D:/"+c.toString());
+         boolean x= file.canRead();
+         boolean y= file.canExecute();
 	 FileInputStream fin = new FileInputStream(file);
-         String Inseret="insert into Image (photo) values(?)";
+         String Inseret="insert into picture (id,image) values(?,?)";
          java.sql.PreparedStatement ps=conn.prepareStatement(Inseret);
+         ps.setInt(1,1);
 	 ps.setBinaryStream(1,fin,(int)file.length()); 
          int result=ps.executeUpdate();
-          
+          if(result>0){
+              f =true;
+          }
             ps.close();
             conn.close(); 
      }
@@ -143,14 +149,39 @@ public void insertimage(String c) {
  }
  
  
- public class Types
-{
-  private String name;
-  private String pcaNo;
-  private String ip;
-  //constructors
-  //getter-setters
-}
+ public JDBCPieDataset chart() {
+        try
+        {
+            JDBCPieDataset dataset = new JDBCPieDataset(conn);
+            String query="SELECT DivisionName,SUM(CandidatesSeats) As SeatCount,SUM(RegisterdVoters) As RegsitedVotes, "+
+			 " SUM(VotedCount) As ValidVotedCount FROM     pollingdivisiontbl,votetable GROUP BY pollingdivisiontbl.DivisionName; ";
+            //java.sql.PreparedStatement ps=conn.prepareStatement(query);
+            //ps.executeQuery();
+            dataset.executeQuery(query);  
+                        
+            return dataset;
+        }
+        catch(Exception ex){
+        throw new UnsupportedOperationException("Not yet implemented");
+        }
+    }
+ 
+ public JDBCCategoryDataset Barchart() {
+        try
+        {
+            JDBCCategoryDataset dataset = new JDBCCategoryDataset(conn);
+            String query="SELECT DivisionName,SUM(CandidatesSeats) As SeatCount,SUM(RegisterdVoters) As RegsitedVotes, "+
+			 " SUM(VotedCount) As ValidVotedCount FROM     pollingdivisiontbl,votetable GROUP BY pollingdivisiontbl.DivisionName; ";
+            //java.sql.PreparedStatement ps=conn.prepareStatement(query);
+            //ps.executeQuery();
+            dataset.executeQuery(query);  
+                        
+            return dataset;
+        }
+        catch(Exception ex){
+        throw new UnsupportedOperationException("Not yet implemented");
+        }
+    }
  
             
 }

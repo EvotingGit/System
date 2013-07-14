@@ -4,8 +4,7 @@
  */
 package Controller;
 
-import Model.LoginDetails;
-import Model.VoterRegister;
+import Model.Votes;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -19,10 +18,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author User
+ * @author nalin
  */
-@WebServlet(name = "VotersLogin_Servlet", urlPatterns = {"/VotersLogin_Servlet"})
-public class VotersLogin_Servlet extends HttpServlet {
+@WebServlet(name = "AdminDash_Servlet", urlPatterns = {"/AdminDash_Servlet"})
+public class AdminDash_Servlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -38,55 +37,33 @@ public class VotersLogin_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        ArrayList userprof =new ArrayList();
-        VoterRegister login=new VoterRegister();
-
+        ArrayList progresslist=new ArrayList();
+        Votes vote=new Votes();
+        HttpSession session=request.getSession(true);
         try {
-             if(request.getParameter("loginBtn")!=null)
-             {
-                String _electcrdno=request.getParameter("ElctioncrdNo");
-                String _nicNo=request.getParameter("Nicno");
-                String _pooliId=request.getParameter("pollid");
-                
-                boolean isvoted=login.Isvotedbefore(_nicNo);
-                if(isvoted!=true)
-                {
-                    ResultSet rsltst=login.GetvoterLoginDetails(_nicNo,_pooliId);
-                    if(rsltst.next())
-                    {
-                        String _encrptelctioncrdno= rsltst.getString(1);
-                        //String _plainelecrdNo=Md5Encryption.decrypt(_encrptelctioncrdno);
-                        String _pollingdivID= rsltst.getString(3); 
-                        String userid= rsltst.getString(4);
-                        userprof.add(_pollingdivID);
-                        userprof.add(userid);
-                  
-                        if(_encrptelctioncrdno.equalsIgnoreCase(_electcrdno)&& _pollingdivID.equals(_pooliId))
-                        {
-                                HttpSession session=request.getSession(true);
-                                session.setAttribute("Admindetals", "Sucess");
-                                session.setAttribute("userprof", userprof);
-                                response.sendRedirect("../FinalSystem/JspPages/BallotFormTest.jsp");
-                        }
-                        else
-                        {
-                            HttpSession session=request.getSession(true);
-                            session.setAttribute("Login", "Error");
-                            response.sendRedirect("../FinalSystem/JspPages/Voterlog.jsp");
-                        }
-                    }
-               }
-                else
-                  {
-                       HttpSession session=request.getSession(true);
-                       session.setAttribute("Login", "Error");
-                       response.sendRedirect("../FinalSystem/JspPages/Voterlog.jsp");
-                  }
-            }  
-        }
-        catch(Exception ex)
+           if(request.getAttribute("hidenprogress")!=null)
+           {
+               //ResultSet prgresRslt=vote.CurrentPrgress();
+               //if(prgresRslt.next())
+//               {
+//                   String progressofpartyName=prgresRslt.getString(1); 
+//                   String progressofpartyValue=prgresRslt.getString(2); 
+//                   progresslist.add(progressofpartyName);
+//                   progresslist.add(progressofpartyValue);
+//                   session.setAttribute("progresslist", progresslist);
+//                   response.sendRedirect("../FinalSystem/JspPages/AdminDash.jsp");
+//               }
+//               else{
+//                   session.setAttribute("progresslist", progresslist);
+//                   response.sendRedirect("../FinalSystem/JspPages/AdminDash.jsp");
+//               }
+           }else{
+               response.sendRedirect("../FinalSystem/JspPages/AdminDash.jsp");
+           }
+           
+        }catch(Exception ex)
         {
-            
+            ex.toString();
         }
         finally {            
             out.close();

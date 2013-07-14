@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+        ArrayList list =new ArrayList();
         UserRegister users=new UserRegister();
         LoginDetails login=new LoginDetails();
         HttpSession session=request.getSession(true);
@@ -63,16 +63,20 @@ public class LoginController extends HttpServlet {
                      String usertype=rsltst.getString(4);
                      if(usertype.equals("Administrator"))
                      {
-                         ArrayList list =new ArrayList();
+                         
                          String fullName=fstName +" "+ lstName;
                           list.add(fullName);
                           list.add(userId);
                           list.add(usertype);
                           session.setAttribute("Admindetals", list);
-                          response.sendRedirect("../FinalSystem/JspPages/FINAL_TEMP_1.jsp");
+                          response.sendRedirect("../FinalSystem/JspPages/AdminDash.jsp");
                      }
                     
-                  }               
+                  } 
+                  else{
+                        session.setAttribute("Admindetals", "Error");
+                          response.sendRedirect("../FinalSystem/JspPages/Adminlogin.jsp");
+                  }
                 }
             }
         }

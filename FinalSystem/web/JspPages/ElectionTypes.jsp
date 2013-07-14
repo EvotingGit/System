@@ -1,3 +1,5 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Model.ElectionType"%>
 <%@page import="java.sql.ResultSet"%>
 <!DOCTYPE html>
@@ -58,19 +60,26 @@
 	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
-	<% 
-   /*String username="";
-   String usertype="";
- * 
-   String userid=session.getAttribute("userid").toString();
-    if(session.getAttribute("username")== null){
-            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
+	<%
+
+        ArrayList list = (ArrayList) session.getAttribute("Admindetals");
+        Iterator iter = list.iterator();
+         String username="";
+         String userid="";
+         String type="";
+         if(iter!=null){
+            while(iter.hasNext()){
+                    username=String.valueOf(iter.next()) ;
+                    userid=String.valueOf(iter.next());
+                    type=String.valueOf(iter.next());
+            }
+            list=null;
+               }
+                 else{
+              out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
             response.sendRedirect("404.html");
-      } 
-   else {
-        username=session.getAttribute("username").toString();
-        usertype=session.getAttribute("usrtype").toString();
-   }*/
+                 }
+
    %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
@@ -85,8 +94,8 @@
 										<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>username</strong>
-							<em>usertype</em>
+							<strong><%=username %></strong>
+							<em><%= type %></em>
 						</span>
 					</div>
 					<!--<ul class="notif">
@@ -242,17 +251,18 @@
 				</tr>
             </table>
             <br><br>
-           <div class="widget-head">
-		<h4 class="heading">Province Details</h4>
+            <div class="reg_form_header">
+		<h4>Province Details</h4>
 	</div>
-    <div class="widget-body">
-      <table  cellpadding="0" cellspacing="0" border="0" >
+
+        <div style="margin: 0 21%;position: relative;width: 100%;">
+      <table  cellpadding="0" cellspacing="0" border="0" class="table table-bordered tbNormal">
           <thead>
               <tr>
                 <th style="display: none; width: 20">Election ID</th>
-                <th>Election Code</th>
-		<th>Election Type</th>
-                <th>Year</th>
+                <th class="left">Election Code</th>
+                <th class="left">Election Type</th>
+                
             </tr>
           </thead>
           <tbody>
@@ -265,9 +275,9 @@
                 {%>
                   <tr class="gradeX">
                     <td style="display: none; width: 20"><%= insertreslt.getString(1)%></td>
-                    <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
-                    <td class="center"><%= insertreslt.getString(3)%></td>
-                    <td class="center"><%= insertreslt.getString(4)%></td>
+                    <td class="left"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
+                    <td class="left"><%= insertreslt.getString(3)%></td>
+                   
 		</tr>
             <% }
               }

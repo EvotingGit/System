@@ -44,7 +44,6 @@ public class ElectionTypeRegister_Servlet extends HttpServlet {
         try {
             if(request.getParameter("eletypregbtn")!=null)
             {
-                //SimpleDateFormat convertDate = new SimpleDateFormat("MMM dd yyyy"); 
                 String ElectionTypeID=createUUid.UniqueID();
                 String ElectionTypeCode=request.getParameter("electioncode");
                 String ElectionType=request.getParameter("electyp");

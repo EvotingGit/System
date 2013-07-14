@@ -111,7 +111,7 @@ public class AdminRegister_Servlet extends HttpServlet {
                         {
                             String UserId=rslt.getString(1);
                             String post=rslt.getString(2);
-                            
+                            HttpSession session=request.getSession(true);
                             if(post.equals("Administrator"))
                               {
                                 String usernm=request.getParameter("usernam");
@@ -119,13 +119,15 @@ public class AdminRegister_Servlet extends HttpServlet {
                                 String encrptpass=Md5Encryption.encrypt(pass);
                                 String location=request.getParameter("loc");
                                 boolean boolrs1=adminReg.insertAdminDetail(UserId, location, createdby,createddate,updatedby, updateddate,usernm,encrptpass,post);
+                                
                                 if(boolrs1==true)
                                 {
-                                    mail.SenderegisterSucess(email, pass);
-                                     HttpSession session=request.getSession(true);
+                                     mail.SenderegisterSucess(email, pass);
                                      session.setAttribute("AdminRegister", "Sucess");
                                      response.sendRedirect("../FinalSystem/JspPages/Adminregister.jsp");
                                 }
+                                 session.setAttribute("AdminRegister", "Error");
+                                 response.sendRedirect("../FinalSystem/JspPages/Adminregister.jsp");
                               }
                             if(post.equals("Candidate"))
                             {
@@ -139,10 +141,12 @@ public class AdminRegister_Servlet extends HttpServlet {
                                  if(boolrs1==true)
                                 {
                                      mail.SenderegisterSucess(email, pass);
-                                     HttpSession session=request.getSession(true);
+                                     
                                      session.setAttribute("CandidateRegister", "Sucess");
                                      response.sendRedirect("../FinalSystem/JspPages/CandidateList.jsp");
                                 }
+                                 session.setAttribute("CandidateRegister", "Error");
+                                 response.sendRedirect("../FinalSystem/JspPages/CandidateList.jsp");
                             }
                               if(post.equals("Sectary"))
                             {
@@ -155,10 +159,11 @@ public class AdminRegister_Servlet extends HttpServlet {
                                  if(boolrs1==true)
                                 {
                                      mail.SenderegisterSucess(email, pass);
-                                     HttpSession session=request.getSession(true);
                                      session.setAttribute("SectaryRegister", "Sucess");
                                      response.sendRedirect("../FinalSystem/JspPages/SecatryList.jsp");
                                 }
+                                  session.setAttribute("SectaryRegister", "Error");
+                                  response.sendRedirect("../FinalSystem/JspPages/SecatryList.jsp");
                             }
                               if(post.equals("Voter"))
                             {
@@ -170,7 +175,6 @@ public class AdminRegister_Servlet extends HttpServlet {
                                  //String encrpyelectNo=Md5Encryption.encrypt(electcrdNo);
                                  
                                  boolean vtrboolrs1=voter.InsertVoterDetails(UserId,electcrdNo,poldiv,status,createdby,createddate,updatedby,updateddate,post);
-                                 HttpSession session=request.getSession(true);
                                  if(vtrboolrs1==true)
                                 {     
                                       mail.SenderegisterSucess(email, electcrdNo); 

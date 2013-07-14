@@ -92,41 +92,42 @@
 						<div class="rrow scroll-y-left">
 							<div class="iScrollWrapper">
 								<ul>
-									<li class="glyphicons home"><a href="index.html"><i></i><span>Dashboard</span></a></li>
-									<li class="glyphicons coins"><a href="finances.html"><i></i><span>Finances</span></a></li>
-									<li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#menu_ecommerce"><i></i><span>Online Shop</span></a>
-										<ul class="collapse" id="menu_ecommerce">
-											<li class=""><a href="products.html" class="glyphicons show_thumbnails"><i></i><span>Products</span></a></li>
-											<!-- <li class=""><a href="categories.html" class="glyphicons show_big_thumbnails"><i></i><span>Categories</span></a></li> -->
-											<li class=""><a href="product_edit.html" class="glyphicons cart_in"><i></i><span>Add product</span></a></li>
-											<!-- <li class=""><a href="orders.html" class="glyphicons list"><i></i><span>Orders</span></a></li> -->
+									 <li class="glyphicons home"><a href="AdminDash.jsp"><i></i><span>Dashboard</span></a></li>
+                                            				
+                                                                        <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Settings"><i></i><span>Election Settings</span></a>
+										<ul class="collapse" id="menu_Settings">
+										<li class=""><a href="ProvinceDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Provinces</span></a></li>
+                                                                                        <li class=""><a href="AddDistricDetails.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Create Districts</span></a></li>
+                                                                                        <li class=""><a href="AddPollingDivisionDetails.jsp" class="glyphicons cart_in"><i></i><span>Create Polling Divisions</span></a></li>
+                                                                                        <li class=""><a href="ElectionTypes.jsp" class="glyphicons list"><i></i><span>Create Election Types</span></a></li> 	
 										</ul>
 									</li>
-									<li class="glyphicons sort"><a href="pages.html"><i></i><span>Site Pages</span></a></li>
-									<li class="glyphicons picture"><a href="gallery.html"><i></i><span>Photo Gallery</span></a></li>
-									<li class="glyphicons adress_book"><a href="bookings.html"><i></i><span>Bookings</span></a></li>
-									<li class="glyphicons charts"><a href="charts.html"><i></i><span>Charts</span></a></li>
-									<li class="glyphicons cogwheels"><a href="ui.html"><i></i><span>UI Elements</span></a></li>
-									<li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span>Forms</span></a>
-										<ul class="collapse" id="menu_forms">
-											<li class=""><a href="form_demo.html" class="glyphicons user"><i></i><span>My Account</span></a></li>
-											<li class=""><a href="form_elements.html" class="glyphicons show_big_thumbnails"><i></i><span>Form Elements</span></a></li>
-											<li class=""><a href="form_validator.html" class="glyphicons circle_ok"><i></i><span>Form Validator</span></a></li>
-											<!-- <li class=""><a href="form_wizzard.html" class="glyphicons share_alt"><i></i><span>Form Wizzard</span></a></li> -->
-											<li class=""><a href="file_managers.html" class="glyphicons file_import"><i></i><span>File Managers</span></a></li>
+                                                                        <!-- User Registration --> 
+                                                                         <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Registrations"><i></i><span>User Registrations</span></a>
+										<ul class="collapse" id="menu_Registrations">
+											<li class=""><a href="Adminregister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Administrator</span></a></li>
+                                                                                    <li class=""><a href="VoterRegistration.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Create Voter</span></a></li>
+                                                                                    <li class=""><a href="voterList.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Voter List</span></a></li>
+                                                                                        
+                                                                                    <li class=""><a href="SecatryRegister.jsp" class="glyphicons cart_in"><i></i><span>Create Sectary</span></a></li>
+                                                                                    <li class="glyphicons charts currentScroll active"><a href="SecatryList.jsp" class="glyphicons cart_in"><i></i><span>Sectary List</span></a></li>
+                                                                                        
+                                                                                    <li class=""><a href="CandidateRegistration.jsp" class="glyphicons list"><i></i><span>Create Candidate</span></a></li>
+                                                                                    <li class=""><a href="CandidateList.jsp" class="glyphicons list"><i></i><span>Candidate List</span></a></li> 
 										</ul>
 									</li>
-									<li class="hasSubmenu2 currentScroll">
-										<a data-toggle="collapse" class="glyphicons table" href="#menu_tables"><i></i><span>Tables</span></a>
-										<ul class="collapse in" id="menu_tables">
-											<li class=""><a href="tables.html" class="glyphicons show_thumbnails"><i></i><span>Classic Tables</span></a></li>
-											<li class=""><a href="tables_themed.html" class="glyphicons show_thumbnails"><i></i><span>Themed Tables</span></a></li>
-											<li class=" active"><a href="tables_enhanced.html" class="glyphicons show_thumbnails"><i></i><span>Enhanced Tables</span></a></li>
+                                                                        <!--Reports -->
+                                                                          <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Reports"><i></i><span>Reports</span></a>
+										<ul class="collapse" id="menu_Reports">
+											 <li class=""><a href="CandidateRpt.jsp" class="glyphicons show_thumbnails"><i></i><span>Candidates Report</span></a></li>
+                                                                                    <li class=""><a href="politicalparydetailRpt.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Political Party Report</span></a></li>
+                                                                                    <li class=""><a href="PollingDivision_Province.jsp" class="glyphicons show_big_thumbnails"><i></i><span>polling Division Reports</span></a></li>
+                                                                                    
 										</ul>
 									</li>
-									<li class="glyphicons calendar"><a href="calendar.html"><i></i><span>Calendar</span></a></li>
 								</ul>
 							</div>
 							<span class="navarrow hide">

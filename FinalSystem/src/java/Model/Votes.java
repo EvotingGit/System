@@ -197,10 +197,14 @@ public class Votes extends Dbconnection{
             if(resltd.next())
                {
                    int Allcount=GetCurentAllVotes();
-                   String progressofpartyName=resltd.getString(1); 
-                   int progressofpartyValue=resltd.getInt(2);
+                   String progressofpartycode=resltd.getString(1); 
+                   String progressofpartyName=resltd.getString(2); 
+                   int progressofpartyValue=resltd.getInt(3);
                    double presentage=calculatepresentage(Allcount,progressofpartyValue);
+                   
+                   progresslist.add(progressofpartycode);
                    progresslist.add(progressofpartyName);
+                   progresslist.add(progressofpartyValue);
                    progresslist.add(presentage);
                }
             return progresslist;

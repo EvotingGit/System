@@ -26,7 +26,7 @@ public class PollingDivisionRegister extends Dbconnection{
         {
              String query="INSERT INTO `electionsystemdb`.`PollingDivisionTbl` " +
                           "(DivisionID,DivisionCode,DivisionName,CandidatesSeats,RegisterdVoters,DistricID,VotedCount) "+
-                          "VALUES (?,?,?,?,?,?);";
+                          "VALUES (?,?,?,?,?,?,?);";
              
              java.sql.PreparedStatement prestate=conn.prepareStatement(query);
              prestate.setString(1, DivisionID);

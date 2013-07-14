@@ -153,5 +153,20 @@ public class VoterRegister  extends UserRegister{
             return flage; 
         }
      }
+     
+     public ResultSet Loadvoterlist(){
+          ResultSet rsltst=null;
+        try
+        {
+            CallableStatement cs=Createconnection().prepareCall("{call LoadAllVoterDetails()}");
+            rsltst = cs.executeQuery();
+            return rsltst;
+        }
+        catch(Exception ex)
+        {
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Password incorrect ", ex);
+            return rsltst;
+        } 
+     }
     
 }

@@ -169,32 +169,42 @@
 						<div class="rrow scroll-y-left">
 							<div class="iScrollWrapper">
 								<ul>
-									<li class="glyphicons home"><a href="#"><i></i><span>Dashboard</span></a></li>
-                                                                        <li class="glyphicons coins"><a href="AddDistricDetails.jsp"><i></i><span>Create District</span></a></li>
-									<li class="hasSubmenu2">
-                                                                            <a data-toggle="collapse" class="glyphicons shopping_cart" href="ProvinceDetails.jsp"><i></i><span>Create Province</span></a>
-										<ul class="collapse" id="menu_ecommerce">
-											<li class=""><a href="products.html" class="glyphicons show_thumbnails"><i></i><span>Products</span></a></li>
-											<!-- <li class=""><a href="categories.html" class="glyphicons show_big_thumbnails"><i></i><span>Categories</span></a></li> -->
-											<li class=""><a href="product_edit.html" class="glyphicons cart_in"><i></i><span>Add product</span></a></li>
-											<!-- <li class=""><a href="orders.html" class="glyphicons list"><i></i><span>Orders</span></a></li> -->
+                                                                    <li class="glyphicons home"><a href="AdminDash.jsp"><i></i><span>Dashboard</span></a></li>
+                                            				
+                                                                        <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Settings"><i></i><span>Election Settings</span></a>
+										<ul class="collapse" id="menu_Settings">
+										<li class=""><a href="ProvinceDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Provinces</span></a></li>
+                                                                                        <li class=""><a href="AddDistricDetails.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Create Districts</span></a></li>
+                                                                                        <li class=""><a href="AddPollingDivisionDetails.jsp" class="glyphicons cart_in"><i></i><span>Create Polling Divisions</span></a></li>
+                                                                                        <li class=""><a href="ElectionTypes.jsp" class="glyphicons list"><i></i><span>Create Election Types</span></a></li> 	
 										</ul>
 									</li>
-                                                                        <li class="glyphicons sort"><a href="ElectionTypes.jsp"><i></i><span>Election Type Creation</span></a></li>
-                                                                        <li class="glyphicons picture"><a href="ElectionPartyregister.jsp"><i></i><span>Political Party Registration</span></a></li>
-                                                                        <li class="glyphicons adress_book"><a href="CandidateRegistration.jsp"><i></i><span>Candidates Registration</span></a></li>
-									<li class="glyphicons charts"><a href="charts.html"><i></i><span>Charts</span></a></li>
-									<li class="glyphicons cogwheels"><a href="ui.html"><i></i><span>UI Elements</span></a></li>
-									
-									<!--<li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons table" href="#menu_tables"><i></i><span>Tables</span></a>
-										<ul class="collapse" id="menu_tables">
-											<li class=""><a href="tables.html" class="glyphicons show_thumbnails"><i></i><span>Classic Tables</span></a></li>
-											<li class=""><a href="tables_themed.html" class="glyphicons show_thumbnails"><i></i><span>Themed Tables</span></a></li>
-											<li class=""><a href="tables_enhanced.html" class="glyphicons show_thumbnails"><i></i><span>Enhanced Tables</span></a></li>
+                                                                        <!-- User Registration --> 
+                                                                         <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Registrations"><i></i><span>User Registrations</span></a>
+										<ul class="collapse" id="menu_Registrations">
+											<li class=""><a href="Adminregister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Administrator</span></a></li>
+                                                                                    <li class=""><a href="VoterRegistration.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Create Voter</span></a></li>
+                                                                                    <li class=""><a href="voterList.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Voter List</span></a></li>
+                                                                                        
+                                                                                    <li class=""><a href="SecatryRegister.jsp" class="glyphicons cart_in"><i></i><span>Create Sectary</span></a></li>
+                                                                                    <li class=""><a href="SecatryList.jsp" class="glyphicons cart_in"><i></i><span>Sectary List</span></a></li>
+                                                                                        
+                                                                                    <li class=""><a href="CandidateRegistration.jsp" class="glyphicons list"><i></i><span>Create Candidate</span></a></li>
+                                                                                    <li class=""><a href="CandidateList.jsp" class="glyphicons list"><i></i><span>Candidate List</span></a></li> 
 										</ul>
 									</li>
-									<li class="glyphicons calendar"><a href="calendar.html"><i></i><span>Calendar</span></a></li>-->
+                                                                        <!--Reports -->
+                                                                          <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Reports"><i></i><span>Reports</span></a>
+										<ul class="collapse" id="menu_Reports">
+											 <li class=""><a href="CandidateRpt.jsp" class="glyphicons show_thumbnails"><i></i><span>Candidates Report</span></a></li>
+                                                                                    <li class=""><a href="politicalparydetailRpt.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Political Party Report</span></a></li>
+                                                                                    <li class=""><a href="PollingDivision_Province.jsp" class="glyphicons show_big_thumbnails"><i></i><span>polling Division Reports</span></a></li>
+                                                                                    
+										</ul>
+									</li>
 								</ul>
 							</div>
 							<span class="navarrow hide">
@@ -211,77 +221,80 @@
 <div class="admin_register_wrapper">
     <div class="reg_form_header" style="alignment-adjust: central"><span><h2> Welcome To Election Vote Counting System </h2></span></div>
  
-    
+     <br/><br/>
 	  <form name="admindash" method="post" action="../AdminDash_Servlet">
-              <br/><br/>
-              
-              <br/>
-              <h4>Current Progress Results</h4>
-              <% 
-              Votes vt=new Votes();
-              
-        ArrayList progresslist = vt.CurrentPrgress();
-        Iterator iter1 = progresslist.iterator();
-         String partyName="";
-         int curentVotes=0;
-        
-    
-   %>
+    <!-- //show the detaisl about the current political party results  -->
+<div class="relativeWrap">
+<div class="widget widget-gray widget-gray-white">
+	<div class="widget-head">
+		<div class="widget-head">
+		<h4 class="heading">Current Vote Progress</h4>
+	</div>
+	</div>
+	<div class="widget-body">
+		<table cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
+			<thead>
+				<tr>
+					<th>Political Party Code</th>
+					<th>Party Name</th>
+					<th>Current Votes</th>
+					<th>Vote Precentage</th>
+				</tr>
+			</thead>
+			<tbody>
+                             <%
+                                Votes vt=new Votes();
+                                ArrayList progresslist = vt.CurrentPrgress();
+                                Iterator iter1 = progresslist.iterator();
+                                
+                                if(iter1!=null){
+                                    while(iter1.hasNext())
+                                    {%>
+				<tr class="gradeX">
+					<td class="left"><%= String.valueOf(iter1.next())%></td>
+                                        <td class="left"><%= String.valueOf(iter1.next())%></td>
+                                        <td class="left"><%= String.valueOf(iter1.next())%></td>
+                                        <td class="left"><%= String.valueOf(iter1.next())%></td>
+        				</tr>
+				 <% }
+              }
+            else{%>
+            <tr class="center" cellpadding="4">
+                 <div class="message act-danger">No Records Found </div>
+            </tr>
+            <%}   %>
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+   
+   
+   
+ <!--  
 <table class="table table-bordered table-fill">
 	<thead>
             <th class="shortRight">Progress Bars</th>
 	</thead>
            
 	<tbody>
-             <%
-            while(iter1.hasNext()){%>
+             //<%
+           // while(iter1.hasNext()){%>
             
 		<tr>
-			<td class="shortRight"><%= String.valueOf(iter1.next()) %></td>
+			<td class="shortRight">/</td>
 			<td>
 				<div class="progress progress-striped progress-success">
-					<div class="bar" style="width: 50%"><%= String.valueOf(iter1.next()) %></div>
+					<div class="bar" style="width: 50%">/</div>
 				</div>
 			</td>
 		</tr>
-                <%  }
+                <%  //}
          
         %>
-		<!--<tr>
-			<td class="shortRight">Info</td>
-			<td>
-				<div class="progress progress-striped  progress-info">
-					<div class="bar" style="width: 40%;"></div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td class="shortRight">Success</td>
-			<td>
-				<div class="progress progress-striped  progress-success">
-					<div class="bar" style="width: 60%;"></div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td class="shortRight">Warning</td>
-			<td>
-				<div class="progress progress-striped progress-warning">
-					<div class="bar" style="width: 80%;"></div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td class="shortRight">Danger</td>
-			<td>
-				<div class="progress progress-striped progress-danger">
-					<div class="bar" style="width: 20%;"></div>
-				</div>
-			</td>
-		</tr>-->
 	</tbody>
 </table>
-              <input type="submit" hidden="true"  id="hidenprogress"/>
+              <input type="submit" hidden="true"  id="hidenprogress"/>-->
             </form>	
 	</div>
 

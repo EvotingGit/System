@@ -1,12 +1,14 @@
-<%@page import="java.sql.ResultSet"%>
+<%@page import="Model.VoterRegister"%>
+<%@page import="Model.CandidatesModel"%>
 <%@page import="Model.ElectionPartyReg"%>
+<%@page import="java.sql.ResultSet"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-	<title> Create New Sectary </title>
+	<title>Voter Details List</title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -36,8 +38,8 @@
 	<!-- Uniform -->
 	<link rel="stylesheet" media="screen" href="theme/scripts/pixelmatrix-uniform/css/uniform.default.css" />
 
-	<!-- ColorPicker -->
-	<link rel="stylesheet" media="screen" href="theme/scripts/farbtastic/farbtastic.css" />
+	<!-- DataTables -->
+	<link rel="stylesheet" media="screen" href="theme/scripts/DataTables/media/css/DT_bootstrap.css" />
 
 	<!-- JQuery v1.8.2 -->
 	<script src="theme/scripts/jquery-1.8.2.min.js"></script>
@@ -49,7 +51,7 @@
 	<link rel="stylesheet" media="screen" href="theme/scripts/jquery-miniColors/jquery.miniColors.css" />
 	
 	<!-- Theme -->
-	<link rel="stylesheet" href="theme/css/style.min.css?1359188899" />
+	<link rel="stylesheet" href="theme/css/style.min.css?1359188932" />
 	
 	
 	
@@ -58,20 +60,7 @@
 	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
-	<% 
-   /*String username="";
-   String usertype="";
- * 
-   String userid=session.getAttribute("userid").toString();
-    if(session.getAttribute("username")== null){
-            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
-            response.sendRedirect("404.html");
-      } 
-   else {
-        username=session.getAttribute("username").toString();
-        usertype=session.getAttribute("usrtype").toString();
-   }*/
-   %>
+	
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
@@ -82,67 +71,18 @@
 				</button>
 				<div class="positionWrapper">
 					<span class="line"></span>
-										<div class="profile">
+						<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>username</strong>
-							<em>usertype</em>
+							<strong>Adrian Demian</strong>
+							<em>Content Manager</em>
 						</span>
-					</div>
-					<!--<ul class="notif">
-						<li><a href="" class="glyphicons chat btn" rel="tooltip" data-placement="bottom" data-original-title="7 new chat message(s)"><i></i><span>7</span></a></li>
-						<li><a href="" class="glyphicons shopping_cart btn" rel="tooltip" data-placement="bottom" data-original-title="1 new product(s)"><i></i><span>1</span></a></li>
-						<li><a href="" class="glyphicons user_add btn" rel="tooltip" data-placement="bottom" data-original-title="4 new member(s)"><i></i><span>4</span></a></li>
-						<li><a href="" class="glyphicons envelope btn" rel="tooltip" data-placement="bottom" data-original-title="3 new email(s)"><i></i><span>3</span></a></li>
-					</ul>-->
-										<ul class="topnav hidden-phone">
-						<!--<li>
-							<div class="btn-group">
-								<a href="#" class="btn-inverse dropdown-toggle" data-toggle="dropdown">
-								<img src="theme/images/lang/en.png" align="absmiddle" />
-								<span class="caret"></span></a>
-						    	<ul class="dropdown-menu pull-right">
-						      		<li class="active"><a href="?page=form_elements&lang=en" title="English"><img src="theme/images/lang/en.png" align="absmiddle" /> English</a></li>
-						      		<li><a href="?page=form_elements&lang=ro" title="Romanian"><img src="theme/images/lang/ro.png" align="absmiddle" /> Romanian</a></li>
-						      		<li><a href="?page=form_elements&lang=it" title="Italian"><img src="theme/images/lang/it.png" align="absmiddle" /> Italian</a></li>
-						      		<li><a href="?page=form_elements&lang=fr" title="French"><img src="theme/images/lang/fr.png" align="absmiddle" /> French</a></li>
-						      		<li><a href="?page=form_elements&lang=pl" title="Polish"><img src="theme/images/lang/pl.png" align="absmiddle" /> Polish</a></li>
-						    	</ul>
-						  	</div>
-						</li>-->
-					<!--							<li>
-							<a href="#themer" data-toggle="collapse" class="logout glyphicons eyedropper"><i></i><span>Themer</span></a>
-							<div id="themer" class="collapse">
-								<div class="wrapper">
-									<h4>Themer <span>color &amp; layout options</span></h4>
-									<ul>
-										<li>Theme: <select id="themer-theme" class="pull-right"></select><div class="clearfix"></div></li>
-										<li>Primary Color: <input type="minicolors" data-default="#ffffff" data-slider="hue" data-textfield="false" data-position="left" id="themer-primary-cp" /><div class="clearfix"></div></li>
-										<li class="advanced">Header Color: <input type="minicolors" data-slider="hue" data-default="#ffffff" data-textfield="false" data-position="left" id="themer-header-cp" /><div class="clearfix"></div></li>
-										<li class="advanced">Menu Color: <input type="minicolors" data-slider="hue" data-default="#ffffff" data-textfield="false" data-position="left" id="themer-menu-cp" /><div class="clearfix"></div></li>
-										<li>
-											<span class="link" id="themer-custom-reset">reset theme</span>
-											<span class="pull-right"><label>advanced <input type="checkbox" value="1" id="themer-advanced-toggle" /></label></span>
-										</li>
-									</ul>
-																		<hr class="separator" />
-									<ul>
-										<li>Menu position: <select id="themer-menu-position" class="pull-right"></select><div class="clearfix"></div></li>
-										<li>Menu size: <select id="themer-menu-size" class="pull-right"></select><div class="clearfix"></div></li>
-									</ul>
-																		<div id="themer-getcode" class="hide">
-										<hr class="separator" />
-										<button class="btn btn-primary btn-small pull-right btn-icon glyphicons download" id="themer-getcode-less"><i></i>Get LESS</button>
-										<button class="btn btn-inverse btn-small pull-right btn-icon glyphicons download" id="themer-getcode-css"><i></i>Get CSS</button>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div>
-						</li>-->
-																		<li>
-							<a href="SignOut.jsp" class="logout glyphicons lock"><i></i><span>Logout</span></a>
+                                            </div>
+					<ul class="topnav hidden-phone">
+						<li>
+							<a href="login.html" class="logout glyphicons lock"><i></i><span>Logout</span></a>
 						</li>
-											</ul>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -169,11 +109,11 @@
                                                                          <li class="hasSubmenu2">
 										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Registrations"><i></i><span>User Registrations</span></a>
 										<ul class="collapse" id="menu_Registrations">
-											<li class=""><a href="Adminregister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Administrator</span></a></li>
+										    <li  class=""><a href="Adminregister.jsp"><i></i><span>Create Administrator</span></a></li>
                                                                                     <li class=""><a href="VoterRegistration.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Create Voter</span></a></li>
-                                                                                    <li class=""><a href="voterList.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Voter List</span></a></li>
+                                                                                    <li class="glyphicons charts currentScroll active"><a href="voterList.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Voter List</span></a></li>
                                                                                         
-                                                                                    <li class="glyphicons charts currentScroll active"><a href="SecatryRegister.jsp" class="glyphicons cart_in"><i></i><span>Create Sectary</span></a></li>
+                                                                                    <li class=""><a href="SecatryRegister.jsp" class="glyphicons cart_in"><i></i><span>Create Sectary</span></a></li>
                                                                                     <li class=""><a href="SecatryList.jsp" class="glyphicons cart_in"><i></i><span>Sectary List</span></a></li>
                                                                                         
                                                                                     <li class=""><a href="CandidateRegistration.jsp" class="glyphicons list"><i></i><span>Create Candidate</span></a></li>
@@ -199,194 +139,67 @@
 					</div>
 					<div class="span10 col main-right">
 						<div class="rrow scroll-y" id="mainYScroller">
-							 
-                           <!--  our GK start-->
-                       <div class="middle_main">
+							<div class="inner topRight"><ul class="breadcrumb">
+	<li><a href="index.html" class="glyphicons home"><i></i> BootAdmin</a></li>
+	<li class="divider"></li>
+	<li>Tables</li>
+	<li class="divider"></li>
+	<li>Enhanced Tables</li>
+</ul><br />
 
-<div class="admin_register_wrapper">
-   <div class="reg_form_header"><h4> Sectary Registration</h4></div>
- <form name="adminregform" method="post" action="../AdminRegister_Servlet">
-             <table class="admin_reg_tb">
-                <tr>
-                    <td>
-                         <label>User Code</label> 
-                         </td>
-                         <td>
-                            <div> 
-                            <input name="usercode" type="text" />
-                            </div>
-                         </td>
-                </tr>
-                <tr>
-                      <td>
-            <label>User Type</label> 
-                         </td>
-                         <td>
-               <div>
-                 <select name="usrtyp" class="selectpicker">
-                    <option value="Administrator">Administrator</option>
-                    <option value="Candidates">Candidates</option>
-                    <option value="Voter">Voter</option>
-                    <option value="Sectary">Sectary</option>
-                 </select> 
-              </div>
-           
-                    </td>
-                    </tr>
-                <tr>
-                      <td>
-                         <label>First Name</label> 
-                         </td>
-                         <td>
-                            <div> 
-                            <input name="fname" type="text" />
-                            </div>
-                    </td>
-                     </tr>
-                <tr>
-                        <td>
-                         <label>Last Name</label> 
-                         </td>
-                         <td>
-                            <div> 
-                            <input name="lname" type="text" />
-                            </div>
-                    </td>
-                    </tr>
-                <tr>
-                      <td>                 
-                   <div>
-                   <label>Gender</label>    
-                    </div>
-                    </td>
-                    <td colspan="2"> 
-                    <ul class="gender_list">
-                   <li> <input type="radio" name="gndr" id="radio-1" value="Male"  checked="checked"/>    </li>
-                   <li> <label for="radio-1">Male</label></li>
-                              
-                  <li> <input type="radio" name="gndr" id="radio-2" value="Female"  /></li>
-                   <li><label for="radio-2" >Female</label></li>
-				   </ul>
-                   </td>
-                    </tr>  
-                <tr>
-                      <td>
-                        <div>
-                         <label>NIC-No/Passport No</label>   
-                        </div>
-                    </td>
-                    <td> <div> <input type="text"  name="nic" />
-                              	</div></td>
-                    </tr>
-                <tr>
-                      <td  style="vertical-align:top">
-                         <label>Contact No</label>   
-                       </td>
-                       <td>
-                   
-                       <input name="mbno" type="text"  class="large" placeholder="Mobile No"/>
-                   
-                      </br>
-                      
-                       <input name="lndno" type="text"  class="large" placeholder="Resident No"/>
-                 
-                       </td>
-                    </tr>
-                <tr>
-                      <td>
-                       <label>Birthday picker</label>   
-                      </td>
-                      <td>
-                       <div class="control-group">
-			<div class="controls">
-			<input type="text" id="datepicker" name="birthday" />
-				</div>
-				</div>
-                      </td>
-                </tr>
-                <tr>
-                    <td>
-                      <label>Email</label>
-                    </td>
-                    <td>
-                      <div> 
-                   <input type="text" name="e_mail" />
-                     </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                         <label>User Name</label>
-                    </td>
-                    <td>
-                         <div> 
-                             <input type="text" name="usernam" />
-                     </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                         <label>Password</label>
-                    </td>
-                    <td>
-                         <div> 
-                             <input type="password" name="passwrd" />
-                     </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                         <label>Confirm Password</label>
-                    </td>
-                    <td>
-                         <div> 
-                             <input type="password" name="conpasswrd" />
-                     </div>
-                    </td>
-                </tr>
-               <tr>
-                    <td>
-                         <label>Political Party :</label>
-                    </td>
-                    <td>
-                     <div>
-                      <%
-                    try {
-                          ElectionPartyReg politParty=new ElectionPartyReg();
-                          ResultSet rslts=politParty.LoadpolipartyCombo();%>
-                          <select name="regpoliparty" class="selectpicker">
-                               <option value="0">Select a Political Party</option>
-                           <% if(rslts!=null){
-                           while(rslts.next())
-                           { %>  
-                                <option value="<%= rslts.getString(1)%>"><%= rslts.getString(2)%></option>
-                           <%}}
-                      }
-                    catch(Exception exception1)
-                    {
-                         exception1.printStackTrace();
-                    }%>   
-                            </select> 
-                         </div>
-                    </td>
-                </tr>
+<h2 class="glyphicons show_thumbnails"><i></i> Enhanced Tables</h2>
+<div class="separator"></div>
+
+
+<div class="relativeWrap">
+<div class="widget widget-gray widget-gray-white">
+	<div class="widget-head">
+		<h4 class="heading">Voter Details List</h4>
+	</div>
+	<div class="widget-body">
+		<table cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
+			<thead>
 				<tr>
-				<td></td>
-				<td> <input type="submit" value="Submit" name="adminregbtn" id="adminregbtn" class="reg_submit"/></td>
-				</tr>
-            </table>
-            <br> <br>
-           
-        </form>
-
-    
-  </div> 
-   </div>     
- 
-
-     <!--  our GK end-->
-
-
+					<th>Voter Code</th>
+					<th>Full Name</th>
+					<th>Election Card No</th>
+                                        <th>NIC No</th>
+                                        <th>polling Division</th>
+					</tr>
+			</thead>
+			<tbody>
+                             <%
+                             try{
+                                ResultSet insertreslt=null;
+                                VoterRegister voterlist=new VoterRegister();
+                                insertreslt=voterlist.Loadvoterlist();
+                                if(insertreslt!=null){
+                                    while(insertreslt.next())
+                                    {%>
+				<tr class="gradeX">
+					<td class="left"><%= insertreslt.getString(1)%></td>
+                                        <td class="left"><%= insertreslt.getString(2)%>  <%= insertreslt.getString(3)%></a></td>
+                                        <td class="center"><%= insertreslt.getString(4)%></td>
+                                        <td class="center"><%= insertreslt.getString(5)%></td>
+                                        <td class="center"><%= insertreslt.getString(6)%></td>
+        				</tr>
+				 <% }
+                        }
+                        else{%>
+            <tr class="center">
+                
+            </tr>
+                        <%} 
+                 }
+                 catch(Exception ex)
+                        {
+                }%>
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+<br />							</div>
 						</div>
 					</div>
 				</div>
@@ -539,9 +352,6 @@
 	<script src="theme/scripts/jquery.cookie.js"></script>
 	<script src="theme/scripts/themer.js"></script>
 	
-	<!-- ColorPicker -->
-	<script src="theme/scripts/farbtastic/farbtastic.js" type="text/javascript"></script>
-
 	
 	
 	<!-- Resize Script -->
@@ -550,6 +360,11 @@
 	<!-- Uniform -->
 	<script src="theme/scripts/pixelmatrix-uniform/jquery.uniform.min.js"></script>
 	
+	
+	<!-- DataTables -->
+	<script src="theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
+	<script src="theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>
+
 	<!-- Bootstrap Script -->
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	

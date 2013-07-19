@@ -1,10 +1,17 @@
-﻿<!DOCTYPE html>
+<%@page import="Model.Votes"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.DistricRegister"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Model.ProvinceRegister"%>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <head>
-	<title>BootAdmin - Responsive Admin HTML Template</title>
+	<title> Online Election Voting </title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -49,14 +56,37 @@
 	<!-- Theme -->
 	<link rel="stylesheet" href="theme/css/style.min.css?1359188899" />
 	
+        <!-- DataTables -->
+	<link rel="stylesheet" media="screen" href="theme/scripts/DataTables/media/css/DT_bootstrap.css" />
+
 	
 	
 	<!-- LESS 2 CSS -->
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
+        
+        <script type="text/javascript">
+            function loadcurentprocess(formdash){
+              var progress=document.getElementById("hidenprogress");
+              progress.submit();
+            }
+        </script>
 	
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
-<body>
-	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" http-equiv="refresh" content="30" /></head>
+<body onload="loadcurentprocess();">
+	<% 
+        ArrayList list = (ArrayList) session.getAttribute("Admindetals");
+        Iterator iter = list.iterator();
+         String username="";
+         String userid="";
+         String type="";
+        while(iter.hasNext()){
+                 username=String.valueOf(iter.next()) ;
+                 userid=String.valueOf(iter.next());
+                 type=String.valueOf(iter.next());
+          }
+ 
+    
+   %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
@@ -70,16 +100,15 @@
 										<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>Adrian Demian</strong>
-							<em>Content Manager</em>
+							<strong><%=username %></strong>
+							<em><%=type %></em>
 						</span>
 					</div>
-					<!--<ul class="notif">
-						<li><a href="" class="glyphicons chat btn" rel="tooltip" data-placement="bottom" data-original-title="7 new chat message(s)"><i></i><span>7</span></a></li>
-						<li><a href="" class="glyphicons shopping_cart btn" rel="tooltip" data-placement="bottom" data-original-title="1 new product(s)"><i></i><span>1</span></a></li>
-						<li><a href="" class="glyphicons user_add btn" rel="tooltip" data-placement="bottom" data-original-title="4 new member(s)"><i></i><span>4</span></a></li>
-						<li><a href="" class="glyphicons envelope btn" rel="tooltip" data-placement="bottom" data-original-title="3 new email(s)"><i></i><span>3</span></a></li>
-					</ul>-->
+					<ul class="notif">
+						
+						<li><a href="" class="glyphicons user_add btn" rel="tooltip" data-placement="bottom" data-original-title="New Profile Updates(s)"><i></i><span>1</span></a></li>
+						
+					</ul>
 										<ul class="topnav hidden-phone">
 						<!--<li>
 							<div class="btn-group">
@@ -125,7 +154,7 @@
 							</div>
 						</li>-->
 																		<li>
-							<a href="login.html" class="logout glyphicons lock"><i></i><span>Logout</span></a>
+                                                                                                                                                    <a href="SignOut.jsp" class="logout glyphicons lock"><i></i><span>Logout</span></a>
 						</li>
 											</ul>
 				</div>
@@ -139,32 +168,51 @@
 						<div class="rrow scroll-y-left">
 							<div class="iScrollWrapper">
 								<ul>
-									<li class="glyphicons home"><a href="index.html"><i></i><span>Dashboard</span></a></li>
-									<li class="glyphicons coins"><a href="finances.html"><i></i><span>Finances</span></a></li>
-									<li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#menu_ecommerce"><i></i><span>Online Shop</span></a>
-										<ul class="collapse" id="menu_ecommerce">
-											<li class=""><a href="products.html" class="glyphicons show_thumbnails"><i></i><span>Products</span></a></li>
-											<!-- <li class=""><a href="categories.html" class="glyphicons show_big_thumbnails"><i></i><span>Categories</span></a></li> -->
-											<li class=""><a href="product_edit.html" class="glyphicons cart_in"><i></i><span>Add product</span></a></li>
-											<!-- <li class=""><a href="orders.html" class="glyphicons list"><i></i><span>Orders</span></a></li> -->
+                                                                    <li class="glyphicons home"><a href="AdminDash.jsp"><i></i><span>Dashboard</span></a></li>
+                                            				
+                                                                        <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Settings"><i></i><span>Election Settings</span></a>
+										<ul class="collapse" id="menu_Settings">
+										<li class=""><a href="ProvinceDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Provinces</span></a></li>
+                                                                                        <li class=""><a href="AddDistricDetails.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Create Districts</span></a></li>
+                                                                                        <li class=""><a href="AddPollingDivisionDetails.jsp" class="glyphicons cart_in"><i></i><span>Create Polling Divisions</span></a></li>
+                                                                                        <li class=""><a href="ElectionTypes.jsp" class="glyphicons list"><i></i><span>Create Election Types</span></a></li> 	
+                                                                                         
 										</ul>
 									</li>
-									<li class="glyphicons sort"><a href="pages.html"><i></i><span>Site Pages</span></a></li>
-									<li class="glyphicons picture"><a href="gallery.html"><i></i><span>Photo Gallery</span></a></li>
-									<li class="glyphicons adress_book"><a href="bookings.html"><i></i><span>Bookings</span></a></li>
-									<li class="glyphicons charts"><a href="charts.html"><i></i><span>Charts</span></a></li>
-									<li class="glyphicons cogwheels"><a href="ui.html"><i></i><span>UI Elements</span></a></li>
-									
-									<!--<li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons table" href="#menu_tables"><i></i><span>Tables</span></a>
-										<ul class="collapse" id="menu_tables">
-											<li class=""><a href="tables.html" class="glyphicons show_thumbnails"><i></i><span>Classic Tables</span></a></li>
-											<li class=""><a href="tables_themed.html" class="glyphicons show_thumbnails"><i></i><span>Themed Tables</span></a></li>
-											<li class=""><a href="tables_enhanced.html" class="glyphicons show_thumbnails"><i></i><span>Enhanced Tables</span></a></li>
+                                                                        <!-- User Registration --> 
+                                                                         <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Registrations"><i></i><span>User Registrations</span></a>
+										<ul class="collapse" id="menu_Registrations">
+											<li class=""><a href="Adminregister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Administrator</span></a></li>
+                                                                                    <li class=""><a href="VoterRegistration.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Create Voter</span></a></li>
+                                                                                    <li class=""><a href="voterList.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Voter List</span></a></li>
+                                                                                        
+                                                                                    <li class=""><a href="SecatryRegister.jsp" class="glyphicons cart_in"><i></i><span>Create Sectary</span></a></li>
+                                                                                    <li class=""><a href="SecatryList.jsp" class="glyphicons cart_in"><i></i><span>Sectary List</span></a></li>
+                                                                                        
+                                                                                    <li class=""><a href="CandidateRegistration.jsp" class="glyphicons list"><i></i><span>Create Candidate</span></a></li>
+                                                                                    <li class=""><a href="CandidateList.jsp" class="glyphicons list"><i></i><span>Candidate List</span></a></li> 
 										</ul>
 									</li>
-									<li class="glyphicons calendar"><a href="calendar.html"><i></i><span>Calendar</span></a></li>-->
+                                                                         <!--Political Party -->
+                                                                          <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_party"><i></i><span>Political Party</span></a>
+										<ul class="collapse" id="menu_Party">
+                                                                                    <li  class=""><a href="ElectionPartyregister.jsp" ><i></i><span>Create Political Party</span></a></li> 
+                                                                                    <li class=""><a href="PoliticalPartyList.jsp" class="glyphicons show_thumbnails"><i></i><span></span>Political Party List</a></li>
+                                                                                 </ul>
+									</li>
+                                                                        <!--Reports -->
+                                                                          <li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_Reports"><i></i><span>Reports</span></a>
+										<ul class="collapse" id="menu_Reports">
+											 <li class=""><a href="CandidateRpt.jsp" class="glyphicons show_thumbnails"><i></i><span>Candidates Report</span></a></li>
+                                                                                    <li class=""><a href="politicalparydetailRpt.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Political Party Report</span></a></li>
+                                                                                    <li class=""><a href="PollingDivision_Province.jsp" class="glyphicons show_big_thumbnails"><i></i><span>polling Division Reports</span></a></li>
+                                                                                    
+										</ul>
+									</li>
 								</ul>
 							</div>
 							<span class="navarrow hide">
@@ -176,7 +224,92 @@
 						<div class="rrow scroll-y" id="mainYScroller">
 							 
                            <!--  our GK start-->
-                        
+                              <div class="middle_main">
+
+<div class="admin_register_wrapper">
+    <div class="reg_form_header" style="alignment-adjust: central"><span><h2> Welcome To Election Vote Counting System </h2></span></div>
+ 
+     <br/><br/>
+	  <form name="admindash" method="post" action="../AdminDash_Servlet">
+    <!-- //show the detaisl about the current political party results  -->
+<div class="relativeWrap">
+<div class="widget widget-gray widget-gray-white">
+	<div class="widget-head">
+		<div class="widget-head">
+		<h4 class="heading">Current Vote Progress</h4>
+	</div>
+	</div>
+	<div class="widget-body">
+		<table cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
+			<thead>
+				<tr>
+					<th>Political Party Code</th>
+					<th>Party Name</th>
+					<th>Current Votes</th>
+					<th>Vote Precentage</th>
+				</tr>
+			</thead>
+			<tbody>
+                             <%
+                                Votes vt=new Votes();
+                                ArrayList progresslist = vt.CurrentPrgress();
+                                Iterator iter1 = progresslist.iterator();
+                                
+                                if(iter1!=null){
+                                    while(iter1.hasNext())
+                                    {%>
+				<tr class="gradeX">
+					<td class="left"><%= String.valueOf(iter1.next())%></td>
+                                        <td class="left"><%= String.valueOf(iter1.next())%></td>
+                                        <td class="left"><%= String.valueOf(iter1.next())%></td>
+                                        <td class="left"><%= String.valueOf(iter1.next())%></td>
+        				</tr>
+				 <% }
+              }
+            else{%>
+            <tr class="center" cellpadding="4">
+                 <div class="message act-danger">No Records Found </div>
+            </tr>
+            <%}   %>
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+   
+   
+   
+ <!--  
+<table class="table table-bordered table-fill">
+	<thead>
+            <th class="shortRight">Progress Bars</th>
+	</thead>
+           
+	<tbody>
+             //<%
+           // while(iter1.hasNext()){%>
+            
+		<tr>
+			<td class="shortRight">/</td>
+			<td>
+				<div class="progress progress-striped progress-success">
+					<div class="bar" style="width: 50%">/</div>
+				</div>
+			</td>
+		</tr>
+                <%  //}
+         
+        %>
+	</tbody>
+</table>
+              <input type="submit" hidden="true"  id="hidenprogress"/>-->
+            </form>	
+	</div>
+
+
+              			
+  </div> 
+   </div> 	
 
      <!--  our GK end-->
 

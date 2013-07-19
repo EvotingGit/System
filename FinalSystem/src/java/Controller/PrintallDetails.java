@@ -4,11 +4,10 @@
  */
 package Controller;
 
-import Model.CreateUniqueID;
-import Model.ProvinceRegister;
+import Model.CandiRegister;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.UUID;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author User
  */
-@WebServlet(name = "ProvinceRegister_Servlet", urlPatterns = {"/ProvinceRegister_Servlet"})
-public class ProvinceRegister_Servlet extends HttpServlet {
+@WebServlet(name = "PrintallDetails", urlPatterns = {"/PrintallDetails"})
+public class PrintallDetails extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -37,34 +36,28 @@ public class ProvinceRegister_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        ProvinceRegister province=new ProvinceRegister();
-        CreateUniqueID createUUid=new CreateUniqueID();
+        CandiRegister candReg=new CandiRegister();
         try {
-           if(request.getParameter("provinceregbtn")!=null);
-           {             
-               String ProvinceID=createUUid.UniqueID();
-               String ProvinceCode=request.getParameter("provincode");
-               String ProvinceName=request.getParameter("provincename");
-               String ProDecription=request.getParameter("decrp");
-               String No_of_district=request.getParameter("Nodistrcs");
-               
-               HttpSession session=request.getSession(true);
-               ProvinceRegister provincemodel=new ProvinceRegister();
-               boolean rslt = provincemodel.InsertProvince(ProvinceID, ProvinceCode, ProvinceName, ProDecription, No_of_district);
-               if(rslt==true){ 
-                        session.setAttribute("Register", "Sucess");
-                        response.sendRedirect("../FinalSystem/JspPages/ProvinceDetails.jsp");
+             String canddatedetail=null;
+             canddatedetail=request.getParameter("printdetaisl");
+             ResultSet retunreslt=candReg.GetCandidateList();
+             HttpSession session=request.getSession(true);
+             if(retunreslt!=null){
+                boolean reportsrslt=candReg.CreateAllCandiesRepot(retunreslt);
+                if(reportsrslt!=false)
+                {
+                    session.setAttribute("Report", "Success");
+                    response.sendRedirect("../FinalSystem/JspPages/CandidateList.jsp");
+                }else{
+                 session.setAttribute("Report", "Error");
+                 response.sendRedirect("../FinalSystem/JspPages/CandidateList.jsp");
                 }
-               else {
-                   session.setAttribute("Register", "Error");
-                   response.sendRedirect("../FinalSystem/JspPages/ProvinceDetails.jsp");
-               }
-           }
-        }catch(Exception ex)
-        {
-            ex.toString();
-        }
-        finally {            
+             }
+             else{
+                 session.setAttribute("Report", "Error");
+                 response.sendRedirect("../FinalSystem/JspPages/CandidateList.jsp");
+             } 
+        } finally {            
             out.close();
         }
     }

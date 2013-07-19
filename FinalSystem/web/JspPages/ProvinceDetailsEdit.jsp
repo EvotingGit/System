@@ -1,17 +1,16 @@
-<%@page import="Model.Votes"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Model.DistricRegister"%>
-<%@page import="java.sql.ResultSet"%>
 <%@page import="Model.ProvinceRegister"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Model.ProvinceProperty"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <head>
-	<title>Admin Dash Board</title>
+	<title> Online Election Voting </title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -54,16 +53,18 @@
 	<link rel="stylesheet" media="screen" href="theme/scripts/jquery-miniColors/jquery.miniColors.css" />
 	
 	<!-- Theme -->
-	<link rel="stylesheet" href="theme/css/style.min.css" />
+	<link rel="stylesheet" href="theme/css/style.min.css?1359188899" />
 	
-	
+	<!-- DataTables -->
+	<link rel="stylesheet" media="screen" href="theme/scripts/DataTables/media/css/DT_bootstrap.css" />
+
 	
 	<!-- LESS 2 CSS -->
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
 	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
-		<% 
+	<% 
         ArrayList list = (ArrayList) session.getAttribute("Admindetals");
         Iterator iter = list.iterator();
          String username="";
@@ -74,8 +75,6 @@
                  userid=String.valueOf(iter.next());
                  type=String.valueOf(iter.next());
           }
- 
-    
    %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
@@ -90,8 +89,8 @@
 										<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong><%=username %></strong>
-							<em><%=type %></em>
+							<strong><%= username %></strong>
+							<em><%= type %></em>
 						</span>
 					</div>
 					<!--<ul class="notif">
@@ -115,7 +114,7 @@
 						    	</ul>
 						  	</div>
 						</li>-->
-												<li>
+									<li>
 							<a href="#themer" data-toggle="collapse" class="logout glyphicons eyedropper"><i></i><span>Themer</span></a>
 							<div id="themer" class="collapse">
 								<div class="wrapper">
@@ -130,23 +129,20 @@
 											<span class="pull-right"><label>advanced <input type="checkbox" value="1" id="themer-advanced-toggle" /></label></span>
 										</li>
 									</ul>
-																		<hr class="separator" />
-								<!--<ul>
+												<!--									<hr class="separator" />
+									<ul>
 										<li>Menu position: <select id="themer-menu-position" class="pull-right"></select><div class="clearfix"></div></li>
 										<li>Menu size: <select id="themer-menu-size" class="pull-right"></select><div class="clearfix"></div></li>
-									</ul>-->
-																	
-																<!--	<div id="themer-getcode" class="hide">
+									</ul>
+																		<div id="themer-getcode" class="hide">
 										<hr class="separator" />
 										<button class="btn btn-primary btn-small pull-right btn-icon glyphicons download" id="themer-getcode-less"><i></i>Get LESS</button>
 										<button class="btn btn-inverse btn-small pull-right btn-icon glyphicons download" id="themer-getcode-css"><i></i>Get CSS</button>
 										<div class="clearfix"></div>
-									</div>-->
-									
-									
+									</div>
 								</div>
 							</div>
-						</li>
+						</li>-->
 																		<li>
 							<a href="SignOut.jsp" class="logout glyphicons lock"><i></i><span>Logout</span></a>
 						</li>
@@ -158,18 +154,17 @@
 		<div class="row-fluid rrow main">
 			<div class="span12 main col" role="main">
 				<div class="row-fluid rrow">
-					<div class="span2 col main-left hide hidden-phone menu-small">
+					<div class="span2 col main-left hide hidden-phone menu-large">
 						<div class="rrow scroll-y-left">
 							<div class="iScrollWrapper">
 								<ul>
-									
 									<li class="hasSubmenu2">
 										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#el_settings"><span class="main_menu_ic"><img src="IMG/election_settings.png"></span><span>Election Settings</span></a>
 										<ul class="collapse" id="el_settings">
 										<li class=""><a href="ProvinceDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Province</span></a></li>
-										<li class=""><a href="AddDistricDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create District</span></a></li>
+										<li class=""><a href="AddDistricDetails.jsp" class=""><i></i><span>Create District</span></a></li>
 										<li class=""><a href="AddPollingDivisionDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Polling Division</span></a></li>											
-										<li class=""><a href="ElectionTypes.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Election Type</span></a></li>
+										<li class="glyphicons charts currentScroll active"><a href="ElectionTypes.jsp" class=""><i></i><span>Create Election Type</span></a></li>
 										</ul>
 									</li>
 									
@@ -199,16 +194,6 @@
                                                                                 <li class=""><a href="PollingDivision_Province.jsp" class="glyphicons show_thumbnails"><i></i><span>Polling Division Reports</span></a></li>
 										</ul>
 									</li>
-									
-									<!--<li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons table" href="#menu_tables"><i></i><span>Tables</span></a>
-										<ul class="collapse" id="menu_tables">
-											<li class=""><a href="tables.html" class="glyphicons show_thumbnails"><i></i><span>Classic Tables</span></a></li>
-											<li class=""><a href="tables_themed.html" class="glyphicons show_thumbnails"><i></i><span>Themed Tables</span></a></li>
-											<li class=""><a href="tables_enhanced.html" class="glyphicons show_thumbnails"><i></i><span>Enhanced Tables</span></a></li>
-										</ul>
-									</li>
-									<li class="glyphicons calendar"><a href="calendar.html"><i></i><span>Calendar</span></a></li>-->
 								</ul>
 							</div>
 							<span class="navarrow hide">
@@ -220,125 +205,110 @@
 						<div class="rrow scroll-y" id="mainYScroller">
 							 
                            <!--  our GK start-->
-                              <div class="middle_main"><br/><br/>
-<div style="alignment-adjust: central ;">
-    <h2> Welcome To Election Vote Counting System </h2></div><br/><br/>
-    <%
-    //int Allcurentvotecunt=0;
-    // Votes getvote=new Votes();
-     // int Allcurentvotecunt=getvote.GetCurentAllVotes();
-    %>
-<div class="row-fluid">
-	<div class="span4">
-		<div class="widget widget-3">
-			<div class="widget-head">
-				<h4 class="heading"><span class="glyphicons coins"><i></i></span>Total amount</h4>
-			</div>
-			<div class="widget-body large">
-				?15,368.50
-			</div>
-		
-		</div>
-	</div>
-	<div class="span4">
-		<div class="widget widget-3">
-			<div class="widget-head">
-				<h4 class="heading"><span class="glyphicons user_add"><i></i></span>Registered Votes</h4>
-			</div>
-			<div class="widget-body large">
-				21
-			</div>
-		</div>
-	</div>
-<div class="span4">
-		<div class="widget widget-3">
-			<div class="widget-head">
-				<h4 class="heading"><span class="glyphicons user_add"><i></i></span>Current Votes </h4>
-			</div>
-			<div class="widget-body large">
-				
-			</div>
-		</div>
-	</div>
-</div>
-	  <form name="admindash" method="post" action="../AdminDash_Servlet">
-    <!-- //show the detaisl about the current political party results  -->
-<div class="relativeWrap">
-<div class="widget widget-gray widget-gray-white">
-	<div class="widget-head">
-		<div class="widget-head">
-		<h4 class="heading">Current Vote Progress</h4>
-	</div>
-	</div>
-	<div class="widget-body">
-		<table cellpadding="0" cellspacing="0" border="0" class="dynamicTable table table-striped table-bordered table-primary table-condensed">
-			<thead>
-				<tr>
-					<th>Political Party Code</th>
-					<th>Party Name</th>
-					<th>Current Votes</th>
-					<th>Vote Precentage</th>
-				</tr>
-			</thead>
-			<tbody>
-                             <%
-                                Votes vt=new Votes();
-                                ArrayList progresslist = vt.CurrentPrgress();
-                                Iterator iter1 = progresslist.iterator();
-                                
-                                if(iter1!=null){
-                                    while(iter1.hasNext())
-                                    {%>
-				<tr class="gradeX">
-					<td class="left"><%= String.valueOf(iter1.next())%></td>
-                                        <td class="left"><%= String.valueOf(iter1.next())%></td>
-                                        <td class="left"><%= String.valueOf(iter1.next())%></td>
-                                        <td class="left"><%= String.valueOf(iter1.next())%></td>
-        				</tr>
-				 <% }
-              }
-            else{%>
-            <tr class="center" cellpadding="4">
-                 <div class="message act-danger">No Records Found </div>
-            </tr>
-            <%}   %>
-			</tbody>
-		</table>
-	</div>
-</div>
-</div>
+                         <div class="middle_main">
+
+<div class="admin_register_wrapper">
+   <div class="reg_form_header"><h4> Provincial Details</h4></div>
+ 
+  <form name="updateProvinceregform" method="post" action="../ProvinceEdit_Servlet" >
+     <%
+                String provinceid="";
+                String provincecode="";
+                String provinceName="";
+                String descrption="";
+                String distctsamount="";
+
+                ArrayList userdetaillist = (ArrayList) session.getAttribute("province");
+                Iterator iterlist = userdetaillist.iterator();
+                while(iterlist.hasNext()){
+                    provinceid=String.valueOf(iterlist.next()) ;
+                    provincecode=String.valueOf(iterlist.next()) ;
+                    provinceName=String.valueOf(iterlist.next()) ;
+                    descrption=String.valueOf(iterlist.next()) ;
+                    distctsamount=String.valueOf(iterlist.next()) ;
+                }
+     %>
+            <table class="admin_reg_tb">
+                 <tr>
+                    <td>
+                        <input type="hidden" name="hidnprovinceid" value="<%=provinceid%>">
+                    </td>
+                   
+                </tr>
+                <tr>
+                    <td>
+                        <label>Province Code</label> 
+                    </td>
+                    <td>
+                         <div> 
+                            <input name="provincode" type="text" value="<%=provincecode%>" />
+                         </div>
+                   </td>
+                </tr>
+                <tr>
+                   <td>
+                         <label>Province Name</label> 
+                   </td>
+                   <td>
+                        <div> 
+                            <input name="provincename" type="text" value="<%=provinceName%>"  />
+                        </div>
+                  </td>
+                </tr>
+                <tr>
+                   <td>
+                         <label>Description</label> 
+                   </td>
+                   <td>
+                        <div> 
+                                <textarea name="decrp" rows="2" value="<%=descrption%>"></textarea>
+                        </div>
+                   </td>
+               </tr>
+                <tr>
+                   <td>                 
+                        <div>
+                            <label>No of Districts</label>    
+                        </div>
+                   </td>
+                   <td>
+                        <div>
+                     
+                        <select name="Nodistrcs" class="selectpicker">
+                            <option value="<%=distctsamount %>"><%=distctsamount %></option>
+                            <option value="1" >1</option>
+                            <option value="2" >2</option>
+                            <option value="3" >3</option>
+                            <option value="4" >4</option>
+                            <option value="5" >5</option>
+                            <option value="6" >6</option>
+                            <option value="7" >7</option>
+                            <option value="8" >8</option>
+                            <option value="9" >9</option> 
+                            <option value="1" >10</option>
+                        </select> 
+                        </div>
+                   </td>           
+                </tr>  
+                <tr>
+                    <td>    
+                    </td>  
+                    <td> 
+                        <input type="submit" value="Update" name="provinceupdatebtn" id="provinceupdatebtn" class="reg_submit"/>
+                    </td>
+                </tr>
+            </table>
+      <br/>
+      <br/>
    
+  
+  </div> 
+  </form>	
+	
    
-   
- <!--  
-<table class="table table-bordered table-fill">
-	<thead>
-            <th class="shortRight">Progress Bars</th>
-	</thead>
-           
-	<tbody>
-             //<%
-           // while(iter1.hasNext()){%>
-            
-		<tr>
-			<td class="shortRight">/</td>
-			<td>
-				<div class="progress progress-striped progress-success">
-					<div class="bar" style="width: 50%">/</div>
-				</div>
-			</td>
-		</tr>
-                <%  //}
-         
-        %>
-	</tbody>
-</table>
-              <input type="submit" hidden="true"  id="hidenprogress"/>-->
-            </form>						  
-							  
-							  
-							  
-   </div> 	
+  </div> 
+   </div> 		
+
 
      <!--  our GK end-->
 
@@ -488,9 +458,9 @@
 	
 	<!-- Themer -->
 	<script>
-	var themerPrimaryColor = '#575757',
-		themerHeaderColor = '#575757',
-		themerMenuColor = '#232628'; 
+	var themerPrimaryColor = '#DA4C4C',
+		themerHeaderColor = '#393D41',
+		themerMenuColor = '#232628';
 	</script>
 	<script src="theme/scripts/jquery.cookie.js"></script>
 	<script src="theme/scripts/themer.js"></script>

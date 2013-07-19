@@ -4,11 +4,9 @@
  */
 package Controller;
 
-import Model.CreateUniqueID;
-import Model.ProvinceRegister;
+import Model.PrefernceDetailsRpt;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +18,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author User
  */
-@WebServlet(name = "ProvinceRegister_Servlet", urlPatterns = {"/ProvinceRegister_Servlet"})
-public class ProvinceRegister_Servlet extends HttpServlet {
+@WebServlet(name = "GeneratecandidatePrefernceReport", urlPatterns = {"/GeneratecandidatePrefernceReport"})
+public class GeneratecandidatePrefernceReport extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -37,34 +35,34 @@ public class ProvinceRegister_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        ProvinceRegister province=new ProvinceRegister();
-        CreateUniqueID createUUid=new CreateUniqueID();
         try {
-           if(request.getParameter("provinceregbtn")!=null);
-           {             
-               String ProvinceID=createUUid.UniqueID();
-               String ProvinceCode=request.getParameter("provincode");
-               String ProvinceName=request.getParameter("provincename");
-               String ProDecription=request.getParameter("decrp");
-               String No_of_district=request.getParameter("Nodistrcs");
-               
-               HttpSession session=request.getSession(true);
-               ProvinceRegister provincemodel=new ProvinceRegister();
-               boolean rslt = provincemodel.InsertProvince(ProvinceID, ProvinceCode, ProvinceName, ProDecription, No_of_district);
-               if(rslt==true){ 
-                        session.setAttribute("Register", "Sucess");
-                        response.sendRedirect("../FinalSystem/JspPages/ProvinceDetails.jsp");
-                }
-               else {
-                   session.setAttribute("Register", "Error");
-                   response.sendRedirect("../FinalSystem/JspPages/ProvinceDetails.jsp");
-               }
-           }
-        }catch(Exception ex)
-        {
-            ex.toString();
-        }
-        finally {            
+            if(request.getParameter("hiidenbtn")!=null)
+             {
+                request.getRequestDispatcher("partyvisecandidateprefernces.jsp").forward(request, response);
+                response.sendRedirect("partyvisecandidateprefernces.jsp");
+            }
+            if(request.getParameter("btngnerate")!=null)
+            {
+                boolean reprt=false;
+                HttpSession session=request.getSession(true);
+                String partyId = request.getParameter("partyId");
+                PrefernceDetailsRpt prferncerpt=new PrefernceDetailsRpt();
+                 if(partyId!=null)
+                 {
+                     reprt= prferncerpt.GeneratePrefernceByPoliticlaID(partyId);
+                         if(reprt==true)
+                         {
+                            session.setAttribute("preferncerpt", "Sucess");
+                            response.sendRedirect("../FinalSystem/JspPages/partyvisecandidateAmount.jsp"); 
+                         } 
+                         else
+                         {
+                           session.setAttribute("preferncerpt", "Error");
+                           response.sendRedirect("../FinalSystem/JspPages/partyvisecandidateAmount.jsp");
+                         }
+                 }
+            }
+        } finally {            
             out.close();
         }
     }

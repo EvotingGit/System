@@ -17,39 +17,38 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
 
 /**
  *
  * @author User
  */
-public class SeatDetailsRpt extends Dbconnection {
-    
+public class PrefernceDetailsRpt extends Dbconnection{
+ 
     Connection conn=Createconnection();
     
-    public boolean GenrateSeatDetails(String Provin_id)
-    {  
-       boolean crtepdf=false; 
-       ResultSet reslts = null;
+    public boolean GeneratePrefernceByPoliticlaID(String partyId) {
+        boolean crtepdf=false; 
+        ResultSet reslts = null;
         CallableStatement cs=null;
+        String parm="All";
         try
         {  
-            if(Provin_id!="All")
+            if(!partyId.equalsIgnoreCase(parm))
             {
-                cs=conn.prepareCall("{call GetSeatonProvinceRpt(?)}");
-                cs.setString(1, Provin_id);
+                cs=conn.prepareCall("{call GetsinglecandidatePrefernceRpt(?)}");
+                cs.setString(1, partyId);
                 reslts = cs.executeQuery();
                 crtepdf=CreateRepot(reslts); 
                 return crtepdf;
             }
             else
             {
-                cs=conn.prepareCall("{call GetAllSeatonProvinceRpt()}");
+                cs=conn.prepareCall("{call GetAllPrefernceRpt()}");
                 reslts = cs.executeQuery();
                 crtepdf=CreateRepot(reslts); 
                 return crtepdf;
             }
-            
-          
         }
         catch(Exception ex)
         {
@@ -64,12 +63,32 @@ public class SeatDetailsRpt extends Dbconnection {
         }
     }
     
-    public boolean  CreateRepot(ResultSet reslts)  
+    
+    public JDBCCategoryDataset prefernceBarchart() {
+        try
+        {
+            JDBCCategoryDataset dataset = new JDBCCategoryDataset(conn);
+            String query="SELECT sysusertbl.FirstName,politicalpartytbl.PoliticalPartyCode,SUM(PrefernceCount) As PrefernceCount "+
+                         " FROM preferencetbl,sysusertbl,votetable,politicalpartytbl WHERE sysusertbl.UserID=preferencetbl.CandidateID "+
+                         " AND votetable.VoteID=preferencetbl.VoteID AND votetable.PoliPartyID=politicalpartytbl.PoliPartyID "+
+                         " AND sysusertbl.UserType='Candidate' group by politicalpartytbl.PoliticalPartyCode";
+            
+           dataset.executeQuery(query);      
+            return dataset;  
+        }
+        catch(Exception ex){
+         ex.printStackTrace();
+         System.err.println(ex.getMessage());
+         throw new UnsupportedOperationException("Not yet implemented");
+        }
+    }
+    
+     public boolean  CreateRepot(ResultSet reslts)  
     {
         boolean flage=false;
         try{
          com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
-         PdfWriter.getInstance(doc, new FileOutputStream("C:/Program Files/SeatDetailsReport.pdf"));
+         PdfWriter.getInstance(doc, new FileOutputStream("C:/Program Files/PrefernceReport.pdf"));
          doc.open();
 
          if (reslts.next())
@@ -77,17 +96,14 @@ public class SeatDetailsRpt extends Dbconnection {
                         PdfPTable table1 = new PdfPTable(2); //Specifies the number of columns in the table
                         Font font = new Font(Font.FontFamily.TIMES_ROMAN,8,Font.BOLD);
                         table1.setSpacingBefore(12f);
-                        //table1.setWidthPercentage(100);
-                        table1.setWidthPercentage(100);
-                        table1.getDefaultCell();
                         
                         PdfPCell cellTitle = new PdfPCell(new Paragraph("Title"));
                         cellTitle.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                        PdfPCell cellVle = new PdfPCell(new Paragraph("Client Detail"));
+                        PdfPCell cellVle = new PdfPCell(new Paragraph("Prefernce Details"));
                        
-                        PdfPCell cellDept = new PdfPCell(new Paragraph("Selected Province"));
+                        PdfPCell cellDept = new PdfPCell(new Paragraph("Political Party"));
                         cellVle.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                        PdfPCell cellVD = new PdfPCell(new Paragraph(reslts.getString(1)));
+                        PdfPCell cellVD = new PdfPCell(new Paragraph(reslts.getString(3)));
                         
                         table1.addCell(cellTitle);
                         table1.addCell(cellVle);
@@ -96,53 +112,37 @@ public class SeatDetailsRpt extends Dbconnection {
                         table1.setSpacingAfter(25f);
                         doc.add(table1);
                          
-                        PdfPTable table2 = new PdfPTable(5); //5 Specifies the number of columns in the table
+                        PdfPTable table2 = new PdfPTable(4); //4 Specifies the number of columns in the table
                         table2.setSpacingBefore(10f);
                         table2.setHorizontalAlignment(100); 
                         table2.setWidthPercentage(100);
                         
-                        PdfPCell cell1 = new PdfPCell(new Paragraph("Province Name"));
+                        PdfPCell cell1 = new PdfPCell(new Paragraph("Full Name"));
                         cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                        
-                        PdfPCell cell2 = new PdfPCell(new Paragraph("District Name"));
+                                
+                        PdfPCell cell2 = new PdfPCell(new Paragraph("Political Party"));
                         cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
                         
-                        PdfPCell cell3 = new PdfPCell(new Paragraph("Polling Division"));
+                        PdfPCell cell3 = new PdfPCell(new Paragraph("Preference votes"));
                         cell3.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                        
-                        PdfPCell cell4 = new PdfPCell(new Paragraph("Registerd voters"));
-                        cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                        
-                        PdfPCell cell5 = new PdfPCell(new Paragraph("Candidates Seats"));
-                        cell5.setBackgroundColor(BaseColor.LIGHT_GRAY);
-       
+   
                         table2.addCell(cell1);
                         table2.addCell(cell2);
                         table2.addCell(cell3);
-                        table2.addCell(cell4);                        
-                        table2.addCell(cell5);
-                      
-                        
-                        
+        
                         reslts.beforeFirst();
                         while(reslts.next())
                         {
-                            PdfPCell cell8 = new PdfPCell(new Paragraph(reslts.getString(1)));
-                            PdfPCell cell9 = new PdfPCell(new Paragraph(reslts.getString(2)));
-                            PdfPCell cell10 = new PdfPCell(new Paragraph(reslts.getString(3)));
-                            PdfPCell cell11 = new PdfPCell(new Paragraph(reslts.getString(4)));
-                            PdfPCell cell12 = new PdfPCell(new Paragraph(reslts.getString(5)));
-       
-                            table2.addCell(cell8);
-                            table2.addCell(cell9); 
-                            table2.addCell(cell10);
-                            table2.addCell(cell11); 
-                            table2.addCell(cell12);
-                            
+                            PdfPCell cell4 = new PdfPCell(new Paragraph(reslts.getString(1)+" "+ reslts.getString(2)));
+                            PdfPCell cell5 = new PdfPCell(new Paragraph(reslts.getString(3)));
+                            PdfPCell cell6= new PdfPCell(new Paragraph(reslts.getString(4)));
+
+                            table2.addCell(cell4);
+                            table2.addCell(cell5); 
+                            table2.addCell(cell6);
                         }
-                        table2.setFooterRows(1);
                         doc.add(table2);
-                        Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler C:/Program Files/SeatDetailsReport.pdf");
+                        Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler C:/Program Files/PrefernceReport.pdf");
                         doc.close();
                         flage=true;
                      }

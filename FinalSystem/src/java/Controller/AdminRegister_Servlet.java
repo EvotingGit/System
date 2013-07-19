@@ -179,7 +179,7 @@ public class AdminRegister_Servlet extends HttpServlet {
                                 {     
                                       mail.SenderegisterSucess(email, electcrdNo); 
                                      session.setAttribute("Register", "Sucess");
-                                     response.sendRedirect("../FinalSystem/JspPages/VoterRegistration.jsp");
+                                     response.sendRedirect("../FinalSystem/JspPages/voterList.jsp");
                                 }
                                  else
                                  {

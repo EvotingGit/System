@@ -1,3 +1,16 @@
+<%@page import="org.jfree.chart.plot.PlotOrientation"%>
+<%@page import="org.jfree.chart.entity.StandardEntityCollection"%>
+<%@page import="org.jfree.chart.ChartRenderingInfo"%>
+<%@page import="org.jfree.chart.ChartUtilities"%>
+<%@page import="java.io.File"%>
+<%@page import="Model.ChartDetails"%>
+<%@page import="org.jfree.data.jdbc.JDBCCategoryDataset"%>
+<%@page import="org.jfree.chart.plot.PiePlot"%>
+<%@page import="org.jfree.chart.JFreeChart"%>
+<%@page import="org.jfree.chart.ChartFactory"%>
+<%@page import="org.jfree.data.general.DefaultPieDataset"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Model.ElectionPartyReg"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="Model.ProvinceRegister"%>
@@ -7,7 +20,7 @@
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-	<title>Political Party Details Reports</title>
+	<title>Registered Candidate Amount Report</title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -69,19 +82,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body ondblclick="autoload ();">
 	<% 
-   /*String username="";
-   String usertype="";
- * 
-   String userid=session.getAttribute("userid").toString();
-    if(session.getAttribute("username")== null){
-            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
-            response.sendRedirect("404.html");
-      } 
-   else {
-        username=session.getAttribute("username").toString();
-        usertype=session.getAttribute("usrtype").toString();
-   }*/
+        ArrayList list = (ArrayList) session.getAttribute("Admindetals");
+        Iterator iter = list.iterator();
+         String username="";
+         String userid="";
+         String type="";
+        while(iter.hasNext()){
+                 username=String.valueOf(iter.next()) ;
+                 userid=String.valueOf(iter.next());
+                 type=String.valueOf(iter.next());
+          }
    %>
+   
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
 		
@@ -95,8 +107,8 @@
 										<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>username</strong>
-							<em>usertype</em>
+							<strong><%= username %></strong>
+							<em><%= type %></em>
 						</span>
 					</div>
 					<!--<ul class="notif">
@@ -120,7 +132,7 @@
 						    	</ul>
 						  	</div>
 						</li>-->
-					<!--							<li>
+											<li>
 							<a href="#themer" data-toggle="collapse" class="logout glyphicons eyedropper"><i></i><span>Themer</span></a>
 							<div id="themer" class="collapse">
 								<div class="wrapper">
@@ -136,7 +148,7 @@
 										</li>
 									</ul>
 																		<hr class="separator" />
-									<ul>
+									<!--	<ul>
 										<li>Menu position: <select id="themer-menu-position" class="pull-right"></select><div class="clearfix"></div></li>
 										<li>Menu size: <select id="themer-menu-size" class="pull-right"></select><div class="clearfix"></div></li>
 									</ul>
@@ -164,32 +176,42 @@
 						<div class="rrow scroll-y-left">
 							<div class="iScrollWrapper">
 								<ul>
-									<li class="glyphicons home"><a href="index.html"><i></i><span>Dashboard</span></a></li>
-									<li class="glyphicons coins"><a href="finances.html"><i></i><span>Finances</span></a></li>
 									<li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#menu_ecommerce"><i></i><span>Online Shop</span></a>
-										<ul class="collapse" id="menu_ecommerce">
-											<li class=""><a href="products.html" class="glyphicons show_thumbnails"><i></i><span>Products</span></a></li>
-											<!-- <li class=""><a href="categories.html" class="glyphicons show_big_thumbnails"><i></i><span>Categories</span></a></li> -->
-											<li class=""><a href="product_edit.html" class="glyphicons cart_in"><i></i><span>Add product</span></a></li>
-											<!-- <li class=""><a href="orders.html" class="glyphicons list"><i></i><span>Orders</span></a></li> -->
+										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#el_settings"><span class="main_menu_ic"><img src="IMG/election_settings.png"></span><span>Election Settings</span></a>
+										<ul class="collapse" id="el_settings">
+										<li class=""><a href="ProvinceDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Province</span></a></li>
+										<li class=""><a href="AddDistricDetails.jsp" class=""><i></i><span>Create District</span></a></li>
+										<li class=""><a href="AddPollingDivisionDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Polling Division</span></a></li>											
+										<li class="glyphicons charts currentScroll active"><a href="ElectionTypes.jsp" class=""><i></i><span>Create Election Type</span></a></li>
 										</ul>
 									</li>
-									<li class="glyphicons sort"><a href="pages.html"><i></i><span>Site Pages</span></a></li>
-									<li class="glyphicons picture"><a href="gallery.html"><i></i><span>Photo Gallery</span></a></li>
-									<li class="glyphicons adress_book"><a href="bookings.html"><i></i><span>Bookings</span></a></li>
-									<li class="glyphicons charts"><a href="charts.html"><i></i><span>Charts</span></a></li>
-									<li class="glyphicons cogwheels"><a href="ui.html"><i></i><span>UI Elements</span></a></li>
 									
-									<!--<li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons table" href="#menu_tables"><i></i><span>Tables</span></a>
-										<ul class="collapse" id="menu_tables">
-											<li class=""><a href="tables.html" class="glyphicons show_thumbnails"><i></i><span>Classic Tables</span></a></li>
-											<li class=""><a href="tables_themed.html" class="glyphicons show_thumbnails"><i></i><span>Themed Tables</span></a></li>
-											<li class=""><a href="tables_enhanced.html" class="glyphicons show_thumbnails"><i></i><span>Enhanced Tables</span></a></li>
+									
+									<li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#user_creation"><span class="main_menu_ic"><img src="IMG/user_creation.png"></span><span>User Creation</span></a>
+										<ul class="collapse" id="user_creation">
+										<li class=""><a href="Adminregister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Administrator</span></a></li>
+                                                                                <li class=""><a href="VoterRegistration.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Voter</span></a></li>
+                                                                                <li class=""><a href="SecatryRegister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Sectary</span></a></li>											
+                                                                                <li class=""><a href="CandidateRegistration.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Candidate</span></a></li>
 										</ul>
 									</li>
-									<li class="glyphicons calendar"><a href="calendar.html"><i></i><span>Calendar</span></a></li>-->
+									
+									<li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#p_party"><span class="main_menu_ic"><img src="IMG/political_p.png"></span><span>Political Party</span></a>
+										<ul class="collapse" id="p_party">
+                                                                                    <li class=""><a href="ElectionPartyregister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Political Party</span></a></li>
+										</ul>
+									</li>
+									
+									<li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#reports"><span class="main_menu_ic"><img src="IMG/reports.png"></span><span>Reports</span></a>
+										<ul class="collapse" id="reports">
+										<li class=""><a href="CandidateRpt.jsp" class="glyphicons show_thumbnails"><i></i><span>Candidate Detail Report</span></a></li>
+										<li class=""><a href="politicalparydetailRpt.jsp" class="glyphicons show_thumbnails"><i></i><span>Political Party Report</span></a></li>
+                                                                                <li class=""><a href="PollingDivision_Province.jsp" class="glyphicons show_thumbnails"><i></i><span>Polling Division Reports</span></a></li>
+										</ul>
+									</li>
 								</ul>
 							</div>
 							<span class="navarrow hide">
@@ -223,6 +245,33 @@
                     } 
                     %> 
              <table class="admin_reg_tb">
+                 <tr style="alignment-adjust: central" >
+                     <%
+                      try{
+                        JDBCCategoryDataset barDataset=null;
+                        JFreeChart chart=null;
+                        ChartDetails charmodel=new ChartDetails();
+                        barDataset=charmodel.Barchart();
+                        chart = ChartFactory.createBarChart3D("Registered Candidate Amount Report by Political party", "Political Party", "Amount", barDataset, PlotOrientation.VERTICAL, true, true, false);
+                        
+                        final File filelocation = new File(getServletContext().getRealPath("") + "/JspPages/Reports/RegisteredCandidateAmountReportbyPoliticalparty.png");
+                        ChartUtilities.saveChartAsJPEG(filelocation, chart, 500, 500);
+                        //Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler D:/Software/JAVA/New folder (2)/images/chart2.jpg");
+                        //response.sendRedirect("Adminlogin.jsp");
+                        //JFreeChart chart = ChartFactory.createBarChart("Political Parties", "political Party", "Candidates", barDataset, null, true, true, false);
+                        //chart.setBackgroundPaint(new Color(222, 222, 255));
+                        //final PiePlot plot = (PiePlot) chart.getPlot();
+                        //plot.setBackgroundPaint(Color.white);
+                        //plot.setCircular(true);
+                      }catch(Exception ex){
+                            ex.toString();
+                      }
+                      %>
+                      <IMG SRC="../JspPages/Reports/RegisteredCandidateAmountReportbyPoliticalparty.png" WIDTH="500" HEIGHT="400" BORDER="0" USEMAP="#chart"> 
+                 </tr>
+                 <tr>
+                     
+                 </tr>
                 <tr>
                    <td>                 
                         <div>

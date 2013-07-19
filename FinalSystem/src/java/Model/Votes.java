@@ -224,7 +224,7 @@ public class Votes extends Dbconnection{
             ResultSet resltd=null;
             CallableStatement cs=Createconnection().prepareCall("{call GetAllVotesCountCurrntly()}");
             resltd = cs.executeQuery(); 
-            if(resltd.next())
+             if(resltd.next())
             {
                 curentAlcount=resltd.getInt(1);
             }

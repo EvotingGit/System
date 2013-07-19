@@ -5,6 +5,14 @@
 package Model;
 
 import Controller.Md5Encryption;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -168,5 +176,111 @@ public class VoterRegister  extends UserRegister{
             return rsltst;
         } 
      }
+
+    public boolean CreateAllVoterRepot(ResultSet votereslt) {
+        java.util.Date date = new java.util.Date();
+        boolean flage=false;
+        Date printdate=(Date) date;
+        try{
+         com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+         PdfWriter.getInstance(doc, new FileOutputStream("C:/Program Files/CreateAllVoterReport.pdf"));
+         doc.open();
+
+         if (votereslt.next())
+                     {
+                        PdfPTable table1 = new PdfPTable(2); //Specifies the number of columns in the table
+                        Font font = new Font(Font.FontFamily.COURIER,5,Font.BOLD);
+                        table1.setSpacingBefore(10f);
+                        
+                        PdfPCell cellTitle = new PdfPCell(new Paragraph("Title"));
+                        cellTitle.setBackgroundColor(BaseColor.ORANGE);
+                        
+                        PdfPCell cellVle = new PdfPCell(new Paragraph("Candidates Detail"));
+                        cellVle.setBackgroundColor(BaseColor.WHITE);
+                        
+                        PdfPCell cellTit1 = new PdfPCell(new Paragraph("Date"));
+                        cellVle.setBackgroundColor(BaseColor.WHITE);
+                        
+                        PdfPCell cellVle1 = new PdfPCell(new Paragraph(printdate.toString()));
+                        cellVle.setBackgroundColor(BaseColor.WHITE);
+                                               
+                        table1.addCell(cellTitle);
+                        table1.addCell(cellVle);
+                        table1.addCell(cellTit1);
+                        table1.addCell(cellVle1);
+                       
+                        table1.setSpacingAfter(10f);
+                        doc.add(table1);
+                         
+                        PdfPTable table2 = new PdfPTable(5); //5 Specifies the number of columns in the table
+                        table2.setSpacingBefore(10f);
+                        table2.setHorizontalAlignment(100); 
+                        table2.setWidthPercentage(100);
+                                
+                        PdfPCell cell1 = new PdfPCell(new Paragraph("Code"));
+                        cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        cell1.getBorderColor();
+                        
+                        PdfPCell cell2 = new PdfPCell(new Paragraph("Full Name"));
+                        cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        
+                        PdfPCell cell3 = new PdfPCell(new Paragraph("ElectionCard No"));
+                        cell3.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        
+                        PdfPCell cell4 = new PdfPCell(new Paragraph("NIC No"));
+                        cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        
+                        PdfPCell cell5 = new PdfPCell(new Paragraph("Polling Division"));
+                        cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
+           
+                        table2.addCell(cell1);
+                        table2.addCell(cell2);
+                        table2.addCell(cell3);
+                        table2.addCell(cell4);
+                        table2.addCell(cell5); 
+                        
+                        votereslt.beforeFirst();
+                        while(votereslt.next())
+                        {
+                            PdfPCell cell6 = new PdfPCell(new Paragraph(votereslt.getString(1)));
+                            PdfPCell cell7 = new PdfPCell(new Paragraph(votereslt.getString(2)+" "+votereslt.getString(3)));
+                            PdfPCell cell8 = new PdfPCell(new Paragraph(votereslt.getString(4)));
+                            PdfPCell cell9 = new PdfPCell(new Paragraph(votereslt.getString(5)));
+                            PdfPCell cell10 = new PdfPCell(new Paragraph(votereslt.getString(6)));
+                                   
+                            table2.addCell(cell6);
+                            table2.addCell(cell7); 
+                            table2.addCell(cell8);
+                            table2.addCell(cell9);
+                            table2.addCell(cell10);
+                            
+                           }
+                        table2.setFooterRows(5);
+                        doc.add(table2);
+                        Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler C:/Program Files/CreateAllVoterReport.pdf");
+                        doc.close();
+                        flage=true;
+                     }
+         return flage;
+        }
+        catch(DocumentException docex)
+        {
+            docex.printStackTrace();
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Pdf Creation Fails !", docex);
+            return flage;
+        }
+        catch(Exception ex )
+        {
+            ex.printStackTrace();
+            System.err.println(ex.getMessage());
+            Logger.getLogger(UserRegister.class.getName()).log(Level.SEVERE, "Record Not Found !", ex);
+        }
+        finally
+        {
+            return flage;
+        }
+    }
+     
+     
     
 }

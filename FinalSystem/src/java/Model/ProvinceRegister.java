@@ -98,4 +98,54 @@ public class ProvinceRegister  extends Dbconnection{
              return rsltst;
          }
      }
+
+    public boolean UpdateProvinces(String ProvinceID,String ProvinceCode,String ProvinceName,String ProDecription,String No_of_district) {
+         boolean provinceupdaterslt=false;
+         try
+         {
+            CallableStatement cs=Createconnection().prepareCall("{call updateprovinceDetails(?,?,?,?,?)}");
+            cs.setString(1, ProvinceCode);
+            cs.setString(2, ProvinceName);
+            cs.setString(3, ProDecription);
+            cs.setString(4, No_of_district);
+            cs.setString(5, ProvinceID);
+            
+            int rslt=cs.executeUpdate();
+            if(rslt>0){
+                provinceupdaterslt=true;
+            }
+            return provinceupdaterslt;
+         }
+         catch(Exception ex)
+         {
+            ex.printStackTrace();
+            System.err.println(ex.getMessage());
+            return provinceupdaterslt;
+         }
+    }
+
+    public ArrayList GetProvincedata(String ProvinceID) {
+         ArrayList list=new ArrayList();
+          ResultSet provinceitems=null;
+         try
+         {
+            CallableStatement cs=Createconnection().prepareCall("{call GetprovinceDetails(?)}");
+            cs.setString(1, ProvinceID);
+            provinceitems = cs.executeQuery();
+            if(provinceitems.next()){
+                 list.add(provinceitems.getString(1)); 
+                 list.add(provinceitems.getString(2)); 
+                 list.add(provinceitems.getString(3)); 
+                 list.add(provinceitems.getString(4)); 
+                 list.add(provinceitems.getString(5)); 
+            }
+            return list;
+         }
+         catch(Exception ex)
+         {
+            ex.printStackTrace();
+            System.err.println(ex.getMessage());
+            return list;
+         }
+    }
 }

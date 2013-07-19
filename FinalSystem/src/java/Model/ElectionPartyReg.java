@@ -16,7 +16,7 @@ public class ElectionPartyReg extends Dbconnection{
     
     Connection conn=Createconnection();
     
-   public boolean InsertElecitonPartyDetaisl(String PoliPartyID,String ElectioPcode, String ElectionPName, String RegisterDate, byte[] Logo,String electypeid,int CandiCount) throws SQLException {
+   public boolean InsertElecitonPartyDetaisl(String PoliPartyID,String ElectioPcode, String ElectionPName, String RegisterDate, String Logo,String electypeid,int CandiCount) throws SQLException {
          boolean flage=false;
         try
         {
@@ -29,7 +29,7 @@ public class ElectionPartyReg extends Dbconnection{
             prestate.setString(2, ElectioPcode);
             prestate.setString(3, ElectionPName);
             prestate.setString(4, RegisterDate);
-            prestate.setBytes(5, Logo);
+            prestate.setString(5, Logo);
             prestate.setInt(6, CandiCount);
             prestate.setString(7, electypeid);
             

@@ -73,7 +73,7 @@ public class PoliticalPartyRpts extends Dbconnection {
         boolean flage=false;
         try{
          com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
-         PdfWriter.getInstance(doc, new FileOutputStream("C:/Users/User/Desktop/completedigrams/PoliticalPartyReport.pdf"));
+         PdfWriter.getInstance(doc, new FileOutputStream("C:/Program Files/PoliticalPartyReport.pdf"));
          doc.open();
 
          if (reslts.next())
@@ -85,11 +85,11 @@ public class PoliticalPartyRpts extends Dbconnection {
                         PdfPCell cellTitle = new PdfPCell(new Paragraph("Title"));
                         cellTitle.setBackgroundColor(BaseColor.LIGHT_GRAY);
                         
-                        PdfPCell cellVle = new PdfPCell(new Paragraph("Client Detail"));
+                        PdfPCell cellVle = new PdfPCell(new Paragraph("Registerd Candidates Report"));
                        
-                        PdfPCell cellDept = new PdfPCell(new Paragraph("Selected Province"));
+                        PdfPCell cellDept = new PdfPCell(new Paragraph("Selected Political Party"));
                         cellVle.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                        PdfPCell cellVD = new PdfPCell(new Paragraph(reslts.getString(1)));
+                        PdfPCell cellVD = new PdfPCell(new Paragraph(reslts.getString(2)));
                         
                         table1.addCell(cellTitle);
                         table1.addCell(cellVle);
@@ -100,20 +100,28 @@ public class PoliticalPartyRpts extends Dbconnection {
                          
                         PdfPTable table2 = new PdfPTable(5); //7 Specifies the number of columns in the table
                         table2.setSpacingBefore(10f);
+                        table2.setHorizontalAlignment(100); 
+                        table2.setWidthPercentage(100);
                         
-                        PdfPCell cell1 = new PdfPCell(new Paragraph("Province Name"));
+                        PdfPCell cell1 = new PdfPCell(new Paragraph("Code"));
                         cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
                         
-                        PdfPCell cell2 = new PdfPCell(new Paragraph("District Name"));
+                        PdfPCell cell2 = new PdfPCell(new Paragraph("Political Party"));
                         cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
                         
-                        PdfPCell cell3 = new PdfPCell(new Paragraph("Polling Division"));
+                        PdfPCell cell3 = new PdfPCell(new Paragraph("Candidates Amount"));
                         cell3.setBackgroundColor(BaseColor.LIGHT_GRAY);
                         
-                        PdfPCell cell4 = new PdfPCell(new Paragraph("Registerd voters"));
+                        PdfPCell cell4 = new PdfPCell(new Paragraph("Secatary Name"));
                         cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
                         
-                        PdfPCell cell5 = new PdfPCell(new Paragraph("Candidates Seats"));
+                        PdfPCell cell5 = new PdfPCell(new Paragraph("Email"));
+                        cell5.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        
+                        PdfPCell cell6 = new PdfPCell(new Paragraph("Mobile No"));
+                        cell5.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        
+                        PdfPCell cell7 = new PdfPCell(new Paragraph("Land No"));
                         cell5.setBackgroundColor(BaseColor.LIGHT_GRAY);
        
                         table2.addCell(cell1);
@@ -121,6 +129,8 @@ public class PoliticalPartyRpts extends Dbconnection {
                         table2.addCell(cell3);
                         table2.addCell(cell4);                        
                         table2.addCell(cell5);
+                        table2.addCell(cell6);                        
+                        table2.addCell(cell7);
                         
                         reslts.beforeFirst();
                         while(reslts.next())
@@ -130,16 +140,20 @@ public class PoliticalPartyRpts extends Dbconnection {
                             PdfPCell cell10 = new PdfPCell(new Paragraph(reslts.getString(3)));
                             PdfPCell cell11 = new PdfPCell(new Paragraph(reslts.getString(4)));
                             PdfPCell cell12 = new PdfPCell(new Paragraph(reslts.getString(5)));
+                            PdfPCell cell13 = new PdfPCell(new Paragraph(reslts.getString(6)));
+                            PdfPCell cell14 = new PdfPCell(new Paragraph(reslts.getString(7)));
        
                             table2.addCell(cell8);
                             table2.addCell(cell9); 
                             table2.addCell(cell10);
                             table2.addCell(cell11); 
                             table2.addCell(cell12);
+                            table2.addCell(cell13); 
+                            table2.addCell(cell14);
                             
                         }
                         doc.add(table2);
-                        Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler C:/Users/User/Desktop/completedigrams/PoliticalPartyReport.pdf");
+                        Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler C:/Program Files/PoliticalPartyReport.pdf");
                         doc.close();
                         flage=true;
                      }

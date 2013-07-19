@@ -1,3 +1,5 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Model.ProvinceRegister"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="Model.ProvinceProperty"%>
@@ -59,21 +61,29 @@
 	
 	<!-- LESS 2 CSS -->
 	<script src="theme/scripts/less-1.3.3.min.js"></script>
+        
+        <script>
+            function editview(){
+                
+                var provinceidpress=document.getElementById("provinceid");
+              alert(provinceidpress);
+              provinceid.click();
+            }
+        </script>
 	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
-	   <% 
-   /*String username="";
-   String usertype="";
-   String userid=session.getAttribute("userid").toString();
-    if(session.getAttribute("username")== null){
-            out.println("<script type='text/javascript'>alert('You are Unautherized User, You cannot Access this page.');</script>");
-            response.sendRedirect("404.html");
-      } 
-   else {
-        username=session.getAttribute("username").toString();
-        usertype=session.getAttribute("usrtype").toString();
-   }*/
+	<% 
+        ArrayList list = (ArrayList) session.getAttribute("Admindetals");
+        Iterator iter = list.iterator();
+         String username="";
+         String userid="";
+         String type="";
+        while(iter.hasNext()){
+                 username=String.valueOf(iter.next()) ;
+                 userid=String.valueOf(iter.next());
+                 type=String.valueOf(iter.next());
+          }
    %>
 	<!-- Start Content -->
 	<div class="container-fluid left-menu">
@@ -88,8 +98,8 @@
 										<div class="profile">
 						<img src="http://www.placehold.it/38x38/232323" class="avatar" alt="Profile" />
 						<span class="info hidden-phone">
-							<strong>username</strong>
-							<em>usertype</em>
+							<strong><%= username %></strong>
+							<em><%= type %></em>
 						</span>
 					</div>
 					<!--<ul class="notif">
@@ -113,7 +123,7 @@
 						    	</ul>
 						  	</div>
 						</li>-->
-					<!--							<li>
+											<li>
 							<a href="#themer" data-toggle="collapse" class="logout glyphicons eyedropper"><i></i><span>Themer</span></a>
 							<div id="themer" class="collapse">
 								<div class="wrapper">
@@ -129,7 +139,7 @@
 										</li>
 									</ul>
 																		<hr class="separator" />
-									<ul>
+									<!--	<ul>
 										<li>Menu position: <select id="themer-menu-position" class="pull-right"></select><div class="clearfix"></div></li>
 										<li>Menu size: <select id="themer-menu-size" class="pull-right"></select><div class="clearfix"></div></li>
 									</ul>
@@ -157,40 +167,40 @@
 						<div class="rrow scroll-y-left">
 							<div class="iScrollWrapper">
 								<ul>
-									 <li class="glyphicons home"><a href="AdminDash.jsp"><i></i><span>Dashboard</span></a></li>
-                                            				
-                                                                        <li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span>Election Settings</span></a>
-										<ul class="collapse" id="menu_forms">
-										<li class="glyphicons charts currentScroll active"><a href="ProvinceDetails.jsp"><i></i><span>Create Provinces</span></a></li>
-                                                                                        <li class=""><a href="AddDistricDetails.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Create Districts</span></a></li>
-                                                                                        <li class=""><a href="AddPollingDivisionDetails.jsp" class="glyphicons cart_in"><i></i><span>Create Polling Divisions</span></a></li>
-                                                                                        <li class=""><a href="ElectionTypes.jsp" class="glyphicons list"><i></i><span>Create Election Types</span></a></li> 	
+									<li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#el_settings"><span class="main_menu_ic"><img src="IMG/election_settings.png"></span><span>Election Settings</span></a>
+										<ul class="collapse" id="el_settings">
+										<li class="glyphicons charts currentScroll active"><a href="ProvinceDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Province</span></a></li>
+										<li class=""><a href="AddDistricDetails.jsp" class="glyphicons show_thumbnails"><i></i><span>Create District</span></a></li>
+										<li class=""><a href="AddPollingDivisionDetails.jsp" class=""><i></i><span>Create Polling Division</span></a></li>											
+										<li class=""><a href="ElectionTypes.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Election Type</span></a></li>
 										</ul>
 									</li>
-                                                                        <!-- User Registration --> 
-                                                                         <li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span>User Registrations</span></a>
-										<ul class="collapse" id="menu_forms">
-											<li class=""><a href="Adminregister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Administrator</span></a></li>
-                                                                                    <li class=""><a href="VoterRegistration.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Create Voter</span></a></li>
-                                                                                    <li class=""><a href="voterList.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Voter List</span></a></li>
-                                                                                        
-                                                                                    <li class=""><a href="SecatryRegister.jsp" class="glyphicons cart_in"><i></i><span>Create Sectary</span></a></li>
-                                                                                    <li class=""><a href="SecatryList.jsp" class="glyphicons cart_in"><i></i><span>Sectary List</span></a></li>
-                                                                                        
-                                                                                    <li class=""><a href="CandidateRegistration.jsp" class="glyphicons list"><i></i><span>Create Candidate</span></a></li>
-                                                                                    <li class=""><a href="CandidateList.jsp" class="glyphicons list"><i></i><span>Candidate List</span></a></li> 
+									
+									
+									<li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#user_creation"><span class="main_menu_ic"><img src="IMG/user_creation.png"></span><span>User Creation</span></a>
+										<ul class="collapse" id="user_creation">
+										<li class=""><a href="Adminregister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Administrator</span></a></li>
+                                                                                <li class=""><a href="VoterRegistration.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Voter</span></a></li>
+                                                                                <li class=""><a href="SecatryRegister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Sectary</span></a></li>											
+                                                                                <li class=""><a href="CandidateRegistration.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Candidate</span></a></li>
 										</ul>
 									</li>
-                                                                        <!--Reports -->
-                                                                          <li class="hasSubmenu2">
-										<a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span>Reports</span></a>
-										<ul class="collapse" id="menu_forms">
-											 <li class=""><a href="CandidateRpt.jsp" class="glyphicons show_thumbnails"><i></i><span>Candidates Report</span></a></li>
-                                                                                    <li class=""><a href="politicalparydetailRpt.jsp" class="glyphicons show_big_thumbnails"><i></i><span>Political Party Report</span></a></li>
-                                                                                    <li class=""><a href="PollingDivision_Province.jsp" class="glyphicons show_big_thumbnails"><i></i><span>polling Division Reports</span></a></li>
-                                                                                    
+									
+									<li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#p_party"><span class="main_menu_ic"><img src="IMG/political_p.png"></span><span>Political Party</span></a>
+										<ul class="collapse" id="p_party">
+                                                                                    <li class=""><a href="ElectionPartyregister.jsp" class="glyphicons show_thumbnails"><i></i><span>Create Political Party</span></a></li>
+										</ul>
+									</li>
+									
+									<li class="hasSubmenu2">
+										<a data-toggle="collapse" class="glyphicons shopping_cart" href="#reports"><span class="main_menu_ic"><img src="IMG/reports.png"></span><span>Reports</span></a>
+										<ul class="collapse" id="reports">
+										<li class=""><a href="CandidateRpt.jsp" class="glyphicons show_thumbnails"><i></i><span>Candidate Detail Report</span></a></li>
+										<li class=""><a href="politicalparydetailRpt.jsp" class="glyphicons show_thumbnails"><i></i><span>Political Party Report</span></a></li>
+                                                                                <li class=""><a href="PollingDivision_Province.jsp" class="glyphicons show_thumbnails"><i></i><span>Polling Division Reports</span></a></li>
 										</ul>
 									</li>
 								</ul>
@@ -210,7 +220,7 @@
    <div class="reg_form_header"><h4> Provincial Details</h4></div>
  
   <form name="Provinceregform" method="post" action="../ProvinceRegister_Servlet" >
-            <table class="admin_reg_tb">
+            <table class="admin_reg_tb" id="provincetbl">
                 <tr>
                     <td>
                         <label>Province Code</label> 
@@ -273,8 +283,11 @@
                         <input type="submit" value="Submit" name="provinceregbtn" id="provinceregbtn" class="reg_submit"/>
                     </td>
                 </tr>
-            </table>
-      <br/>
+            </table>        
+  </form>
+   
+   <form name="Provinceregform2" method="post" action="../ProvinceEdit_Servlet" >
+         <br/>
       <br/>
        <div class="reg_form_header"><h4>Province Details</h4></div>
        <br>
@@ -307,12 +320,14 @@
             if(insertreslt!=null){
                 while(insertreslt.next())
                 {%>
-                  <tr class="gradeX">
-                    <td style="display:  none"><%= insertreslt.getString(1)%></td>
-                    <td class="center"><a href="#" onclick="editview();"><%= insertreslt.getString(2)%></a></td>
+                  <tr class="gradeX" id="provinces">
+                    
+                    <td class="center"><a href="../ProvinceEdit_Servlet?datatobesend=<%= insertreslt.getString(1)%>"><%= insertreslt.getString(2)%></a></td>
 			<td class="center"><%= insertreslt.getString(3)%></td>
                         <td class="center"><%= insertreslt.getString(4)%></td>
                         <td class="center"><%= insertreslt.getString(5)%></td>
+                      
+                      
 		</tr>
             <% }
               }
@@ -326,7 +341,9 @@
       </table>
   
   </div> 
-  </form>	
+   </form>
+
+
 	
    
   </div> 

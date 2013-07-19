@@ -73,7 +73,7 @@
              $.post('../BallotServlet',{postVariableName: poliId},function(responseJson) 
                 {
                   if(responseJson!=null){
-                      $("#stTwo").find("tr:gt(0)").remove();
+                    //  $("#stTwo").find("tr:gt(0)").remove();
                       var table1 = $("#stTwo");
                        $.each(responseJson, function(key,value) {
                            var rowNew = $( "<tr>\n\

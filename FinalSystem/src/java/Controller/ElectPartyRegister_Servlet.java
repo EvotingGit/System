@@ -7,9 +7,12 @@ package Controller;
 import Model.CreateUniqueID;
 import Model.ElectionPartyReg;
 import Model.ElectionType;
+import com.sun.imageio.plugins.common.ImageUtil;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +25,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.entity.StandardEntityCollection;
 
 /**
  *
@@ -46,7 +52,7 @@ public class ElectPartyRegister_Servlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         CreateUniqueID createUUid=new CreateUniqueID();
-        byte[] logo=null; 
+        //byte[] logo=null; 
         ElectionPartyReg electionparty=new ElectionPartyReg();
         
         try {
@@ -60,13 +66,13 @@ public class ElectPartyRegister_Servlet extends HttpServlet {
                 String ElectioPcode=request.getParameter("electpcode");
                 String ElectionPName=request.getParameter("partyname");
                 String RegisterDate=request.getParameter("regdate");
-                /*while (iter.hasNext()) { 
-                        FileItem item = (FileItem) iter.next(); 
-                            if (!item.isFormField()) { 
-                                logo = item.get(); 
-                            }   
-                    } */
-                String electypeid=request.getParameter("electype"); 
+                String logo=request.getParameter("logoimg");
+                Date date = new Date();
+                //String nelogoname=logo+date.getTime();
+                final ChartRenderingInfo info = new ChartRenderingInfo(new StandardEntityCollection());
+                final File file1 = new File(getServletContext().getRealPath("") + "/JspPages/Reports/"+logo+"");
+                
+                        String electypeid=request.getParameter("electype"); 
                 int candidateamunt=Integer.parseInt(request.getParameter("candiamount")); 
                 
                 boolean reslt=electionparty.InsertElecitonPartyDetaisl(PoliPartyID,ElectioPcode,ElectionPName,RegisterDate,logo,electypeid,candidateamunt);

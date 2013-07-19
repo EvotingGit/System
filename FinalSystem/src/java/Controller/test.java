@@ -6,6 +6,7 @@ package Controller;
 
 import Model.CreateUniqueID;
 import Model.Testmd;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +34,13 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import java.util.Date;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.entity.StandardEntityCollection;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -56,31 +64,28 @@ public class test extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        String connectionURL = "jdbc:mysql://192.168.10.59:3306/electionsystemdb";
-             java.sql.Connection con=null;
+        
             try{  
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con=DriverManager.getConnection(connectionURL,"root","root");  
-            Statement st1=con.createStatement();
-		ResultSet rs1 = st1.executeQuery("select * from Image");
-		String imgLen="";
-		if(rs1.next()){
-                    imgLen = rs1.getString(1);
-                    System.out.println(imgLen.length());
-		}	
-		rs1 = st1.executeQuery("select * from Image");
-		if(rs1.next()){
-                    int len = imgLen.length();
-                    byte [] rb = new byte[len];
-                    InputStream readImg = rs1.getBinaryStream(1);
-                    int index=readImg.read(rb, 0, len);	
-                    System.out.println("index"+index);
-                    st1.close();
-                   response.reset();
-                  response.setContentType("image/jpg");
-                   response.getOutputStream().write(rb,0,len);
-                  response.getOutputStream().flush();
-                }
+           DefaultPieDataset pieDataset = new DefaultPieDataset();
+           pieDataset.setValue("JavaWorld", new Integer(75));
+           pieDataset.setValue("Other", new Integer(25));
+
+          JFreeChart chart = ChartFactory.createPieChart("Discounts Used by Category ", pieDataset, true, true, false);
+          //chart.setBackgroundPaint(new Color(222, 222, 255));
+            final PiePlot plot = (PiePlot) chart.getPlot();
+            plot.setBackgroundPaint(Color.white);
+            plot.setCircular(true);
+
+        try {
+
+            final ChartRenderingInfo info = new ChartRenderingInfo(new StandardEntityCollection());
+            final File file1 = new File(getServletContext().getRealPath(".") + "/images/charts/piechart.png");
+
+            ChartUtilities.saveChartAsPNG(file1, chart, 600, 400, info);
+        } catch (Exception e) {
+            System.out.println(e);
+
+        }
             }catch(Exception ex)
             {
                 ex.toString();

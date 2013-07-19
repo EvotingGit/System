@@ -4,11 +4,11 @@
  */
 package Controller;
 
-import Model.CreateUniqueID;
 import Model.ProvinceRegister;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.UUID;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author User
  */
-@WebServlet(name = "ProvinceRegister_Servlet", urlPatterns = {"/ProvinceRegister_Servlet"})
-public class ProvinceRegister_Servlet extends HttpServlet {
+@WebServlet(name = "ProvinceEdit_Servlet", urlPatterns = {"/ProvinceEdit_Servlet"})
+public class ProvinceEdit_Servlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -36,35 +36,40 @@ public class ProvinceRegister_Servlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         ProvinceRegister province=new ProvinceRegister();
-        CreateUniqueID createUUid=new CreateUniqueID();
+         ArrayList provincedetailslist=new ArrayList();
+        PrintWriter out = response.getWriter();
         try {
-           if(request.getParameter("provinceregbtn")!=null);
-           {             
-               String ProvinceID=createUUid.UniqueID();
-               String ProvinceCode=request.getParameter("provincode");
-               String ProvinceName=request.getParameter("provincename");
-               String ProDecription=request.getParameter("decrp");
-               String No_of_district=request.getParameter("Nodistrcs");
-               
-               HttpSession session=request.getSession(true);
-               ProvinceRegister provincemodel=new ProvinceRegister();
-               boolean rslt = provincemodel.InsertProvince(ProvinceID, ProvinceCode, ProvinceName, ProDecription, No_of_district);
-               if(rslt==true){ 
-                        session.setAttribute("Register", "Sucess");
+         String ProvinceID=null;
+                ProvinceID=request.getParameter("datatobesend");
+                if(ProvinceID!=null){
+                   provincedetailslist= province.GetProvincedata(ProvinceID);
+                    HttpSession session=request.getSession(true);
+                   if(provincedetailslist!=null ||  provincedetailslist.isEmpty() ){
+                      
+                        session.setAttribute("province", provincedetailslist);
+                        response.sendRedirect("../FinalSystem/JspPages/ProvinceDetailsEdit.jsp");
+                   }
+                   else{
+                        session.setAttribute("province", "");
                         response.sendRedirect("../FinalSystem/JspPages/ProvinceDetails.jsp");
+                   }
                 }
-               else {
-                   session.setAttribute("Register", "Error");
-                   response.sendRedirect("../FinalSystem/JspPages/ProvinceDetails.jsp");
-               }
+                else if(request.getParameter("provinceupdatebtn")!=null){
+                    String ProvincehidnID=request.getParameter("hidnprovinceid");
+                    String ProvinceCode=request.getParameter("provincode");
+                    String ProvinceName=request.getParameter("provincename");
+                        String ProDecription=request.getParameter("decrp");
+                    String No_of_district=request.getParameter("Nodistrcs");
+                    boolean relst= province.UpdateProvinces(ProvincehidnID,ProvinceCode,ProvinceName,ProDecription,No_of_district); 
+                    if(relst==true){
+                        response.sendRedirect("../FinalSystem/JspPages/ProvinceDetails.jsp");
+                    }
            }
-        }catch(Exception ex)
-        {
+            
+        }catch(Exception ex){
             ex.toString();
-        }
-        finally {            
+        } finally {            
             out.close();
         }
     }
